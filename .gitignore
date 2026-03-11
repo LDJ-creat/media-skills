@@ -1,2 +1,11 @@
 .env
 node_modules
+
+# get-wechat-data skill sensitive and generated files
+.baoyu-skills/get-wechat-data/cookies.json
+.baoyu-skills/get-wechat-data/storageState.json
+wechat-data-output/
+get-wechat-data/.baoyu-skills/
+get-wechat-data/output/
+get-wechat-data/output-*/
+get-wechat-data/scripts/wechat-data-output/
