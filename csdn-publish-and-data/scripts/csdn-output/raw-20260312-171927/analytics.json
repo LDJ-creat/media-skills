@@ -1,0 +1,211 @@
+{
+  "pageType": "analytics",
+  "targetUrl": "https://mp.csdn.net/mp_blog/analysis/article/single",
+  "finalUrl": "https://mp.csdn.net/mp_blog/analysis/article/single",
+  "pageTitle": "内容管理-CSDN创作中心",
+  "bodyPreview": "消息\n创作中心\n创作\n首页\n管理\n内容管理\n评论管理\n专栏管理\n数据\n作品数据\n收益数据\n粉丝数据\n一周小结\n活动\n打卡激励\n创作灵感\n投稿管理\n流量券管理\n权益\n等级权益\n原创保护\n创作学院\n设置\n自定义模块\n自定义域名\n博客设置\n工具\n博文打赏\n资源变现\n粉丝服务\n推广管理\n博客数据\n下载数据\n问答数据\n博客数据统计专栏数据统计百度热搜词条一周小结\n\n文章总数\n\n3\n\n展现量\n\n3864\n\n点赞数\n\n25\n\n评论数\n\n-\n\n阅读量\n\n1446\n\n积分\n\n55\n\n平均质量分\n\n81\n\n收藏数\n\n18\n\n趋势图\n\n数据列表\n\n单篇文章分析\n\n数据统计只支持此功能上线后的数据变化展示\n导出数据\n文章标题\n\t\n创建日期\n\t\n\n展现量 \n\n\t\n\n阅读量 \n\n\t\n评论数\n\t\n收藏数\n\t\n关注数\n\t\n操作\n经历了大学期末速通之后，我做了一个视频内容学习助手\n\t\n2026-03-05\n\t\n3757\n\t\n583\n\t\n-\n\t\n6\n\t\n-\n\t\n查看详情\n\n\nClaude Code团队成员Thariq的Agent开发心得：Seeing like an agent\n\t\n2026-03-03\n\t\n39\n\t\n346\n\t\n-\n\t\n5\n\t\n-\n\t\n查看详情\n\n\n这才是快速部署openClaw的正确姿势！\n\t\n2026-02-26\n\t\n68\n\t\n400\n\t\n-\n\t\n6\n\t\n-\n\t\n查看详情",
+  "responses": [
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/blog-statistics",
+      "status": 200,
+      "contentType": "application/json;charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:45.766Z",
+      "payload": {
+        "code": 200,
+        "message": "success",
+        "traceId": "4732342a-6ee8-49d0-99f9-9dfd4a1d6d47",
+        "data": [
+          {
+            "name": "文章总数",
+            "enName": "article",
+            "num": 3,
+            "tips": ""
+          },
+          {
+            "name": "展现量",
+            "enName": "exposure",
+            "num": 3864,
+            "tips": "在所有展示信息流中内容被用户看到的次数总和（不包含站外通过链接直接访问该内容），统计范围为全站（PC、APP、WAP），每日更新，仅支持统计 2021年3月15日之后的数据"
+          },
+          {
+            "name": "点赞数",
+            "enName": "digg",
+            "num": 25,
+            "tips": ""
+          },
+          {
+            "name": "评论数",
+            "enName": "comment",
+            "num": 0,
+            "tips": ""
+          },
+          {
+            "name": "阅读量",
+            "enName": "view",
+            "num": 1446,
+            "tips": ""
+          },
+          {
+            "name": "积分",
+            "enName": "score",
+            "num": 55,
+            "tips": ""
+          },
+          {
+            "name": "平均质量分",
+            "enName": "quality",
+            "num": 81,
+            "tips": "CSDN 质量分是一项公开的 CSDN 博文内容质量分析服务，平均质量分是指所有发布过审文章的质量分综合的均值"
+          },
+          {
+            "name": "收藏数",
+            "enName": "collect",
+            "num": 18,
+            "tips": ""
+          }
+        ]
+      }
+    },
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/user-recall/get-state",
+      "status": 200,
+      "contentType": "application/json;charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:46.456Z",
+      "payload": {
+        "code": 200,
+        "message": "success",
+        "traceId": "309bdf9b-ead7-48f3-a3ed-1eb5e9e1cabe",
+        "data": {
+          "state": 0,
+          "noviceGuidance": false
+        }
+      }
+    },
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/single-article-list?page=1&size=20&type=date&action=down",
+      "status": 200,
+      "contentType": "application/json;charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:47.705Z",
+      "payload": {
+        "code": 200,
+        "message": "success",
+        "traceId": "f5d01238-b664-4103-a99d-4fb0482b21cf",
+        "data": {
+          "list": [
+            {
+              "title": "经历了大学期末速通之后，我做了一个视频内容学习助手",
+              "createTime": "2026-03-05",
+              "url": "https://blog.csdn.net/2601_95343509/article/details/158702949",
+              "viewCount": 583,
+              "commentCount": 0,
+              "favoriteCount": 6,
+              "exposuresCount": 3757,
+              "fansCount": 0,
+              "diggCount": 16,
+              "articleId": 158702949,
+              "type": 1,
+              "postTime": "2026-03-05 20:06",
+              "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data"
+            },
+            {
+              "title": "Claude Code团队成员Thariq的Agent开发心得：Seeing like an agent",
+              "createTime": "2026-03-03",
+              "url": "https://blog.csdn.net/2601_95343509/article/details/158621237",
+              "viewCount": 346,
+              "commentCount": 0,
+              "favoriteCount": 5,
+              "exposuresCount": 39,
+              "fansCount": 0,
+              "diggCount": 6,
+              "articleId": 158621237,
+              "type": 1,
+              "postTime": "2026-03-03 19:58",
+              "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data"
+            },
+            {
+              "title": "这才是快速部署openClaw的正确姿势！",
+              "createTime": "2026-02-26",
+              "url": "https://blog.csdn.net/2601_95343509/article/details/158428018",
+              "viewCount": 400,
+              "commentCount": 0,
+              "favoriteCount": 6,
+              "exposuresCount": 68,
+              "fansCount": 0,
+              "diggCount": 3,
+              "articleId": 158428018,
+              "type": 1,
+              "postTime": "2026-02-26 17:28",
+              "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data"
+            }
+          ],
+          "total": 3,
+          "page": 1,
+          "size": 20
+        }
+      }
+    },
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/single-article-statistics?page=1&size=10&start=1772640000&end=1773244799&articleId=158702949",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:50.420Z",
+      "payload": {
+        "message": "X-Ca-Key is not exist"
+      }
+    },
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/article/quality-score-list?articleId=158702949",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:50.810Z",
+      "payload": {
+        "message": "X-Ca-Key is not exist"
+      }
+    },
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/single-article-statistics?page=1&size=10&start=1772640000&end=1773244799&articleId=158621237",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:51.640Z",
+      "payload": {
+        "message": "X-Ca-Key is not exist"
+      }
+    },
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/article/quality-score-list?articleId=158621237",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:52.027Z",
+      "payload": {
+        "message": "X-Ca-Key is not exist"
+      }
+    },
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/single-article-statistics?page=1&size=10&start=1772640000&end=1773244799&articleId=158428018",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:52.475Z",
+      "payload": {
+        "message": "X-Ca-Key is not exist"
+      }
+    },
+    {
+      "pageType": "analytics",
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/article/quality-score-list?articleId=158428018",
+      "status": 401,
+      "contentType": "application/json; charset=utf-8",
+      "capturedAt": "2026-03-12T09:18:52.984Z",
+      "payload": {
+        "message": "X-Ca-Key is not exist"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1310 @@
+{
+  "generatedAt": "2026-03-12T09:21:22.208Z",
+  "page": "both",
+  "start": "2026-03-05",
+  "end": "2026-03-11",
+  "outputDir": "C:\\Users\\FLDJ\\Desktop\\csdn-skill\\csdn-publish-and-data\\test-output",
+  "records": [
+    {
+      "pageType": "analytics",
+      "targetUrl": "https://mp.csdn.net/mp_blog/analysis/article/single",
+      "finalUrl": "https://mp.csdn.net/mp_blog/analysis/article/single",
+      "pageTitle": "内容管理-CSDN创作中心",
+      "bodyPreview": "消息\n创作中心\n创作\n首页\n管理\n内容管理\n评论管理\n专栏管理\n数据\n作品数据\n收益数据\n粉丝数据\n一周小结\n活动\n打卡激励\n创作灵感\n投稿管理\n流量券管理\n权益\n等级权益\n原创保护\n创作学院\n设置\n自定义模块\n自定义域名\n博客设置\n工具\n博文打赏\n资源变现\n粉丝服务\n推广管理\n博客数据\n下载数据\n问答数据\n博客数据统计专栏数据统计百度热搜词条一周小结\n\n文章总数\n\n3\n\n展现量\n\n3864\n\n点赞数\n\n25\n\n评论数\n\n-\n\n阅读量\n\n1446\n\n积分\n\n55\n\n平均质量分\n\n81\n\n收藏数\n\n18\n\n趋势图\n\n数据列表\n\n单篇文章分析\n\n数据统计只支持此功能上线后的数据变化展示\n导出数据\n文章标题\n\t\n创建日期\n\t\n\n展现量 \n\n\t\n\n阅读量 \n\n\t\n评论数\n\t\n收藏数\n\t\n关注数\n\t\n操作\n经历了大学期末速通之后，我做了一个视频内容学习助手\n\t\n2026-03-05\n\t\n3757\n\t\n583\n\t\n-\n\t\n6\n\t\n-\n\t\n查看详情\n\n\nClaude Code团队成员Thariq的Agent开发心得：Seeing like an agent\n\t\n2026-03-03\n\t\n39\n\t\n346\n\t\n-\n\t\n5\n\t\n-\n\t\n查看详情\n\n\n这才是快速部署openClaw的正确姿势！\n\t\n2026-02-26\n\t\n68\n\t\n400\n\t\n-\n\t\n6\n\t\n-\n\t\n查看详情\n\n这才是快速部署openClaw的正确姿势！\n\n原创\n2026-02-26 17:28\n\n发布至今总数据\n\n展现量\n\n68\n\n阅读量\n\n400\n\n评论量\n\n0\n\n点赞量\n\n3\n\n收藏量\n\n6\n\n关注量\n\n0\n\n质量分\n\n暂未获取，点我刷新\n\n读者分享\n\n下载分享明细\n基础分析\n\n趋势图\n\n数据列表\n\n7天\n30天\n至\n质量分\n日期\n\t\n质量分\n\t\n质量分版本\n2026-02-26 17:04:49\n\t\n67\n\t\nV5.0",
+      "responses": [
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/blog-statistics",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:31.838Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "a7ec5f83-b321-4a70-ae52-0a614c629ca2",
+            "data": [
+              {
+                "name": "文章总数",
+                "enName": "article",
+                "num": 3,
+                "tips": ""
+              },
+              {
+                "name": "展现量",
+                "enName": "exposure",
+                "num": 3864,
+                "tips": "在所有展示信息流中内容被用户看到的次数总和（不包含站外通过链接直接访问该内容），统计范围为全站（PC、APP、WAP），每日更新，仅支持统计 2021年3月15日之后的数据"
+              },
+              {
+                "name": "点赞数",
+                "enName": "digg",
+                "num": 25,
+                "tips": ""
+              },
+              {
+                "name": "评论数",
+                "enName": "comment",
+                "num": 0,
+                "tips": ""
+              },
+              {
+                "name": "阅读量",
+                "enName": "view",
+                "num": 1446,
+                "tips": ""
+              },
+              {
+                "name": "积分",
+                "enName": "score",
+                "num": 55,
+                "tips": ""
+              },
+              {
+                "name": "平均质量分",
+                "enName": "quality",
+                "num": 81,
+                "tips": "CSDN 质量分是一项公开的 CSDN 博文内容质量分析服务，平均质量分是指所有发布过审文章的质量分综合的均值"
+              },
+              {
+                "name": "收藏数",
+                "enName": "collect",
+                "num": 18,
+                "tips": ""
+              }
+            ]
+          }
+        },
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/user-recall/get-state",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:32.479Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "7a62f6b3-bba3-44ea-baee-962a4a909ba0",
+            "data": {
+              "state": 0,
+              "noviceGuidance": false
+            }
+          }
+        },
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/single-article-list?page=1&size=20&type=date&action=down",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:33.746Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "17da9f5f-a7ce-4b54-bb28-7117df95c74d",
+            "data": {
+              "list": [
+                {
+                  "title": "经历了大学期末速通之后，我做了一个视频内容学习助手",
+                  "createTime": "2026-03-05",
+                  "url": "https://blog.csdn.net/2601_95343509/article/details/158702949",
+                  "viewCount": 583,
+                  "commentCount": 0,
+                  "favoriteCount": 6,
+                  "exposuresCount": 3757,
+                  "fansCount": 0,
+                  "diggCount": 16,
+                  "articleId": 158702949,
+                  "type": 1,
+                  "postTime": "2026-03-05 20:06",
+                  "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data"
+                },
+                {
+                  "title": "Claude Code团队成员Thariq的Agent开发心得：Seeing like an agent",
+                  "createTime": "2026-03-03",
+                  "url": "https://blog.csdn.net/2601_95343509/article/details/158621237",
+                  "viewCount": 346,
+                  "commentCount": 0,
+                  "favoriteCount": 5,
+                  "exposuresCount": 39,
+                  "fansCount": 0,
+                  "diggCount": 6,
+                  "articleId": 158621237,
+                  "type": 1,
+                  "postTime": "2026-03-03 19:58",
+                  "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data"
+                },
+                {
+                  "title": "这才是快速部署openClaw的正确姿势！",
+                  "createTime": "2026-02-26",
+                  "url": "https://blog.csdn.net/2601_95343509/article/details/158428018",
+                  "viewCount": 400,
+                  "commentCount": 0,
+                  "favoriteCount": 6,
+                  "exposuresCount": 68,
+                  "fansCount": 0,
+                  "diggCount": 3,
+                  "articleId": 158428018,
+                  "type": 1,
+                  "postTime": "2026-02-26 17:28",
+                  "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data"
+                }
+              ],
+              "total": 3,
+              "page": 1,
+              "size": 20
+            }
+          }
+        },
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/article/quality-score-list?articleId=158702949",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:44.093Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "476fbc58-1eb7-4de0-b56d-1b13b327d760",
+            "data": [
+              {
+                "id": 46644408,
+                "articleId": 158702949,
+                "score": 85,
+                "version": "V5.0",
+                "url": "https://blog.csdn.net/u010280923/article/details/131449478",
+                "source": 1,
+                "createAt": "2026-03-05 20:05:53"
+              }
+            ]
+          }
+        },
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/single-article-statistics?page=1&size=10&start=1772702430&end=1773220830&articleId=158702949",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:44.203Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "159cb312-ec6c-4b72-a1d1-3b589dfdda91",
+            "data": {
+              "dateList": [
+                "2026-03-05",
+                "2026-03-06",
+                "2026-03-07",
+                "2026-03-08",
+                "2026-03-09",
+                "2026-03-10",
+                "2026-03-11"
+              ],
+              "chartData": {
+                "view": [
+                  52,
+                  404,
+                  9,
+                  18,
+                  8,
+                  92,
+                  0
+                ],
+                "comment": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "collect": [
+                  1,
+                  4,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "diggs": [
+                  1,
+                  9,
+                  0,
+                  0,
+                  3,
+                  0,
+                  3
+                ],
+                "exposures": [
+                  0,
+                  3741,
+                  2,
+                  3,
+                  5,
+                  4,
+                  2
+                ],
+                "fans": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              "list": [
+                {
+                  "viewCount": 0,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 3,
+                  "exposuresCount": 2,
+                  "fansCount": 0,
+                  "pdate": "2026-03-11"
+                },
+                {
+                  "viewCount": 92,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 4,
+                  "fansCount": 0,
+                  "pdate": "2026-03-10"
+                },
+                {
+                  "viewCount": 8,
+                  "commentCount": 0,
+                  "favoriteCount": 1,
+                  "diggCount": 3,
+                  "exposuresCount": 5,
+                  "fansCount": 0,
+                  "pdate": "2026-03-09"
+                },
+                {
+                  "viewCount": 18,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 3,
+                  "fansCount": 0,
+                  "pdate": "2026-03-08"
+                },
+                {
+                  "viewCount": 9,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 2,
+                  "fansCount": 0,
+                  "pdate": "2026-03-07"
+                },
+                {
+                  "viewCount": 404,
+                  "commentCount": 0,
+                  "favoriteCount": 4,
+                  "diggCount": 9,
+                  "exposuresCount": 3741,
+                  "fansCount": 0,
+                  "pdate": "2026-03-06"
+                },
+                {
+                  "viewCount": 52,
+                  "commentCount": 0,
+                  "favoriteCount": 1,
+                  "diggCount": 1,
+                  "exposuresCount": 0,
+                  "fansCount": 0,
+                  "pdate": "2026-03-05"
+                }
+              ],
+              "page": 1,
+              "size": 10,
+              "total": 7
+            }
+          }
+        },
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/article/quality-score-list?articleId=158621237",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:45.983Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "76b05057-d7da-426f-a4dd-b20a4eb3cab5",
+            "data": [
+              {
+                "id": 46528104,
+                "articleId": 158621237,
+                "score": 90,
+                "version": "V5.0",
+                "url": "https://blog.csdn.net/u010280923/article/details/131449478",
+                "source": 2,
+                "createAt": "2026-03-03 19:58:27"
+              }
+            ]
+          }
+        },
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/single-article-statistics?page=1&size=10&start=1772702430&end=1773220830&articleId=158621237",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:45.989Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "dc47961a-c4db-4cdb-80f5-500f0ab810f2",
+            "data": {
+              "dateList": [
+                "2026-03-05",
+                "2026-03-06",
+                "2026-03-07",
+                "2026-03-08",
+                "2026-03-09",
+                "2026-03-10",
+                "2026-03-11"
+              ],
+              "chartData": {
+                "view": [
+                  34,
+                  20,
+                  8,
+                  5,
+                  17,
+                  16,
+                  9
+                ],
+                "comment": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "collect": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "diggs": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exposures": [
+                  8,
+                  10,
+                  8,
+                  3,
+                  3,
+                  3,
+                  4
+                ],
+                "fans": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              "list": [
+                {
+                  "viewCount": 9,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 4,
+                  "fansCount": 0,
+                  "pdate": "2026-03-11"
+                },
+                {
+                  "viewCount": 16,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 3,
+                  "fansCount": 0,
+                  "pdate": "2026-03-10"
+                },
+                {
+                  "viewCount": 17,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 3,
+                  "fansCount": 0,
+                  "pdate": "2026-03-09"
+                },
+                {
+                  "viewCount": 5,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 3,
+                  "fansCount": 0,
+                  "pdate": "2026-03-08"
+                },
+                {
+                  "viewCount": 8,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 8,
+                  "fansCount": 0,
+                  "pdate": "2026-03-07"
+                },
+                {
+                  "viewCount": 20,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 10,
+                  "fansCount": 0,
+                  "pdate": "2026-03-06"
+                },
+                {
+                  "viewCount": 34,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 8,
+                  "fansCount": 0,
+                  "pdate": "2026-03-05"
+                }
+              ],
+              "page": 1,
+              "size": 10,
+              "total": 7
+            }
+          }
+        },
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/article/quality-score-list?articleId=158428018",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:47.496Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "21c39040-0053-431f-9eda-35e2eca9bd46",
+            "data": [
+              {
+                "id": 46263872,
+                "articleId": 158428018,
+                "score": 67,
+                "version": "V5.0",
+                "url": "https://blog.csdn.net/u010280923/article/details/131449478",
+                "source": 1,
+                "createAt": "2026-02-26 17:04:49"
+              }
+            ]
+          }
+        },
+        {
+          "pageType": "analytics",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/data/single-article-statistics?page=1&size=10&start=1772702430&end=1773220830&articleId=158428018",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:47.497Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "6a747cf3-62c5-4d34-b587-a0cb8830ab1b",
+            "data": {
+              "dateList": [
+                "2026-03-05",
+                "2026-03-06",
+                "2026-03-07",
+                "2026-03-08",
+                "2026-03-09",
+                "2026-03-10",
+                "2026-03-11"
+              ],
+              "chartData": {
+                "view": [
+                  1,
+                  8,
+                  12,
+                  2,
+                  3,
+                  5,
+                  1
+                ],
+                "comment": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "collect": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "diggs": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "exposures": [
+                  12,
+                  15,
+                  4,
+                  2,
+                  7,
+                  10,
+                  11
+                ],
+                "fans": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              },
+              "list": [
+                {
+                  "viewCount": 1,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 11,
+                  "fansCount": 0,
+                  "pdate": "2026-03-11"
+                },
+                {
+                  "viewCount": 5,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 10,
+                  "fansCount": 0,
+                  "pdate": "2026-03-10"
+                },
+                {
+                  "viewCount": 3,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 7,
+                  "fansCount": 0,
+                  "pdate": "2026-03-09"
+                },
+                {
+                  "viewCount": 2,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 2,
+                  "fansCount": 0,
+                  "pdate": "2026-03-08"
+                },
+                {
+                  "viewCount": 12,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 4,
+                  "fansCount": 0,
+                  "pdate": "2026-03-07"
+                },
+                {
+                  "viewCount": 8,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 15,
+                  "fansCount": 0,
+                  "pdate": "2026-03-06"
+                },
+                {
+                  "viewCount": 1,
+                  "commentCount": 0,
+                  "favoriteCount": 0,
+                  "diggCount": 0,
+                  "exposuresCount": 12,
+                  "fansCount": 0,
+                  "pdate": "2026-03-05"
+                }
+              ],
+              "page": 1,
+              "size": 10,
+              "total": 7
+            }
+          }
+        }
+      ]
+    },
+    {
+      "pageType": "manage",
+      "targetUrl": "https://mp.csdn.net/mp_blog/manage/article?spm=1011.2415.3001.10336",
+      "finalUrl": "https://mp.csdn.net/mp_blog/manage/article?spm=1011.2415.3001.10336",
+      "pageTitle": "内容管理-CSDN创作中心",
+      "bodyPreview": "消息\n创作中心\n创作\n首页\n管理\n内容管理\n评论管理\n专栏管理\n数据\n作品数据\n收益数据\n粉丝数据\n一周小结\n活动\n打卡激励\n创作灵感\n投稿管理\n流量券管理\n权益\n等级权益\n原创保护\n创作学院\n设置\n自定义模块\n自定义域名\n博客设置\n工具\n博文打赏\n资源变现\n粉丝服务\n推广管理\n文章\n下载\n问答\n视频\n课程\n项目\n全部(3)\n已发布(3)\n审核中/未通过(0)\n回收站(0)\n草稿箱(5)\n\n年：不限\n月：不限\n文章类型：不限\n可见范围：不限\n分类专栏：不限\n\n文章\n\n阅读\n\n点赞\n\n评论\n\n收藏\n\n操作\n\n经历了大学期末速通之后，我做了一个视频内容学习助手\n\n原创\n高质量\n\n2026-03-05 20:06:45\n\n667\n\n16\n\n0\n\n6\n\n数据\n编辑\n浏览\n\nClaude Code团队成员Thariq的Agent开发心得：Seeing like an agent\n\n原创\n高质量\n\n2026-03-03 19:58:27\n\n361\n\n6\n\n0\n\n5\n\n数据\n编辑\n浏览\n\n这才是快速部署openClaw的正确姿势！\n\n原创\n\n2026-02-26 17:28:07\n\n401\n\n3\n\n0\n\n6\n\n数据\n编辑\n浏览",
+      "responses": [
+        {
+          "pageType": "manage",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/user/list-permission",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:54.942Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "ad38eae0-ee98-4a4f-8378-ba6f221f305a",
+            "data": {
+              "useGpt": true,
+              "useHistoryVersion": {
+                "guideCopy": "•专家或 VIP 可查看 90 天内最多 200 个版本<br>•普通用户可查看 90 天内最多 10 个版本",
+                "vipUrl": "https://mall.csdn.net/vip",
+                "commonUser": true
+              },
+              "novice": true,
+              "oldUser": false,
+              "useSeven": true,
+              "displayFlowCouponPage": true,
+              "oldFullVersion": false,
+              "editPopUpImg": "https://img-home.csdnimg.cn/images/20240229014321.png",
+              "ab365": "exp1",
+              "ab369": "exp1",
+              "ab376": "control",
+              "latestCouponTimestamp": 0,
+              "showDraftPopUp": 0
+            }
+          }
+        },
+        {
+          "pageType": "manage",
+          "url": "https://bizapi.csdn.net/blog-console-api/v1/user/info",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:55.218Z",
+          "payload": {
+            "code": 200,
+            "traceId": "41c427c7-8463-4fd1-87fa-fab6e2302def",
+            "data": {
+              "avatar": "https://i-avatar.csdnimg.cn/93142b2a54ff4ba29c92ff0b3a2d5e28_2601_95343509.jpg!1",
+              "username": "2601_95343509",
+              "nickname": "神经墨客",
+              "roles": [],
+              "level": 1,
+              "point": 55,
+              "diffScore": 45,
+              "profile": {
+                "level": 1,
+                "point": 55,
+                "data": [
+                  {
+                    "username": "新秀勋章",
+                    "type": 35,
+                    "score": 0,
+                    "name": "新秀勋章",
+                    "image": "https://csdnimg.cn/medal/xinxiu@240.png",
+                    "description": "用户首次发布原创文章，审核通过后即可获得",
+                    "show": true,
+                    "desc": "用户首次发布原创文章，审核通过后即可获得"
+                  },
+                  {
+                    "username": "勤写标兵",
+                    "type": 154,
+                    "score": 0,
+                    "name": "勤写标兵",
+                    "image": "https://csdnimg.cn/f10c883cfd674a3e9217683e8cd55511.png",
+                    "description": "授予累计1周发布3篇原创IT博文的用户",
+                    "show": true,
+                    "desc": "授予累计1周发布3篇原创IT博文的用户"
+                  },
+                  {
+                    "username": "创作能手",
+                    "type": 28,
+                    "score": 0,
+                    "name": "创作能手",
+                    "image": "https://csdnimg.cn/medal/qixiebiaobing4@240.png",
+                    "description": "授予每个自然周发布1篇到3篇原创IT博文的用户",
+                    "show": true,
+                    "desc": "授予每个自然周发布1篇到3篇原创IT博文的用户"
+                  }
+                ],
+                "ico_expert": 0,
+                "zhuanlandaren": false,
+                "chizhiyiheng": false,
+                "weiruanmvp": false,
+                "bokezhixing": false,
+                "short_medal": false,
+                "long_medal": false,
+                "super_writer": []
+              },
+              "certification": [],
+              "blog_url": "https://blog.csdn.net/2601_95343509",
+              "custom_domain": "",
+              "code_style": "prism-atom-one-dark",
+              "open_reward": "0",
+              "editor_type": "0",
+              "master_mode": false,
+              "is_show_upload_video": true,
+              "side_model_default_abtest": true,
+              "side_model_hide_status_abtest": true,
+              "cover_image_ab_test": true,
+              "is_show_creator_activity_switch": 1,
+              "is_show_blog_info_card": false,
+              "is_show_editor_new_style": true,
+              "holiday_audit_config": {
+                "msg": "很抱歉，暂不允许修改此内容",
+                "switch": false
+              },
+              "is_show_fans_menu": false,
+              "is_in_fans_white_users": false,
+              "is_guide_log": false,
+              "blog_group_qr_code_url": "https://img-blog.csdnimg.cn/20210507101636818.jpg",
+              "show_new_mp_entry": true,
+              "is_show_defend_benefit": false
+            },
+            "msg": "success"
+          }
+        },
+        {
+          "pageType": "manage",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/popup/list",
+          "status": 200,
+          "contentType": "application/json",
+          "capturedAt": "2026-03-12T09:20:55.910Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "09ebd3ed-c8d9-44c3-84a3-9e5753fa10a0",
+            "data": []
+          }
+        },
+        {
+          "pageType": "manage",
+          "url": "https://bizapi.csdn.net/blog-console-api/v1/article/getQueryCriteriaNew",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:55.982Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "6eb1703d-140d-4dc9-960c-63f2941b80b9",
+            "data": {
+              "date": [
+                2026
+              ],
+              "column": [],
+              "types": {
+                "1": "原创",
+                "2": "转载",
+                "4": "翻译"
+              },
+              "visible": [
+                "vip",
+                "fans",
+                "all",
+                "self"
+              ]
+            }
+          }
+        },
+        {
+          "pageType": "manage",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/article/list?status=all_v3&pageSize=20",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:56.178Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "63121233-39c3-47e4-8a95-0ccb418f9ef2",
+            "data": {
+              "count": {
+                "all": 8,
+                "no_send_ml_audit": 8,
+                "private": 0,
+                "db_new_publish": 3,
+                "original": 0,
+                "request_new_publish": 3,
+                "post_audit": 3,
+                "all_v2": 3,
+                "all_v3": 3,
+                "deleted": 0,
+                "enable": 3,
+                "audit": 0,
+                "draft": 5,
+                "publish": 8
+              },
+              "list": [
+                {
+                  "articleId": "158702949",
+                  "title": "经历了大学期末速通之后，我做了一个视频内容学习助手",
+                  "postTime": "2026-03-05 20:06:45",
+                  "viewCount": "667",
+                  "commentCount": "0",
+                  "commentAuth": "2",
+                  "isTop": "0",
+                  "status": "1",
+                  "username": "2601_95343509",
+                  "type": "1",
+                  "isNeedFans": "0",
+                  "isNeedVip": "0",
+                  "isVipArticle": false,
+                  "editorType": 1,
+                  "isRecommend": false,
+                  "totalExposures": 3757,
+                  "fansCount": 0,
+                  "diggCount": 16,
+                  "collectCount": 6,
+                  "coverImage": [],
+                  "voteId": 0,
+                  "isLock": false,
+                  "deprecated": false,
+                  "isShowFeedback": false,
+                  "complaintArticleId": 0,
+                  "complaintTitle": null,
+                  "complaintUrl": null,
+                  "complaintArticleStatus": null,
+                  "isComplaint": null,
+                  "complaintStatus": null,
+                  "complaintOrderNumber": null,
+                  "scheduledTime": 0,
+                  "downloadShareDataUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data?articleId=158702949",
+                  "plan": null,
+                  "qualityScore": 85,
+                  "qualitySpecification": "https://blog.csdn.net/u010280923/article/details/131449478"
+                },
+                {
+                  "articleId": "158621237",
+                  "title": "Claude Code团队成员Thariq的Agent开发心得：Seeing like an agent",
+                  "postTime": "2026-03-03 19:58:27",
+                  "viewCount": "361",
+                  "commentCount": "0",
+                  "commentAuth": "2",
+                  "isTop": "0",
+                  "status": "1",
+                  "username": "2601_95343509",
+                  "type": "1",
+                  "isNeedFans": "0",
+                  "isNeedVip": "0",
+                  "isVipArticle": false,
+                  "editorType": 1,
+                  "isRecommend": false,
+                  "totalExposures": 39,
+                  "fansCount": 0,
+                  "diggCount": 6,
+                  "collectCount": 5,
+                  "coverImage": [],
+                  "voteId": 0,
+                  "isLock": false,
+                  "deprecated": false,
+                  "isShowFeedback": false,
+                  "complaintArticleId": 0,
+                  "complaintTitle": null,
+                  "complaintUrl": null,
+                  "complaintArticleStatus": null,
+                  "isComplaint": null,
+                  "complaintStatus": null,
+                  "complaintOrderNumber": null,
+                  "scheduledTime": 0,
+                  "downloadShareDataUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data?articleId=158621237",
+                  "plan": null,
+                  "qualityScore": 90,
+                  "qualitySpecification": "https://blog.csdn.net/u010280923/article/details/131449478"
+                },
+                {
+                  "articleId": "158428018",
+                  "title": "这才是快速部署openClaw的正确姿势！",
+                  "postTime": "2026-02-26 17:28:07",
+                  "viewCount": "401",
+                  "commentCount": "0",
+                  "commentAuth": "2",
+                  "isTop": "0",
+                  "status": "1",
+                  "username": "2601_95343509",
+                  "type": "1",
+                  "isNeedFans": "0",
+                  "isNeedVip": "0",
+                  "isVipArticle": false,
+                  "editorType": 1,
+                  "isRecommend": false,
+                  "totalExposures": 68,
+                  "fansCount": 0,
+                  "diggCount": 3,
+                  "collectCount": 6,
+                  "coverImage": [],
+                  "voteId": 0,
+                  "isLock": false,
+                  "deprecated": false,
+                  "isShowFeedback": false,
+                  "complaintArticleId": 0,
+                  "complaintTitle": null,
+                  "complaintUrl": null,
+                  "complaintArticleStatus": null,
+                  "isComplaint": null,
+                  "complaintStatus": null,
+                  "complaintOrderNumber": null,
+                  "scheduledTime": 0,
+                  "downloadShareDataUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data?articleId=158428018",
+                  "plan": null,
+                  "qualityScore": 67,
+                  "qualitySpecification": "https://blog.csdn.net/u010280923/article/details/131449478"
+                }
+              ],
+              "page": 1,
+              "size": 20,
+              "listStatus": "all_v3",
+              "total": 3,
+              "couponGuidanceModule": {
+                "btnImgUrl": "https://img-home.csdnimg.cn/images/20240229105408.png",
+                "bubbleImgUrl": "https://img-home.csdnimg.cn/images/20240229105332.png",
+                "url": "https://mp.csdn.net/mp_blog/manage/traffic"
+              }
+            }
+          }
+        },
+        {
+          "pageType": "manage",
+          "url": "https://kunpeng.csdn.net/ad/json/integrate/list?positions=932",
+          "status": 200,
+          "contentType": "application/json",
+          "capturedAt": "2026-03-12T09:20:56.684Z",
+          "payload": {
+            "code": 400501,
+            "message": "no found ad",
+            "data": null
+          }
+        },
+        {
+          "pageType": "manage",
+          "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/user-recall/get-state",
+          "status": 200,
+          "contentType": "application/json;charset=utf-8",
+          "capturedAt": "2026-03-12T09:20:56.691Z",
+          "payload": {
+            "code": 200,
+            "message": "success",
+            "traceId": "f51b83da-5bee-4b81-963c-89f6ad329b69",
+            "data": {
+              "state": 0,
+              "noviceGuidance": false
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "normalized": {
+    "range": {
+      "start": "2026-03-05",
+      "end": "2026-03-11"
+    },
+    "availableArticleCount": 3,
+    "selectedArticleCount": 3,
+    "recentArticles": [
+      {
+        "articleId": "158702949",
+        "title": "经历了大学期末速通之后，我做了一个视频内容学习助手",
+        "url": "https://blog.csdn.net/2601_95343509/article/details/158702949",
+        "createTime": "2026-03-05",
+        "postTime": "2026-03-05 20:06",
+        "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data",
+        "type": 1,
+        "totals": {
+          "exposuresCount": 3757,
+          "viewCount": 583,
+          "commentCount": 0,
+          "favoriteCount": 6,
+          "fansCount": 0,
+          "diggCount": 16
+        },
+        "recent7Days": [
+          {
+            "date": "2026-03-05",
+            "exposuresCount": 0,
+            "viewCount": 52,
+            "commentCount": 0,
+            "diggCount": 1,
+            "favoriteCount": 1,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-06",
+            "exposuresCount": 3741,
+            "viewCount": 404,
+            "commentCount": 0,
+            "diggCount": 9,
+            "favoriteCount": 4,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-07",
+            "exposuresCount": 2,
+            "viewCount": 9,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-08",
+            "exposuresCount": 3,
+            "viewCount": 18,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-09",
+            "exposuresCount": 5,
+            "viewCount": 8,
+            "commentCount": 0,
+            "diggCount": 3,
+            "favoriteCount": 1,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-10",
+            "exposuresCount": 4,
+            "viewCount": 92,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-11",
+            "exposuresCount": 2,
+            "viewCount": 0,
+            "commentCount": 0,
+            "diggCount": 3,
+            "favoriteCount": 0,
+            "fansCount": 0
+          }
+        ],
+        "qualityScores": [
+          {
+            "articleId": "158702949",
+            "score": 85,
+            "version": "V5.0",
+            "createAt": "2026-03-05 20:05:53",
+            "url": "https://blog.csdn.net/u010280923/article/details/131449478",
+            "source": 1
+          }
+        ]
+      },
+      {
+        "articleId": "158621237",
+        "title": "Claude Code团队成员Thariq的Agent开发心得：Seeing like an agent",
+        "url": "https://blog.csdn.net/2601_95343509/article/details/158621237",
+        "createTime": "2026-03-03",
+        "postTime": "2026-03-03 19:58",
+        "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data",
+        "type": 1,
+        "totals": {
+          "exposuresCount": 39,
+          "viewCount": 346,
+          "commentCount": 0,
+          "favoriteCount": 5,
+          "fansCount": 0,
+          "diggCount": 6
+        },
+        "recent7Days": [
+          {
+            "date": "2026-03-05",
+            "exposuresCount": 8,
+            "viewCount": 34,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-06",
+            "exposuresCount": 10,
+            "viewCount": 20,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-07",
+            "exposuresCount": 8,
+            "viewCount": 8,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-08",
+            "exposuresCount": 3,
+            "viewCount": 5,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-09",
+            "exposuresCount": 3,
+            "viewCount": 17,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-10",
+            "exposuresCount": 3,
+            "viewCount": 16,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-11",
+            "exposuresCount": 4,
+            "viewCount": 9,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          }
+        ],
+        "qualityScores": [
+          {
+            "articleId": "158621237",
+            "score": 90,
+            "version": "V5.0",
+            "createAt": "2026-03-03 19:58:27",
+            "url": "https://blog.csdn.net/u010280923/article/details/131449478",
+            "source": 2
+          }
+        ]
+      },
+      {
+        "articleId": "158428018",
+        "title": "这才是快速部署openClaw的正确姿势！",
+        "url": "https://blog.csdn.net/2601_95343509/article/details/158428018",
+        "createTime": "2026-02-26",
+        "postTime": "2026-02-26 17:28",
+        "downloadUrl": "https://blog.csdn.net/phoenix/web/v1/share/download-share-data",
+        "type": 1,
+        "totals": {
+          "exposuresCount": 68,
+          "viewCount": 400,
+          "commentCount": 0,
+          "favoriteCount": 6,
+          "fansCount": 0,
+          "diggCount": 3
+        },
+        "recent7Days": [
+          {
+            "date": "2026-03-05",
+            "exposuresCount": 12,
+            "viewCount": 1,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-06",
+            "exposuresCount": 15,
+            "viewCount": 8,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-07",
+            "exposuresCount": 4,
+            "viewCount": 12,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-08",
+            "exposuresCount": 2,
+            "viewCount": 2,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-09",
+            "exposuresCount": 7,
+            "viewCount": 3,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-10",
+            "exposuresCount": 10,
+            "viewCount": 5,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-11",
+            "exposuresCount": 11,
+            "viewCount": 1,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          }
+        ],
+        "qualityScores": [
+          {
+            "articleId": "158428018",
+            "score": 67,
+            "version": "V5.0",
+            "createAt": "2026-02-26 17:04:49",
+            "url": "https://blog.csdn.net/u010280923/article/details/131449478",
+            "source": 1
+          }
+        ]
+      }
+    ]
+  }
+}

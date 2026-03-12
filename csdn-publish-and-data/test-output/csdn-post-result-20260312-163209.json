@@ -1,0 +1,250 @@
+{
+  "generatedAt": "2026-03-12T08:32:09.061Z",
+  "mode": "draft",
+  "title": "构建 Claude Code 的经验教训：Prompt Cache (提示词缓存) 就是一切",
+  "summary": "原文地址：$1 \\ 作者：Thariq (@trq212) \\ 发布日期：2026年2月20日 工程界常说 \"缓存决定一切\" (Cache Rules Everything Around Me)，这条法则同样适用于 AI Agent。像 Claude Code 这样需要长时间运行",
+  "tags": [
+    "Claude",
+    "Prompt Caching",
+    "AI Agents",
+    "经验分享"
+  ],
+  "original": true,
+  "finalUrl": "https://editor.csdn.net/md?not_checkout=1&spm=1015.2103.3001.8066&articleId=158971956",
+  "articleId": "158971956",
+  "articleUrl": "https://blog.csdn.net/2601_95343509/article/details/158971956",
+  "success": true,
+  "message": "success",
+  "warnings": [
+    "Markdown 编辑器页未提供摘要输入框，摘要需要在后续手动发布流程中补充。",
+    "已跳过自动填充标签：Claude, Prompt Caching, AI Agents, 经验分享。请在 CSDN 草稿页手动确认后再发布。",
+    "已跳过自动处理原创/转载设置。请在手动发布前确认版权声明。"
+  ],
+  "capturedResponses": [
+    {
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/write/get-config",
+      "status": 200,
+      "payload": {
+        "code": 200,
+        "message": "success",
+        "traceId": "eec32e09-af28-43e2-9ddc-1c1536f45d0b",
+        "data": {
+          "vipEditText": "<p>现金补贴10万元，高额收益分成，专属VIP内容流量扶持，等你加入，<a style=\"color:#7dbce2;\" href=\"https://marketing.csdn.net/p/fe54150055296e2678b2e4c8f95bb2fc?pId=2950\" target=\"_blank\">活动详情</a></p>",
+          "vipEditMark": "https://img-home.csdnimg.cn/images/20250207040118.png"
+        }
+      }
+    },
+    {
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/article/is-zero-article-user",
+      "status": 200,
+      "payload": {
+        "code": 200,
+        "message": "success",
+        "traceId": "1a9f7c88-5edc-4e7f-982d-cf095e110b83",
+        "data": false
+      }
+    },
+    {
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/user/list-permission",
+      "status": 200,
+      "payload": {
+        "code": 200,
+        "message": "success",
+        "traceId": "28fb25f5-e6cb-49eb-9d39-954950902f87",
+        "data": {
+          "useGpt": true,
+          "useHistoryVersion": {
+            "guideCopy": "•专家或 VIP 可查看 90 天内最多 200 个版本<br>•普通用户可查看 90 天内最多 10 个版本",
+            "vipUrl": "https://mall.csdn.net/vip",
+            "commonUser": true
+          },
+          "novice": true,
+          "oldUser": false,
+          "useSeven": true,
+          "displayFlowCouponPage": true,
+          "oldFullVersion": false,
+          "editPopUpImg": "https://img-home.csdnimg.cn/images/20240229014321.png",
+          "ab365": "exp1",
+          "ab369": "exp1",
+          "ab376": "control",
+          "latestCouponTimestamp": 0,
+          "showDraftPopUp": 0
+        }
+      }
+    },
+    {
+      "url": "https://bizapi.csdn.net/blog-console-api/v3/editor/getBaseInfo",
+      "status": 200,
+      "payload": {
+        "code": 200,
+        "traceId": "71f22a54-2825-4446-9adc-2d91356c2c7d",
+        "data": {
+          "avatar": "https://i-avatar.csdnimg.cn/93142b2a54ff4ba29c92ff0b3a2d5e28_2601_95343509.jpg!1",
+          "name": "2601_95343509",
+          "blog_url": "https://blog.csdn.net/2601_95343509",
+          "blog_level": 1,
+          "muser_name": "2601_95343509",
+          "code_style": "prism-atom-one-dark",
+          "editor_code_style": "atom-one-dark",
+          "categorys": [],
+          "can_add_category_num": 10,
+          "open_reward_text": 0,
+          "cover_image_ab_test": true,
+          "template_switch": true,
+          "my_template_switch": true,
+          "plan": [],
+          "vote_switch": true,
+          "water_mark": false,
+          "nickname": "神经墨客",
+          "label_required_switch": true,
+          "open_scheduled_publish": true,
+          "enable_title_forbid": false,
+          "vip": false,
+          "image_domain_list": [
+            "latex.csdn.net",
+            "pre-latex.csdn.net",
+            "img-blog.csdnimg.cn",
+            "img-blog.csdn.net",
+            "csdn-test-oss.oss-cn-beijing.aliyuncs.com",
+            "csdn-img-blog.oss-cn-beijing.aliyuncs.com",
+            "img-home.csdnimg.cn",
+            "imgconvert.csdnimg.cn",
+            "img-service.csdnimg.cn",
+            "csdn-ebook-resources.oss-cn-beijing.aliyuncs.com",
+            "devpress.csdnimg.cn",
+            "csdnimg.cn",
+            "live-file.csdnimg.cn",
+            "img-my.csdnimg.cn",
+            "private.codecogs.com",
+            "video-community.csdnimg.cn",
+            "g.csdnimg.cn",
+            "i-blog.csdnimg.cn",
+            "csdn-img-blog.obs.cn-north-4.myhuaweicloud.com"
+          ],
+          "vip_mark": "https://img-home.csdnimg.cn/images/20240702052943.png",
+          "assistant": {
+            "jump_url": "https://blog.csdn.net/blogdevteam/article/details/105087689",
+            "jump_text": "【标题规范】",
+            "text": "发文助手会对标题提出优化建议，避免出现不恰当文字从而影响文章推荐。"
+          },
+          "is_expert": false,
+          "is_muser": false,
+          "is_new_editor": false,
+          "is_show_fans_menu": false,
+          "is_in_fans_white_users": false,
+          "is_show_defend_benefit": false,
+          "history_version_save_interval_sec": 120
+        },
+        "msg": "success"
+      }
+    },
+    {
+      "url": "https://bizapi.csdn.net/blog/phoenix/console/v1/write-active/list?type=2&order=0&page=1&size=3",
+      "status": 200,
+      "payload": {
+        "code": 200,
+        "message": "success",
+        "traceId": "27ef3a28-5e51-40cd-9ed6-9c4d432474eb",
+        "data": {
+          "actives": [
+            {
+              "writeActiveId": 11141,
+              "name": "CSDN技术盲盒挑战",
+              "synopsis": "随机抽取一个技术难题，分享你的解决思路或完整方案。",
+              "descUrl": "https://activity.csdn.net/topic?id=11141",
+              "status": 2,
+              "startTime": "2026-03-09T06:23:14.000+0000",
+              "endTime": "2026-03-23T06:23:14.000+0000",
+              "type": 2,
+              "attendUserNum": 34,
+              "attendArticleNum": 57,
+              "owner": "blogdevteam",
+              "isHot": false,
+              "createTime": "2026-03-09T06:23:14.000+0000",
+              "totalViews": 12966,
+              "subType": 4,
+              "formatTotalViews": "1.2w",
+              "formatAttendUserNum": "34",
+              "hasExternalLink": false
+            },
+            {
+              "writeActiveId": 11140,
+              "name": "91行代码创意赛",
+              "synopsis": "用不超过91行代码实现创意项目，挑战开发极限。",
+              "descUrl": "https://activity.csdn.net/topic?id=11140",
+              "status": 2,
+              "startTime": "2026-03-09T06:22:34.000+0000",
+              "endTime": "2026-03-23T06:22:34.000+0000",
+              "type": 2,
+              "attendUserNum": 8,
+              "attendArticleNum": 8,
+              "owner": "blogdevteam",
+              "isHot": false,
+              "createTime": "2026-03-09T06:22:33.000+0000",
+              "totalViews": 1160,
+              "subType": 4,
+              "formatTotalViews": "1.1k",
+              "formatAttendUserNum": "8",
+              "hasExternalLink": false
+            },
+            {
+              "writeActiveId": 11139,
+              "name": "GitHub镜像站搭建全攻略",
+              "synopsis": "手把手教你从零搭建私有GitHub镜像站，解决访问难题",
+              "descUrl": "https://activity.csdn.net/topic?id=11139",
+              "status": 2,
+              "startTime": "2026-03-09T06:22:28.000+0000",
+              "endTime": "2026-03-23T06:22:28.000+0000",
+              "type": 2,
+              "attendUserNum": 3,
+              "attendArticleNum": 3,
+              "owner": "blogdevteam",
+              "isHot": false,
+              "createTime": "2026-03-09T06:22:28.000+0000",
+              "totalViews": 1219,
+              "subType": 4,
+              "formatTotalViews": "1.2k",
+              "formatAttendUserNum": "3",
+              "hasExternalLink": false
+            }
+          ],
+          "carousel": [],
+          "page": 1,
+          "size": 3,
+          "total": 30
+        }
+      }
+    },
+    {
+      "url": "https://bizapi.csdn.net/blog-console-api/v3/mdeditor/saveArticle",
+      "status": 200,
+      "payload": {
+        "code": 200,
+        "traceId": "d7e5a46b-ae37-4052-8e19-db4abcfdcf1e",
+        "data": {
+          "url": "https://blog.csdn.net/2601_95343509/article/details/158971956",
+          "id": 158971956,
+          "qrcode": "https://blog.csdn.net/common_tool/qrcode?url=https://blog.csdn.net/2601_95343509/article/details/158971956%3Futm_source=blog_wap_share",
+          "title": "构建 Claude Code 的经验教训：Prompt Cache (提示词缓存) 就是一切",
+          "description": ""
+        },
+        "msg": "success"
+      }
+    },
+    {
+      "url": "https://arms-retcode.aliyuncs.com/r.png?t=api&times=1&page=%5Bindex%5D&release=markdown_v1.0&environment=prod&begin=1773304325791&api=bizapi.csdn.net%2Fblog-console-api%2Fv3%2Fmdeditor%2FsaveArticle&success=1&time=1169&code=200&msg=success&traceId=&pv_id=bsmvqm33n1276Fl58s0d7aRy4gtq&domain=editor.csdn.net&flag=1&sr=1440x960&vp=1440x960&ct=4g&uid=11_73911714077-1773220441235-820679&sid=80mUqm2vngL79altstgjfaOmzqFv&pid=dyiaei5ihw%406ac55c45dd489f7&_v=1.8.36-beta.1&username=2601_95343509&sampling=2&dl=https%3A%2F%2Feditor.csdn.net%2Fmd%2F%3Fnot_checkout%3D1%26spm%3D1015.2103.3001.8066&z=mmn7ls84&post_res=",
+      "status": 200,
+      "payload": {
+        "text": ""
+      }
+    },
+    {
+      "url": "https://arms-retcode.aliyuncs.com/r.png?t=pv&times=1&page=%2Fmd&tag=&release=markdown_v1.0&environment=prod&begin=1773304327607&c1=mp_report&c2=markdown&uid=11_73911714077-1773220441235-820679&dt=%E5%86%99%E6%96%87%E7%AB%A0-CSDN%E5%8D%9A%E5%AE%A2&dr=&dpr=1.00&de=utf-8&ul=&sr=1440x960&vp=1440x960&ct=4g&sid=80mUqm2vngL79altstgjfaOmzqFv&pid=dyiaei5ihw%406ac55c45dd489f7&_v=1.8.36-beta.1&pv_id=q2mCzm9Unv37FvmUb0be893da6Lh&username=2601_95343509&sampling=1&dl=https%3A%2F%2Feditor.csdn.net%2Fmd%3Fnot_checkout%3D1%26spm%3D1015.2103.3001.8066%26articleId%3D158971956&z=mmn7ls86",
+      "status": 200,
+      "payload": {
+        "parseError": "response body unavailable",
+        "error": "response.text: Protocol error (Network.getResponseBody): No data found for resource with given identifier"
+      }
+    }
+  ]
+}
