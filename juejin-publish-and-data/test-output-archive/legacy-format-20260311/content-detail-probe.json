@@ -1,0 +1,1813 @@
+{
+  "finalUrl": "https://juejin.cn/creator/data/content/article/single",
+  "captured": [
+    {
+      "url": "https://api.juejin.cn/content_api/v1/article/list_by_user?aid=2608&uuid=7615996659764495918&spider=0",
+      "status": 200,
+      "body": {
+        "err_no": 0,
+        "err_msg": "success",
+        "data": [
+          {
+            "article_id": "7613596861333078067",
+            "article_info": {
+              "article_id": "7613596861333078067",
+              "user_id": "2892189005793067",
+              "category_id": "6809637772874219534",
+              "tag_ids": [
+                6809640407484334000,
+                6809640408797168000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "经历了大学期末速通之后，我做了一个视频内容学习助手",
+              "brief_content": "说来惭愧，起初萌生做这么一个项目的想法，源于我期末时那几个速通的夜晚。但是这里需要先叠个甲，需要速通并不是我因为我平时懒散哈，而是对于某些科目我认为和我自己的目标规划没有太多的联系，所以我更希望短时间",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 0,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1772705868",
+              "mtime": "1772711920",
+              "rtime": "-62135596800",
+              "draft_id": "7613555403788271654",
+              "view_count": 50,
+              "collect_count": 0,
+              "digg_count": 0,
+              "comment_count": 0,
+              "hot_index": 2,
+              "is_hot": 0,
+              "rank_index": 1e-8,
+              "status": 1,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 36,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 3,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 1020,
+              "read_time": "3分钟",
+              "in_aicoding": null
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637772874219534",
+              "category_name": "阅读",
+              "category_url": "article",
+              "rank": 8,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/228be0376b22924b.png",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/20f56d7df9f97d1d.png",
+              "ctime": 1457483895,
+              "mtime": 1432503208,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 8
+            },
+            "tags": [
+              {
+                "id": 2546526,
+                "tag_id": "6809640407484334093",
+                "tag_name": "前端",
+                "color": "#60ADFF",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/leancloud-assets/bac28828a49181c34110.png~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 1,
+                "ctime": 1435971546,
+                "mtime": 1773301455,
+                "id_type": 9,
+                "tag_alias": "",
+                "post_article_count": 681464,
+                "concern_user_count": 728791
+              },
+              {
+                "id": 2546527,
+                "tag_id": "6809640408797167623",
+                "tag_name": "后端",
+                "color": "#C679FF",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/leancloud-assets/d83da9d012ddb7ae85f4.png~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 1,
+                "ctime": 1435971556,
+                "mtime": 1773301441,
+                "id_type": 9,
+                "tag_alias": "",
+                "post_article_count": 482614,
+                "concern_user_count": 600912
+              }
+            ],
+            "user_interact": {
+              "id": 7613596861333078000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          },
+          {
+            "article_id": "7612863397353586707",
+            "article_info": {
+              "article_id": "7612863397353586707",
+              "user_id": "2892189005793067",
+              "category_id": "6809637773935378440",
+              "tag_ids": [
+                6809640642101117000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "Claude Code团队成员Thariq的Agent开发心得：Seeing like an agent",
+              "brief_content": "众所周知，在一个agent中，大模型通过Tool calling来实现各种各样的功能，但是工具的方式多种多样，它可能是bash命令，可能是已经备受认可的skills，也可能通过直接运行代码实现。 那么",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 7.31689281606276,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1772538881",
+              "mtime": "1772589688",
+              "rtime": "1772589688",
+              "draft_id": "7612822457070207018",
+              "view_count": 228,
+              "collect_count": 0,
+              "digg_count": 0,
+              "comment_count": 0,
+              "hot_index": 11,
+              "is_hot": 0,
+              "rank_index": 0.01883818,
+              "status": 2,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 3629,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 1,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 1965,
+              "read_time": "7分钟",
+              "in_aicoding": null
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637773935378440",
+              "category_name": "人工智能",
+              "category_url": "ai",
+              "rank": 5,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/f7cecf8806e8621ef35e.jpg",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/9b525117507d7a76c4ac.png",
+              "ctime": 1500876664,
+              "mtime": 1500876667,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 5
+            },
+            "tags": [
+              {
+                "id": 2546696,
+                "tag_id": "6809640642101116936",
+                "tag_name": "人工智能",
+                "color": "#2e6cff",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/leancloud-assets/9b525117507d7a76c4ac.png~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 1,
+                "ctime": 1472072600,
+                "mtime": 1773301622,
+                "id_type": 9,
+                "tag_alias": "",
+                "post_article_count": 182101,
+                "concern_user_count": 298473
+              }
+            ],
+            "user_interact": {
+              "id": 7612863397353587000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          },
+          {
+            "article_id": "7610728235362156559",
+            "article_info": {
+              "article_id": "7610728235362156559",
+              "user_id": "2892189005793067",
+              "category_id": "6809637773935378440",
+              "tag_ids": [
+                6809640419505209000,
+                7467857238494020000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "这才是快速部署openClaw的正确姿势！",
+              "brief_content": "先说说我的部署环境 我想要在我的腾讯云服务器上配置openClaw,快速地跑通安装-网关和模型配置-连接飞书的流程。大多数云服务厂商都推出了一键部署的方案，但更多是针对新的服务器进行快速导入或者对旧的",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 7.678873587267572,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1772096015",
+              "mtime": "1772099251",
+              "rtime": "-62135596800",
+              "draft_id": "7610702177411072052",
+              "view_count": 94,
+              "collect_count": 0,
+              "digg_count": 0,
+              "comment_count": 0,
+              "hot_index": 4,
+              "is_hot": 0,
+              "rank_index": 5e-8,
+              "status": 1,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 157,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 1,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 1031,
+              "read_time": "3分钟",
+              "in_aicoding": true
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637773935378440",
+              "category_name": "人工智能",
+              "category_url": "ai",
+              "rank": 5,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/f7cecf8806e8621ef35e.jpg",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/9b525117507d7a76c4ac.png",
+              "ctime": 1500876664,
+              "mtime": 1500876667,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 5
+            },
+            "tags": [
+              {
+                "id": 2546535,
+                "tag_id": "6809640419505209358",
+                "tag_name": "开源",
+                "color": "#6EBD68",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/leancloud-assets/553ecacd498946a9a6d9.png~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 0,
+                "ctime": 1435972427,
+                "mtime": 1773300447,
+                "id_type": 9,
+                "tag_alias": "",
+                "post_article_count": 29994,
+                "concern_user_count": 268874
+              },
+              {
+                "id": 11991910,
+                "tag_id": "7467857238494019610",
+                "tag_name": "AI编程",
+                "color": "",
+                "icon": "https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1fa3c0a49ab34943aa26b26202891e7f~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=200&h=200&s=11771&e=png&b=0a0909",
+                "back_ground": "",
+                "show_navi": 0,
+                "ctime": 1741235353,
+                "mtime": 1773301658,
+                "id_type": 9,
+                "tag_alias": "AICoding、ai编程、aicoding",
+                "post_article_count": 7043,
+                "concern_user_count": 20079
+              }
+            ],
+            "user_interact": {
+              "id": 7610728235362157000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          },
+          {
+            "article_id": "7592865044690927622",
+            "article_info": {
+              "article_id": "7592865044690927622",
+              "user_id": "2892189005793067",
+              "category_id": "6809637771511070734",
+              "tag_ids": [
+                6809640375880253000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "OpenSkills 零基础入门指南：跨编辑器复用 AI 技能，效率翻倍",
+              "brief_content": "在 AI 编程工具爆发的今天，Claude Code、Antigravity、Cursor、Trae 等工具各有特色，而 Skill（技能）是 Anthropic 率先提出的轻量级 Agent 技能包",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 7.151264942451169,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1767876122",
+              "mtime": "1768205638",
+              "rtime": "-62135596800",
+              "draft_id": "7592865044690911238",
+              "view_count": 2791,
+              "collect_count": 6,
+              "digg_count": 6,
+              "comment_count": 0,
+              "hot_index": 145,
+              "is_hot": 0,
+              "rank_index": 7.1e-7,
+              "status": 1,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 2316,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 2,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 2213,
+              "read_time": "7分钟",
+              "in_aicoding": null
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637771511070734",
+              "category_name": "开发工具",
+              "category_url": "freebie",
+              "rank": 6,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/412957a61f414c0b.png",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/eb20ab1334d9abea.png",
+              "ctime": 1457483920,
+              "mtime": 1432503202,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 6
+            },
+            "tags": [
+              {
+                "id": 2546502,
+                "tag_id": "6809640375880253447",
+                "tag_name": "GitHub",
+                "color": "#616161",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/leancloud-assets/0d614af263aa63aa6a77.png~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 0,
+                "ctime": 1432234558,
+                "mtime": 1773300447,
+                "id_type": 9,
+                "tag_alias": "",
+                "post_article_count": 40098,
+                "concern_user_count": 470913
+              }
+            ],
+            "user_interact": {
+              "id": 7592865044690928000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          },
+          {
+            "article_id": "7559068227642474515",
+            "article_info": {
+              "article_id": "7559068227642474515",
+              "user_id": "2892189005793067",
+              "category_id": "6809637767543259144",
+              "tag_ids": [
+                6809641209204572000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "鸿蒙 Tab 中的 WebView 如何优雅地拦截侧滑返回？",
+              "brief_content": "今天正好要实现一个功能：对于放在 Tab 组件中的 WebView，我希望使用系统的侧滑返回手势时作用的是通过 Web 组件打开的网页而不是作用于应用导致应用直接退出。 搜索了下感觉不难，但是其中也遇",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 7.162552392187019,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1760058353",
+              "mtime": "1760062578",
+              "rtime": "1760062578",
+              "draft_id": "7559217981999366183",
+              "view_count": 95,
+              "collect_count": 1,
+              "digg_count": 0,
+              "comment_count": 0,
+              "hot_index": 4,
+              "is_hot": 0,
+              "rank_index": 0.00025888,
+              "status": 2,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 3727,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 1,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 1215,
+              "read_time": "4分钟",
+              "in_aicoding": null
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637767543259144",
+              "category_name": "前端",
+              "category_url": "frontend",
+              "rank": 2,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/8c95587526f346c0.png",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/1c40f5eaba561e32.png",
+              "ctime": 1457483942,
+              "mtime": 1432503190,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 2
+            },
+            "tags": [
+              {
+                "id": 2547106,
+                "tag_id": "6809641209204572174",
+                "tag_name": "HarmonyOS",
+                "color": "",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/1560486100469dc100639f246a2bd14f26cd5c9dd554b.jpg~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 0,
+                "ctime": 1560457382,
+                "mtime": 1773300429,
+                "id_type": 9,
+                "tag_alias": "鸿蒙 OS,鸿蒙",
+                "post_article_count": 12168,
+                "concern_user_count": 15544
+              }
+            ],
+            "user_interact": {
+              "id": 7559068227642474000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          },
+          {
+            "article_id": "7555528529649958966",
+            "article_info": {
+              "article_id": "7555528529649958966",
+              "user_id": "2892189005793067",
+              "category_id": "6809637767543259144",
+              "tag_ids": [
+                6809641209204572000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "图片/视频操作一条龙(3)：文件上传全攻略--从简单直传到分片续传，一次搞定！（鸿蒙开发）",
+              "brief_content": "在历经上两篇关于图片和视频处理的文章之后，我们终于来到了“最后一关”——文件上传！废话不多说，我们先从最简单直接的方式开始，接着再不断深入优化。准备好了吗？发车！ 方式一：简单粗暴，直接扔给后端 这是",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 0,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1759228864",
+              "mtime": "1759237172",
+              "rtime": "-62135596800",
+              "draft_id": "7555528529649942582",
+              "view_count": 97,
+              "collect_count": 0,
+              "digg_count": 0,
+              "comment_count": 0,
+              "hot_index": 4,
+              "is_hot": 0,
+              "rank_index": 2e-8,
+              "status": 1,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 77,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 2,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 2894,
+              "read_time": "10分钟",
+              "in_aicoding": null
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637767543259144",
+              "category_name": "前端",
+              "category_url": "frontend",
+              "rank": 2,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/8c95587526f346c0.png",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/1c40f5eaba561e32.png",
+              "ctime": 1457483942,
+              "mtime": 1432503190,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 2
+            },
+            "tags": [
+              {
+                "id": 2547106,
+                "tag_id": "6809641209204572174",
+                "tag_name": "HarmonyOS",
+                "color": "",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/1560486100469dc100639f246a2bd14f26cd5c9dd554b.jpg~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 0,
+                "ctime": 1560457382,
+                "mtime": 1773300429,
+                "id_type": 9,
+                "tag_alias": "鸿蒙 OS,鸿蒙",
+                "post_article_count": 12168,
+                "concern_user_count": 15544
+              }
+            ],
+            "user_interact": {
+              "id": 7555528529649959000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          },
+          {
+            "article_id": "7555462803491176502",
+            "article_info": {
+              "article_id": "7555462803491176502",
+              "user_id": "2892189005793067",
+              "category_id": "6809637767543259144",
+              "tag_ids": [
+                6809641209204572000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "图片/视频操作一条龙(2)：视频转码，缩略如获取（鸿蒙开发）",
+              "brief_content": "上一篇文章我们详细地讨论了图片相关的操作，最近有点忙时隔多日没有更新了，这一次我们继续视频图片操作一条龙系列--一起来捋一捋视频相关的操作--主要包含视频转码和视频缩略图的获取。 视频播放—AVPla",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 0,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1759219899",
+              "mtime": "1759220594",
+              "rtime": "-62135596800",
+              "draft_id": "7555399714734948395",
+              "view_count": 149,
+              "collect_count": 0,
+              "digg_count": 0,
+              "comment_count": 0,
+              "hot_index": 7,
+              "is_hot": 0,
+              "rank_index": 3e-8,
+              "status": 1,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 86,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 1,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 2908,
+              "read_time": "10分钟",
+              "in_aicoding": null
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637767543259144",
+              "category_name": "前端",
+              "category_url": "frontend",
+              "rank": 2,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/8c95587526f346c0.png",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/1c40f5eaba561e32.png",
+              "ctime": 1457483942,
+              "mtime": 1432503190,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 2
+            },
+            "tags": [
+              {
+                "id": 2547106,
+                "tag_id": "6809641209204572174",
+                "tag_name": "HarmonyOS",
+                "color": "",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/1560486100469dc100639f246a2bd14f26cd5c9dd554b.jpg~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 0,
+                "ctime": 1560457382,
+                "mtime": 1773300429,
+                "id_type": 9,
+                "tag_alias": "鸿蒙 OS,鸿蒙",
+                "post_article_count": 12168,
+                "concern_user_count": 15544
+              }
+            ],
+            "user_interact": {
+              "id": 7555462803491176000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          },
+          {
+            "article_id": "7543951199272828943",
+            "article_info": {
+              "article_id": "7543951199272828943",
+              "user_id": "2892189005793067",
+              "category_id": "6809637767543259144",
+              "tag_ids": [
+                6809641209204572000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "图片/视频操作一条龙(1)：图片的获取，预览与压缩（鸿蒙开发）",
+              "brief_content": "📖 文章目录 文章有点小长，所以先放个目录，方便大家对文章的总体结构有所了解 🎯 主要内容 参考文档 - 相关开发文档链接 操作步骤讲解： 🔐 声明权限 - 配置媒体访问所需权限 ✅ 检查/获取权限 ",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 0,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1756562006",
+              "mtime": "1756608755",
+              "rtime": "1756608755",
+              "draft_id": "7543878504029208591",
+              "view_count": 124,
+              "collect_count": 2,
+              "digg_count": 1,
+              "comment_count": 0,
+              "hot_index": 7,
+              "is_hot": 0,
+              "rank_index": 0.00012007,
+              "status": 2,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 4115,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 2,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 3713,
+              "read_time": "12分钟",
+              "in_aicoding": null
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637767543259144",
+              "category_name": "前端",
+              "category_url": "frontend",
+              "rank": 2,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/8c95587526f346c0.png",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/1c40f5eaba561e32.png",
+              "ctime": 1457483942,
+              "mtime": 1432503190,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 2
+            },
+            "tags": [
+              {
+                "id": 2547106,
+                "tag_id": "6809641209204572174",
+                "tag_name": "HarmonyOS",
+                "color": "",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/1560486100469dc100639f246a2bd14f26cd5c9dd554b.jpg~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 0,
+                "ctime": 1560457382,
+                "mtime": 1773300429,
+                "id_type": 9,
+                "tag_alias": "鸿蒙 OS,鸿蒙",
+                "post_article_count": 12168,
+                "concern_user_count": 15544
+              }
+            ],
+            "user_interact": {
+              "id": 7543951199272829000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          },
+          {
+            "article_id": "7543834852886937642",
+            "article_info": {
+              "article_id": "7543834852886937642",
+              "user_id": "2892189005793067",
+              "category_id": "6809637767543259144",
+              "tag_ids": [
+                6809641209204572000
+              ],
+              "visible_level": 0,
+              "link_url": "",
+              "cover_image": "",
+              "is_gfw": 0,
+              "title": "文本转语音？我们来盘一盘(鸿蒙开发)",
+              "brief_content": "最近在开发鸿蒙app时刚好有文本转语音的需求，那今天我们来聊一聊如何实现 废话不多说，我们直接上代码，边看代码边聊 📚 官方参考文档 官方参考文档：文档中心 🚀 初始实现 一开始我直接将官方示例改造成",
+              "is_english": 0,
+              "is_original": 1,
+              "user_index": 0,
+              "original_type": 0,
+              "original_author": "",
+              "content": "",
+              "ctime": "1756483684",
+              "mtime": "1758252206",
+              "rtime": "1756521142",
+              "draft_id": "7543799718733971497",
+              "view_count": 181,
+              "collect_count": 0,
+              "digg_count": 0,
+              "comment_count": 0,
+              "hot_index": 9,
+              "is_hot": 0,
+              "rank_index": 0.00015333,
+              "status": 2,
+              "verify_status": 1,
+              "audit_status": 2,
+              "mark_content": "",
+              "display_count": 3091,
+              "is_markdown": 1,
+              "app_html_content": "",
+              "version": 3,
+              "web_html_content": null,
+              "meta_info": null,
+              "catalog": null,
+              "homepage_top_time": -62135596800,
+              "homepage_top_status": 0,
+              "content_count": 1829,
+              "read_time": "6分钟",
+              "in_aicoding": null
+            },
+            "author_user_info": {
+              "user_id": "2892189005793067",
+              "user_name": "神刀墨客",
+              "company": "",
+              "job_title": "",
+              "avatar_large": "https://p26-passport.byteacctimg.com/img/user-avatar/facac3eaa4b85c1e0f424183f38017f0~300x300.image",
+              "level": 2,
+              "description": "",
+              "followee_count": 68,
+              "follower_count": 2,
+              "post_article_count": 9,
+              "digg_article_count": 7,
+              "got_digg_count": 7,
+              "got_view_count": 3809,
+              "post_shortmsg_count": 0,
+              "digg_shortmsg_count": 0,
+              "isfollowed": false,
+              "favorable_author": 0,
+              "power": 173,
+              "study_point": 0,
+              "university": {
+                "university_id": "0",
+                "name": "",
+                "logo": ""
+              },
+              "major": {
+                "major_id": "0",
+                "parent_id": "0",
+                "name": ""
+              },
+              "student_status": 0,
+              "select_event_count": 0,
+              "select_online_course_count": 0,
+              "identity": 0,
+              "is_select_annual": false,
+              "select_annual_rank": 0,
+              "annual_list_type": 0,
+              "extraMap": {},
+              "is_logout": 0,
+              "annual_info": [],
+              "account_amount": 0,
+              "user_growth_info": {
+                "user_id": 2892189005793067,
+                "jpower": 173,
+                "jscore": 1241.9,
+                "jpower_level": 2,
+                "jscore_level": 5,
+                "jscore_title": "先锋掘友",
+                "author_achievement_list": [],
+                "vip_level": 1,
+                "vip_title": "初学乍练",
+                "jscore_next_level_score": 2000,
+                "jscore_this_level_mini_score": 500,
+                "vip_score": 0
+              },
+              "is_vip": false,
+              "become_author_days": 0,
+              "collection_set_article_count": 0,
+              "recommend_article_count_daily": 0,
+              "article_collect_count_daily": 0,
+              "user_priv_info": {
+                "administrator": 0,
+                "builder": 0,
+                "favorable_author": 0,
+                "book_author": 0,
+                "forbidden_words": 0,
+                "can_tag_cnt": 0,
+                "auto_recommend": 0,
+                "signed_author": 0,
+                "popular_author": 0,
+                "can_add_video": 0
+              }
+            },
+            "category": {
+              "category_id": "6809637767543259144",
+              "category_name": "前端",
+              "category_url": "frontend",
+              "rank": 2,
+              "back_ground": "https://lc-mhke0kuv.cn-n1.lcfile.com/8c95587526f346c0.png",
+              "icon": "https://lc-mhke0kuv.cn-n1.lcfile.com/1c40f5eaba561e32.png",
+              "ctime": 1457483942,
+              "mtime": 1432503190,
+              "show_type": 3,
+              "item_type": 2,
+              "promote_tag_cap": 4,
+              "promote_priority": 2
+            },
+            "tags": [
+              {
+                "id": 2547106,
+                "tag_id": "6809641209204572174",
+                "tag_name": "HarmonyOS",
+                "color": "",
+                "icon": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/1560486100469dc100639f246a2bd14f26cd5c9dd554b.jpg~tplv-t2oaga2asx-image.image",
+                "back_ground": "",
+                "show_navi": 0,
+                "ctime": 1560457382,
+                "mtime": 1773300429,
+                "id_type": 9,
+                "tag_alias": "鸿蒙 OS,鸿蒙",
+                "post_article_count": 12168,
+                "concern_user_count": 15544
+              }
+            ],
+            "user_interact": {
+              "id": 7543834852886938000,
+              "omitempty": 2,
+              "user_id": 0,
+              "is_digg": false,
+              "is_follow": false,
+              "is_collect": false,
+              "collect_set_count": 0
+            },
+            "org": {
+              "is_followed": false
+            },
+            "req_id": "20260312154755842A1B1436837598FA69",
+            "status": {
+              "push_status": 0
+            },
+            "theme_list": [],
+            "extra": {
+              "extra": ""
+            }
+          }
+        ],
+        "count": 9
+      }
+    },
+    {
+      "url": "https://api.juejin.cn/content_api/v1/author_center/data/trend?aid=2608&uuid=7615996659764495918&spider=0",
+      "status": 200,
+      "body": {
+        "err_no": 0,
+        "err_msg": "success",
+        "data": {
+          "date": "2026-03-11",
+          "datas": {
+            "incr_article_collect": [
+              {
+                "date": "2026-03-05",
+                "cnt": 0,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 0,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 0,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 0,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 0,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 0,
+                "unixdate": 1773072000
+              },
+              {
+                "date": "2026-03-11",
+                "cnt": 0,
+                "unixdate": 1773158400
+              }
+            ],
+            "incr_article_comment": [
+              {
+                "date": "2026-03-05",
+                "cnt": 0,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 0,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 0,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 0,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 0,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 0,
+                "unixdate": 1773072000
+              },
+              {
+                "date": "2026-03-11",
+                "cnt": 0,
+                "unixdate": 1773158400
+              }
+            ],
+            "incr_article_digg": [
+              {
+                "date": "2026-03-05",
+                "cnt": 0,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 0,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 0,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 0,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 0,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 0,
+                "unixdate": 1773072000
+              },
+              {
+                "date": "2026-03-11",
+                "cnt": 0,
+                "unixdate": 1773158400
+              }
+            ],
+            "incr_article_display": [
+              {
+                "date": "2026-03-05",
+                "cnt": 18,
+                "unixdate": 1772668800
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 8,
+                "unixdate": 1772755200
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 0,
+                "unixdate": 1772841600
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 5,
+                "unixdate": 1772928000
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 4,
+                "unixdate": 1773014400
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 4,
+                "unixdate": 1773100800
+              },
+              {
+                "date": "2026-03-11",
+                "cnt": 0,
+                "unixdate": 1773187200
+              }
+            ],
+            "incr_article_view": [
+              {
+                "date": "2026-03-05",
+                "cnt": 30,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 7,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 1,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 0,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 1,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 5,
+                "unixdate": 1773072000
+              },
+              {
+                "date": "2026-03-11",
+                "cnt": 1,
+                "unixdate": 1773158400
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "bodyPreview": "创作者中心\n1\n写文章\n首页\n内容管理\n文章管理\n专栏管理\n沸点管理\nAI作品管理\n数据中心\n内容数据\n粉丝数据\n创作成长\n创作等级权益\n创作灵感\n创作工具\n文章导入发布\n帮助中心\n常见问题\n文章数据专栏数据沸点数据\n2026-03-11 数据表现\n总文章数\n10\n较前日\n文章展现数\n17,277\n较前日\n35\n文章阅读数\n3,825\n较前日\n76\n文章点赞数\n7\n较前日\n文章评论数\n0\n较前日\n文章收藏数\n9\n较前日\n1\n数据趋势\n整体分析单篇分析\n文章标题\t发布时间\t展现数\t阅读数\t点赞数\t评论数\t收藏数\t操作\n\n经历了大学期末速通之后，我做了一个视频内容学习助手\n\t2026-03-05\t36\t50\t0\t0\t0\t\n详情\n\n\n最近7天最近14天最近30天\n导出数据\n\n\nClaude Code团队成员Thariq的Agent开发心得：Seeing like an agent\n\t2026-03-03\t3629\t228\t0\t0\t0\t\n详情\n\n\n这才是快速部署openClaw的正确姿势！\n\t2026-02-26\t157\t94\t0\t0\t0\t\n详情\n\n\nOpenSkills 零基础入门指南：跨编辑器复用 AI 技能，效率翻倍\n\t2026-01-08\t2316\t2791\t6\t0\t6\t\n详情\n\n\n鸿蒙 Tab 中的 WebView 如何优雅地拦截侧滑返回？\n\t2025-10-10\t3727\t95\t0\t0\t1\t\n详情\n\n\n图片/视频操作一条龙(3)：文件上传全攻略--从简单直传到分片续传，一次搞定！（鸿蒙开发）\n\t2025-09-30\t77\t97\t0\t0\t0\t\n详情\n\n\n图片/视频操作一条龙(2)：视频转码，缩略如获取（鸿蒙开发）\n\t2025-09-30\t86\t149\t0\t0\t0\t\n详情\n\n\n图片/视频操作一条龙(1)：图片的获取，预览与压缩（鸿蒙开发）\n\t2025-08-30\t4115\t124\t1\t0\t2\t\n详情\n\n\n文本转语音？我们来盘一盘(鸿蒙开发)\n\t2025-08-30\t3091\t181\t0\t0\t0\t\n详情"
+}

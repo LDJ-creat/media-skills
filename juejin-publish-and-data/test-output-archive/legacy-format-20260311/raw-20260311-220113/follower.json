@@ -1,0 +1,375 @@
+{
+  "pageType": "follower",
+  "targetUrl": "https://juejin.cn/creator/data/follower/data",
+  "finalUrl": "https://juejin.cn/creator/data/follower/data",
+  "pageTitle": "粉丝数据 - 创作者中心 - 掘金",
+  "bodyPreview": "创作者中心\n1\n写文章\n首页\n内容管理\n文章管理\n专栏管理\n沸点管理\nAI作品管理\n数据中心\n内容数据\n粉丝数据\n创作成长\n创作等级权益\n创作灵感\n创作工具\n文章导入发布\n帮助中心\n常见问题\n粉丝数据粉丝列表\n2026-03-10 数据表现\n总粉丝\n2\n较前日\n互动粉丝\n0\n较前日\n新增粉丝\n0\n较前日\n取消关注\n0\n较前日\n净增关注\n0\n较前日\n数据趋势\n最近7天最近14天最近30天\n导出数据",
+  "responses": [
+    {
+      "pageType": "follower",
+      "url": "https://api.juejin.cn/user_api/v1/follow/followers_by_page?aid=2608&uuid=7615996659764495918&spider=0&item_id=2892189005793067&item_type=1&page_no=1&page_size=20&verifyFp=verify_mmm3rtlk_ngBkMLxy_MzXF_48Q2_8qgg_RDuQdkNsDlfM&fp=verify_mmm3rtlk_ngBkMLxy_MzXF_48Q2_8qgg_RDuQdkNsDlfM&msToken=yv72kBu1hgYZGcTR_XizhVXBLtBQiVjhnAXzpQQqhzPB1RZ9hScbxzuzHkyiVngzg6E78HvzA-Y7hkUFy9cgnfv93adRWxFb23j_BrYm9Re_ADUi9jBOpAi7Bvft_gIE4Z0%3D&a_bogus=YvlmDOhhMsm1bfVA6hkw99iml560YW-pgZEzh9ojOUqH",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "capturedAt": "2026-03-11T14:01:08.532Z",
+      "payload": {
+        "err_no": 0,
+        "err_msg": "success",
+        "data": [
+          {
+            "user_id": "4353721774384375",
+            "user_name": "Mark爱学习20567",
+            "company": "",
+            "job_title": "",
+            "avatar_large": "https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/9/17/16d3ee0431259219~tplv-t2oaga2asx-image.image",
+            "level": 0,
+            "description": "",
+            "followee_count": 43,
+            "follower_count": 0,
+            "post_article_count": 0,
+            "digg_article_count": 1,
+            "got_digg_count": 0,
+            "got_view_count": 0,
+            "post_shortmsg_count": 0,
+            "digg_shortmsg_count": 0,
+            "isfollowed": false,
+            "favorable_author": 0,
+            "power": 0,
+            "study_point": 0,
+            "university": {
+              "university_id": "0",
+              "name": "",
+              "logo": ""
+            },
+            "major": {
+              "major_id": "0",
+              "parent_id": "0",
+              "name": ""
+            },
+            "student_status": 0,
+            "select_event_count": 0,
+            "select_online_course_count": 0,
+            "identity": 0,
+            "is_select_annual": false,
+            "select_annual_rank": 0,
+            "annual_list_type": 0,
+            "extraMap": {},
+            "is_logout": 0,
+            "annual_info": [],
+            "account_amount": 0,
+            "user_growth_info": {
+              "user_id": 4353721774384375,
+              "jpower": 0,
+              "jscore": 47,
+              "jpower_level": 0,
+              "jscore_level": 3,
+              "jscore_title": "新星掘友",
+              "author_achievement_list": [],
+              "vip_level": 0,
+              "vip_title": "",
+              "jscore_next_level_score": 150,
+              "jscore_this_level_mini_score": 30,
+              "vip_score": 0
+            },
+            "is_vip": false,
+            "become_author_days": 0,
+            "collection_set_article_count": 0,
+            "recommend_article_count_daily": 0,
+            "article_collect_count_daily": 0,
+            "user_priv_info": {
+              "administrator": 0,
+              "builder": 0,
+              "favorable_author": 0,
+              "book_author": 0,
+              "forbidden_words": 0,
+              "can_tag_cnt": 0,
+              "auto_recommend": 0,
+              "signed_author": 0,
+              "popular_author": 0,
+              "can_add_video": 0
+            }
+          },
+          {
+            "user_id": "719561103256112",
+            "user_name": "testDbbWJWSLow有點了you",
+            "company": "但還是覺得罐可乐l and I'm about time with克力的确非常已经实^ ^他国领导人在乛面前没有了他不t",
+            "job_title": "是出vt釰吗皒Vg for sure l。",
+            "avatar_large": "https://p3-passport.byteacctimg.com/img/user-avatar/6c294cd3e4a152de889b0757c9e7533b~300x300.image",
+            "level": 0,
+            "description": "Vg Vg we like your",
+            "followee_count": 1148,
+            "follower_count": 23,
+            "post_article_count": 0,
+            "digg_article_count": 573,
+            "got_digg_count": 0,
+            "got_view_count": 0,
+            "post_shortmsg_count": 0,
+            "digg_shortmsg_count": 309,
+            "isfollowed": false,
+            "favorable_author": 0,
+            "power": 0,
+            "study_point": 0,
+            "university": {
+              "university_id": "0",
+              "name": "",
+              "logo": ""
+            },
+            "major": {
+              "major_id": "0",
+              "parent_id": "0",
+              "name": ""
+            },
+            "student_status": 0,
+            "select_event_count": 0,
+            "select_online_course_count": 0,
+            "identity": 0,
+            "is_select_annual": false,
+            "select_annual_rank": 0,
+            "annual_list_type": 0,
+            "extraMap": {},
+            "is_logout": 0,
+            "annual_info": [],
+            "account_amount": 0,
+            "user_growth_info": {
+              "user_id": 719561103256112,
+              "jpower": 0,
+              "jscore": 782.6,
+              "jpower_level": 0,
+              "jscore_level": 5,
+              "jscore_title": "先锋掘友",
+              "author_achievement_list": [],
+              "vip_level": 0,
+              "vip_title": "",
+              "jscore_next_level_score": 2000,
+              "jscore_this_level_mini_score": 500,
+              "vip_score": 0
+            },
+            "is_vip": false,
+            "become_author_days": 0,
+            "collection_set_article_count": 0,
+            "recommend_article_count_daily": 0,
+            "article_collect_count_daily": 0,
+            "user_priv_info": {
+              "administrator": 0,
+              "builder": 0,
+              "favorable_author": 0,
+              "book_author": 0,
+              "forbidden_words": 0,
+              "can_tag_cnt": 0,
+              "auto_recommend": 0,
+              "signed_author": 0,
+              "popular_author": 0,
+              "can_add_video": 0
+            }
+          }
+        ],
+        "page": 0,
+        "count": 2
+      }
+    },
+    {
+      "pageType": "follower",
+      "url": "https://api.juejin.cn/content_api/v1/author_center/data/trend?aid=2608&uuid=7615996659764495918&spider=0",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "capturedAt": "2026-03-11T14:01:08.755Z",
+      "payload": {
+        "err_no": 0,
+        "err_msg": "success",
+        "data": {
+          "date": "2026-03-10",
+          "datas": {
+            "all_follower": [
+              {
+                "date": "2026-03-04",
+                "cnt": 2,
+                "unixdate": 1772553600
+              },
+              {
+                "date": "2026-03-05",
+                "cnt": 2,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 2,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 2,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 2,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 2,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 2,
+                "unixdate": 1773072000
+              }
+            ],
+            "incr_active_follower": [
+              {
+                "date": "2026-03-04",
+                "cnt": 0,
+                "unixdate": 1772553600
+              },
+              {
+                "date": "2026-03-05",
+                "cnt": 0,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 0,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 0,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 0,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 0,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 0,
+                "unixdate": 1773072000
+              }
+            ],
+            "incr_do_follower": [
+              {
+                "date": "2026-03-04",
+                "cnt": 0,
+                "unixdate": 1772553600
+              },
+              {
+                "date": "2026-03-05",
+                "cnt": 0,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 0,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 0,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 0,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 0,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 0,
+                "unixdate": 1773072000
+              }
+            ],
+            "incr_follower": [
+              {
+                "date": "2026-03-04",
+                "cnt": 0,
+                "unixdate": 1772553600
+              },
+              {
+                "date": "2026-03-05",
+                "cnt": 0,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 0,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 0,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 0,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 0,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 0,
+                "unixdate": 1773072000
+              }
+            ],
+            "incr_undo_follower": [
+              {
+                "date": "2026-03-04",
+                "cnt": 0,
+                "unixdate": 1772553600
+              },
+              {
+                "date": "2026-03-05",
+                "cnt": 0,
+                "unixdate": 1772640000
+              },
+              {
+                "date": "2026-03-06",
+                "cnt": 0,
+                "unixdate": 1772726400
+              },
+              {
+                "date": "2026-03-07",
+                "cnt": 0,
+                "unixdate": 1772812800
+              },
+              {
+                "date": "2026-03-08",
+                "cnt": 0,
+                "unixdate": 1772899200
+              },
+              {
+                "date": "2026-03-09",
+                "cnt": 0,
+                "unixdate": 1772985600
+              },
+              {
+                "date": "2026-03-10",
+                "cnt": 0,
+                "unixdate": 1773072000
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "fallbackState": {
+    "oncontentvisibilityautostatechange": null,
+    "onpopstate": null
+  }
+}
