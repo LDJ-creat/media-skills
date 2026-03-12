@@ -1,0 +1,273 @@
+{
+  "generatedAt": "2026-03-12T10:05:53.907Z",
+  "report": {
+    "range": {
+      "start": "2026-03-05",
+      "end": "2026-03-11"
+    },
+    "overview": {
+      "articleCount": 3,
+      "exposuresCount": 3864,
+      "diggCount": 25,
+      "commentCount": 0,
+      "viewCount": 1446,
+      "score": 55,
+      "averageQuality": 81,
+      "collectCount": 18
+    },
+    "articles": [
+      {
+        "articleId": "158702949",
+        "title": "经历了大学期末速通之后，我做了一个视频内容学习助手",
+        "url": "https://blog.csdn.net/2601_95343509/article/details/158702949",
+        "summary": {
+          "publishTime": "2026-03-05 20:06",
+          "exposuresCount": 3757,
+          "viewCount": 583,
+          "commentCount": 0,
+          "favoriteCount": 6,
+          "fansCount": 0,
+          "diggCount": 16,
+          "qualityScore": {
+            "score": 85,
+            "version": "V5.0",
+            "createAt": "2026-03-05 20:05:53"
+          }
+        },
+        "recent7Days": [
+          {
+            "date": "2026-03-05",
+            "exposuresCount": 0,
+            "viewCount": 52,
+            "commentCount": 0,
+            "diggCount": 1,
+            "favoriteCount": 1,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-06",
+            "exposuresCount": 3741,
+            "viewCount": 404,
+            "commentCount": 0,
+            "diggCount": 9,
+            "favoriteCount": 4,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-07",
+            "exposuresCount": 2,
+            "viewCount": 9,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-08",
+            "exposuresCount": 3,
+            "viewCount": 18,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-09",
+            "exposuresCount": 5,
+            "viewCount": 8,
+            "commentCount": 0,
+            "diggCount": 3,
+            "favoriteCount": 1,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-10",
+            "exposuresCount": 4,
+            "viewCount": 92,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-11",
+            "exposuresCount": 2,
+            "viewCount": 0,
+            "commentCount": 0,
+            "diggCount": 3,
+            "favoriteCount": 0,
+            "fansCount": 0
+          }
+        ]
+      },
+      {
+        "articleId": "158621237",
+        "title": "Claude Code团队成员Thariq的Agent开发心得：Seeing like an agent",
+        "url": "https://blog.csdn.net/2601_95343509/article/details/158621237",
+        "summary": {
+          "publishTime": "2026-03-03 19:58",
+          "exposuresCount": 39,
+          "viewCount": 346,
+          "commentCount": 0,
+          "favoriteCount": 5,
+          "fansCount": 0,
+          "diggCount": 6,
+          "qualityScore": {
+            "score": 90,
+            "version": "V5.0",
+            "createAt": "2026-03-03 19:58:27"
+          }
+        },
+        "recent7Days": [
+          {
+            "date": "2026-03-05",
+            "exposuresCount": 8,
+            "viewCount": 34,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-06",
+            "exposuresCount": 10,
+            "viewCount": 20,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-07",
+            "exposuresCount": 8,
+            "viewCount": 8,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-08",
+            "exposuresCount": 3,
+            "viewCount": 5,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-09",
+            "exposuresCount": 3,
+            "viewCount": 17,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-10",
+            "exposuresCount": 3,
+            "viewCount": 16,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-11",
+            "exposuresCount": 4,
+            "viewCount": 9,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          }
+        ]
+      },
+      {
+        "articleId": "158428018",
+        "title": "这才是快速部署openClaw的正确姿势！",
+        "url": "https://blog.csdn.net/2601_95343509/article/details/158428018",
+        "summary": {
+          "publishTime": "2026-02-26 17:28",
+          "exposuresCount": 68,
+          "viewCount": 400,
+          "commentCount": 0,
+          "favoriteCount": 6,
+          "fansCount": 0,
+          "diggCount": 3,
+          "qualityScore": {
+            "score": 67,
+            "version": "V5.0",
+            "createAt": "2026-02-26 17:04:49"
+          }
+        },
+        "recent7Days": [
+          {
+            "date": "2026-03-05",
+            "exposuresCount": 12,
+            "viewCount": 1,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-06",
+            "exposuresCount": 15,
+            "viewCount": 8,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-07",
+            "exposuresCount": 4,
+            "viewCount": 12,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-08",
+            "exposuresCount": 2,
+            "viewCount": 2,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-09",
+            "exposuresCount": 7,
+            "viewCount": 3,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-10",
+            "exposuresCount": 10,
+            "viewCount": 5,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          },
+          {
+            "date": "2026-03-11",
+            "exposuresCount": 11,
+            "viewCount": 1,
+            "commentCount": 0,
+            "diggCount": 0,
+            "favoriteCount": 0,
+            "fansCount": 0
+          }
+        ]
+      }
+    ]
+  }
+}
