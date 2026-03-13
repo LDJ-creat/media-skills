@@ -2,8 +2,6 @@
 node_modules
 
 # get-wechat-data skill sensitive and generated files
-.baoyu-skills/get-wechat-data/cookies.json
-.baoyu-skills/get-wechat-data/storageState.json
 wechat-data-output/
 get-wechat-data/.baoyu-skills/
 get-wechat-data/output/
@@ -11,10 +9,13 @@ get-wechat-data/output-*/
 get-wechat-data/scripts/wechat-data-output/
 
 # juejin-publish-and-data sensitive and generated files
-.baoyu-skills/juejin-publish-and-data/cookies.json
-.baoyu-skills/juejin-publish-and-data/storageState.json
 juejin-publish-and-data/test-output-*/
 juejin-publish-and-data/juejin-data-output/
 juejin-publish-and-data/juejin-data-output-*/
 juejin-publish-and-data/scripts/juejin-data-output/
 juejin-publish-and-data/scripts/juejin-data-output-*/
+
+data
+storageState.json
+cookies.json
+__pycache__/
