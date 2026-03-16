@@ -1,7 +1,7 @@
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import type {
   ArticleInput,
@@ -62,32 +62,29 @@ function parseKeyValueMarkdown(content: string): Record<string, string> {
   return out;
 }
 
-function findFileInParents(startDir: string, relativePath: string): string | null {
-  if (!relativePath || path.isAbsolute(relativePath)) return null;
-  let current = path.resolve(startDir);
-  for (;;) {
-    const candidate = path.join(current, relativePath);
-    if (fs.existsSync(candidate)) return candidate;
-    const parent = path.dirname(current);
-    if (parent === current) return null;
-    current = parent;
-  }
+function getSkillRootDir(): string {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  return path.resolve(__dirname, "..");
 }
 
-function getXdgBaseDir(): string {
-  return process.env.XDG_CONFIG_HOME ? process.env.XDG_CONFIG_HOME : path.join(os.homedir(), ".config");
+function getSkillAuthDir(): string {
+  return path.join(getSkillRootDir(), ".auth");
+}
+
+function getDefaultAuthFilePath(fileName: string): string {
+  return path.join(getSkillAuthDir(), fileName);
 }
 
 function findSkillExtendFile(): string | null {
-  const project = findFileInParents(process.cwd(), path.join(".baoyu-skills", "juejin-publish-and-data", "EXTEND.md"));
-  if (project) return project;
-
-  const xdgFile = path.join(getXdgBaseDir(), "baoyu-skills", "juejin-publish-and-data", "EXTEND.md");
-  if (fs.existsSync(xdgFile)) return xdgFile;
-
-  const userFile = path.join(os.homedir(), ".baoyu-skills", "juejin-publish-and-data", "EXTEND.md");
-  if (fs.existsSync(userFile)) return userFile;
-
+  const skillRoot = getSkillRootDir();
+  const candidates = [
+    path.join(skillRoot, ".config", "EXTEND.md"),
+    path.join(skillRoot, "EXTEND.md"),
+  ];
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
   return null;
 }
 
@@ -344,19 +341,6 @@ function resolveExplicitPath(input: string): string {
   return path.isAbsolute(input) ? input : path.resolve(process.cwd(), input);
 }
 
-function resolveDiscoveredAuthPath(relativeDir: string, fileName: string): string | null {
-  const project = findFileInParents(process.cwd(), path.join(".baoyu-skills", relativeDir, fileName));
-  if (project) return project;
-
-  const xdgFile = path.join(getXdgBaseDir(), "baoyu-skills", relativeDir, fileName);
-  if (fs.existsSync(xdgFile)) return xdgFile;
-
-  const userFile = path.join(os.homedir(), ".baoyu-skills", relativeDir, fileName);
-  if (fs.existsSync(userFile)) return userFile;
-
-  return null;
-}
-
 export function resolveAuthFile(cookiePath: string | undefined, statePath: string | undefined, config: SkillConfig): AuthFileRef {
   if (statePath) {
     const resolved = resolveExplicitPath(statePath);
@@ -369,14 +353,14 @@ export function resolveAuthFile(cookiePath: string | undefined, statePath: strin
     return { kind: "cookie", path: resolved };
   }
 
-  const discoveredState = resolveDiscoveredAuthPath("juejin-publish-and-data", config.storageStateFileName);
-  if (discoveredState) return { kind: "storage-state", path: discoveredState };
+  const defaultState = getDefaultAuthFilePath(config.storageStateFileName);
+  if (fs.existsSync(defaultState)) return { kind: "storage-state", path: defaultState };
 
-  const discoveredCookie = resolveDiscoveredAuthPath("juejin-publish-and-data", config.cookieFileName);
-  if (discoveredCookie) return { kind: "cookie", path: discoveredCookie };
+  const defaultCookie = getDefaultAuthFilePath(config.cookieFileName);
+  if (fs.existsSync(defaultCookie)) return { kind: "cookie", path: defaultCookie };
 
   throw new Error(
-    "No auth file found. Provide --state/--cookie or place storageState.json under .baoyu-skills/juejin-publish-and-data/",
+    "No auth file found. Provide --state/--cookie or place storageState.json under .auth/",
   );
 }
 

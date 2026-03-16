@@ -1,7 +1,7 @@
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import type {
   AnalyticsCliOptions,
@@ -57,31 +57,29 @@ function parseKeyValueMarkdown(content: string): Record<string, string> {
   return out;
 }
 
-function findFileInParents(startDir: string, relativePath: string): string | null {
-  if (!relativePath || path.isAbsolute(relativePath)) return null;
-  let current = path.resolve(startDir);
-  for (;;) {
-    const candidate = path.join(current, relativePath);
-    if (fs.existsSync(candidate)) return candidate;
-    const parent = path.dirname(current);
-    if (parent === current) return null;
-    current = parent;
-  }
+function getSkillRootDir(): string {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  return path.resolve(__dirname, "..");
 }
 
-function resolveConfigScopedFile(fileName: string): string | null {
-  const projectPath = findFileInParents(process.cwd(), path.join(".baoyu-skills", "csdn-publish-and-data", fileName));
-  if (projectPath) return projectPath;
+function getSkillAuthDir(): string {
+  return path.join(getSkillRootDir(), ".auth");
+}
 
-  const xdgBase = process.env.XDG_CONFIG_HOME
-    ? process.env.XDG_CONFIG_HOME
-    : path.join(os.homedir(), ".config");
-  const xdgPath = path.join(xdgBase, "baoyu-skills", "csdn-publish-and-data", fileName);
-  if (fs.existsSync(xdgPath)) return xdgPath;
+function getDefaultAuthFilePath(fileName: string): string {
+  return path.join(getSkillAuthDir(), fileName);
+}
 
-  const userPath = path.join(os.homedir(), ".baoyu-skills", "csdn-publish-and-data", fileName);
-  if (fs.existsSync(userPath)) return userPath;
-
+function findSkillExtendFile(): string | null {
+  const skillRoot = getSkillRootDir();
+  const candidates = [
+    path.join(skillRoot, ".config", "EXTEND.md"),
+    path.join(skillRoot, "EXTEND.md"),
+  ];
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
   return null;
 }
 
@@ -140,7 +138,7 @@ function deriveSummary(body: string): string | undefined {
 
 export function loadSkillConfig(): SkillConfig {
   const config: SkillConfig = { ...DEFAULT_CONFIG };
-  const extendFile = resolveConfigScopedFile("EXTEND.md");
+  const extendFile = findSkillExtendFile();
   if (!extendFile) return config;
 
   const parsed = parseKeyValueMarkdown(fs.readFileSync(extendFile, "utf-8"));
@@ -395,18 +393,18 @@ export function resolveAuthFile(
     return { kind: "cookie", path: explicitCookie };
   }
 
-  const defaultState = resolveConfigScopedFile(config.storageStateFileName);
-  if (defaultState) {
+  const defaultState = getDefaultAuthFilePath(config.storageStateFileName);
+  if (fs.existsSync(defaultState)) {
     return { kind: "storage-state", path: defaultState };
   }
 
-  const defaultCookie = resolveConfigScopedFile(config.cookieFileName);
-  if (defaultCookie) {
+  const defaultCookie = getDefaultAuthFilePath(config.cookieFileName);
+  if (fs.existsSync(defaultCookie)) {
     return { kind: "cookie", path: defaultCookie };
   }
 
   throw new Error(
-    "No auth state found. Provide --state with a Playwright storageState.json, or --cookie with cookies.json, or create one at .baoyu-skills/csdn-publish-and-data/storageState.json"
+    "No auth state found. Provide --state with a Playwright storageState.json, or --cookie with cookies.json, or create one at .auth/storageState.json"
   );
 }
 

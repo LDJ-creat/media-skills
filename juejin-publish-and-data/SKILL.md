@@ -59,20 +59,15 @@ Auth file discovery order:
 
 1. CLI --state path
 2. CLI --cookie path
-3. nearest .baoyu-skills/juejin-publish-and-data/storageState.json from current directory to parents
-4. nearest .baoyu-skills/juejin-publish-and-data/cookies.json from current directory to parents
-5. $XDG_CONFIG_HOME/baoyu-skills/juejin-publish-and-data/storageState.json
-6. $XDG_CONFIG_HOME/baoyu-skills/juejin-publish-and-data/cookies.json
-7. $HOME/.baoyu-skills/juejin-publish-and-data/storageState.json
-8. $HOME/.baoyu-skills/juejin-publish-and-data/cookies.json
+3. <skillRoot>/.auth/storageState.json
+4. <skillRoot>/.auth/cookies.json
 
 ## Preferences (EXTEND.md)
 
 Optional config file path order:
 
-1. .baoyu-skills/juejin-publish-and-data/EXTEND.md
-2. $XDG_CONFIG_HOME/baoyu-skills/juejin-publish-and-data/EXTEND.md
-3. $HOME/.baoyu-skills/juejin-publish-and-data/EXTEND.md
+1. <skillRoot>/.config/EXTEND.md
+2. <skillRoot>/EXTEND.md
 
 Supported keys:
 

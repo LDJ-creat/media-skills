@@ -54,8 +54,7 @@ ${BUN_X} ./scripts/wechat-api.ts article.md --theme default --dry-run
 
 The script reads credentials in priority order:
 1. Environment variables: `WECHAT_APP_ID`, `WECHAT_APP_SECRET`
-2. `<cwd>/.baoyu-skills/.env`
-3. `~/.baoyu-skills/.env`
+2. `baoyu-post-to-wechat/.env` (skill root)
 
 ## Result
 

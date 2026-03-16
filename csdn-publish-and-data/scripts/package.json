@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "check:env": "tsx check-environment.ts",
-    "check:login": "tsx check-login.ts",
-    "fetch": "tsx fetch-analytics.ts",
-    "post": "tsx post-article.ts",
-    "auth:export-state": "tsx export-storage-state.ts",
+    "check:login": "tsx check-login.ts --",
+    "fetch": "tsx fetch-analytics.ts --",
+    "post": "tsx post-article.ts --",
+    "auth:export-state": "tsx export-storage-state.ts --",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

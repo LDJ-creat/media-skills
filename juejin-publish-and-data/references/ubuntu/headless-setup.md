@@ -38,8 +38,8 @@ Recommended flow:
 
 ```bash
 npx tsx check-environment.ts
-npx tsx check-login.ts --page both --state ../.baoyu-skills/juejin-publish-and-data/storageState.json
-npx tsx fetch-analytics.ts --page both --state ../.baoyu-skills/juejin-publish-and-data/storageState.json --save-raw --output ../output-headless
+npx tsx check-login.ts --page both --state ../.auth/storageState.json
+npx tsx fetch-analytics.ts --page both --state ../.auth/storageState.json --save-raw --output ../output-headless
 ```
 
 ## 6. Limits

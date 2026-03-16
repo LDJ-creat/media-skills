@@ -1,9 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
 async function main(): Promise<void> {
-  const statePath = path.resolve(process.cwd(), "..", ".baoyu-skills", "csdn-publish-and-data", "storageState.json");
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  const statePath = path.resolve(__dirname, "..", ".auth", "storageState.json");
   const outputDir = path.resolve(process.cwd(), "..", "test-output");
   const htmlPath = path.join(outputDir, "editor-debug.html");
   const textPath = path.join(outputDir, "editor-debug.txt");

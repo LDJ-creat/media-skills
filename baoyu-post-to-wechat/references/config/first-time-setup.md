@@ -123,17 +123,17 @@ header: "Save"
 question: "Where to save preferences?"
 options:
   - label: "Project (Recommended)"
-    description: ".baoyu-skills/ (this project only)"
+    description: ".config/ (this project only)"
   - label: "User"
-    description: "~/.baoyu-skills/ (all projects)"
+    description: "~/.config/ (all projects)"
 ```
 
 ## Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| Project | `.baoyu-skills/baoyu-post-to-wechat/EXTEND.md` | Current project |
-| User | `~/.baoyu-skills/baoyu-post-to-wechat/EXTEND.md` | All projects |
+| Project | `.config/baoyu-markdown-to-html/EXTEND.md` | Current project |
+| User | `~/.config/baoyu-markdown-to-html/EXTEND.md` | All projects |
 
 ## After Setup
 

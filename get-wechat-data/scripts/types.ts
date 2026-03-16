@@ -17,6 +17,7 @@ export interface CliOptions {
   outputDir: string;
   cookiePath?: string;
   statePath?: string;
+  proxyServer?: string;
   saveRaw: boolean;
   probeOnly: boolean;
   headless: boolean;

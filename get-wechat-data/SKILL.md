@@ -61,20 +61,15 @@ Auth file discovery order:
 
 1. CLI --state path
 2. CLI --cookie path
-3. nearest .baoyu-skills/get-wechat-data/storageState.json from current directory to parents
-4. nearest .baoyu-skills/get-wechat-data/cookies.json from current directory to parents
-5. $XDG_CONFIG_HOME/baoyu-skills/get-wechat-data/storageState.json
-6. $XDG_CONFIG_HOME/baoyu-skills/get-wechat-data/cookies.json
-7. $HOME/.baoyu-skills/get-wechat-data/storageState.json
-8. $HOME/.baoyu-skills/get-wechat-data/cookies.json
+3. <skillRoot>/.auth/storageState.json
+4. <skillRoot>/.auth/cookies.json
 
 ## Preferences (EXTEND.md)
 
 Optional config file path order:
 
-1. .baoyu-skills/get-wechat-data/EXTEND.md
-2. $XDG_CONFIG_HOME/baoyu-skills/get-wechat-data/EXTEND.md
-3. $HOME/.baoyu-skills/get-wechat-data/EXTEND.md
+1. <skillRoot>/.config/EXTEND.md
+2. <skillRoot>/EXTEND.md
 
 Supported keys (case-insensitive):
 
@@ -148,10 +143,10 @@ Examples:
 
 ```bash
 # run from {baseDir}/scripts and store artifacts in {baseDir}/output-auto-token
-npx tsx fetch-analytics.ts --page both --state ../.baoyu-skills/get-wechat-data/storageState.json --save-raw --output ../output-auto-token
+npx tsx fetch-analytics.ts --page both --state ../.auth/storageState.json --save-raw --output ../output-auto-token
 
 # optional date range filter
-npx tsx fetch-analytics.ts --page content --state ../.baoyu-skills/get-wechat-data/storageState.json --start 2026-03-01 --end 2026-03-10 --save-raw --output ../output-content
+npx tsx fetch-analytics.ts --page content --state ../.auth/storageState.json --start 2026-03-01 --end 2026-03-10 --save-raw --output ../output-content
 ```
 
 Common options:

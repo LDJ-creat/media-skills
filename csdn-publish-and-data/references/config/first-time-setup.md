@@ -27,16 +27,15 @@ If Ubuntu is missing browser libraries, see [../ubuntu/headless-setup.md](../ubu
 
 Preferred file:
 
-- .baoyu-skills/csdn-publish-and-data/storageState.json
+- .auth/storageState.json
 
 Fallback file:
 
-- .baoyu-skills/csdn-publish-and-data/cookies.json
+- .auth/cookies.json
 
 Recommended storage state locations:
 
-- .baoyu-skills/csdn-publish-and-data/storageState.json
-- $HOME/.baoyu-skills/csdn-publish-and-data/storageState.json
+- .auth/storageState.json
 
 Use [../auth/export-storage-state.md](../auth/export-storage-state.md) if you need to export a fresh login state.
 
@@ -44,9 +43,8 @@ Use [../auth/export-storage-state.md](../auth/export-storage-state.md) if you ne
 
 Create EXTEND.md at one of these locations:
 
-- .baoyu-skills/csdn-publish-and-data/EXTEND.md
-- $XDG_CONFIG_HOME/baoyu-skills/csdn-publish-and-data/EXTEND.md
-- $HOME/.baoyu-skills/csdn-publish-and-data/EXTEND.md
+- .config/EXTEND.md
+- EXTEND.md
 
 Supported keys:
 
@@ -84,9 +82,9 @@ npx tsx check-login.ts --page both
 ## 6. Recommended first runs
 
 ```bash
-npx tsx fetch-analytics.ts --page both --state ../.baoyu-skills/csdn-publish-and-data/storageState.json --save-raw --output ../output
+npx tsx fetch-analytics.ts --page both --state ../.auth/storageState.json --save-raw --output ../output
 ```
 
 ```bash
-npx tsx post-article.ts --file ../example.md --draft --state ../.baoyu-skills/csdn-publish-and-data/storageState.json --output ../output
+npx tsx post-article.ts --file ../example.md --draft --state ../.auth/storageState.json --output ../output
 ```

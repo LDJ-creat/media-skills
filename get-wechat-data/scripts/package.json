@@ -4,9 +4,9 @@
   "type": "module",
   "scripts": {
     "check:env": "tsx check-environment.ts",
-    "check:login": "tsx check-login.ts",
-    "fetch": "tsx fetch-analytics.ts",
-    "auth:export-state": "tsx export-storage-state.ts"
+    "check:login": "tsx check-login.ts --",
+    "fetch": "tsx fetch-analytics.ts --",
+    "auth:export-state": "tsx export-storage-state.ts --"
   },
   "devDependencies": {
     "@types/node": "^24.6.0",

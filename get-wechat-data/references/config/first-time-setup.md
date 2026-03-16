@@ -25,19 +25,17 @@ npx playwright install chromium
 
 Preferred file:
 
-- .baoyu-skills/get-wechat-data/storageState.json
+- .auth/storageState.json
 
 Fallback file:
 
 Create one of these locations:
 
-- .baoyu-skills/get-wechat-data/cookies.json (project level)
-- $HOME/.baoyu-skills/get-wechat-data/cookies.json (user level)
+- .auth/cookies.json
 
 Recommended storage state locations:
 
-- .baoyu-skills/get-wechat-data/storageState.json (project level)
-- $HOME/.baoyu-skills/get-wechat-data/storageState.json (user level)
+- .auth/storageState.json
 
 Storage state file must be a Playwright-compatible JSON object with `cookies` and optional `origins`.
 
@@ -47,7 +45,7 @@ Cookie file must be a JSON array compatible with browser cookie export.
 
 Create EXTEND.md at:
 
-- .baoyu-skills/get-wechat-data/EXTEND.md
+- .config/EXTEND.md
 
 Example:
 
@@ -78,7 +76,7 @@ npx tsx check-login.ts --page both
 Run inside get-wechat-data/scripts:
 
 ```bash
-npx tsx fetch-analytics.ts --page both --state ../.baoyu-skills/get-wechat-data/storageState.json --save-raw --output ../output-auto-token
+npx tsx fetch-analytics.ts --page both --state ../.auth/storageState.json --save-raw --output ../output-auto-token
 ```
 
 Expected artifacts:

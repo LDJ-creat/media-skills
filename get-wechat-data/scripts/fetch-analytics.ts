@@ -200,6 +200,7 @@ async function main(): Promise<void> {
     token: options.token,
     timeoutMs: options.timeoutMs,
     headless: options.headless,
+    proxyServer: options.proxyServer,
   });
 
   const loginIssue = detectLoginIssue(records);

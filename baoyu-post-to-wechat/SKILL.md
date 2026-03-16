@@ -23,7 +23,7 @@ metadata:
 **Working directory & paths**:
 
 - CLI/file paths (e.g. `article.md`, `--cover cover.png`) are resolved relative to the current working directory. To avoid path mistakes, prefer absolute paths, or run commands from the directory that contains your article and images.
-- API credentials file `.baoyu-skills/.env` is discovered by walking up from the current directory to parent directories (nearest match wins), then falling back to `~/.baoyu-skills/.env`.
+- API credentials are loaded from environment variables first, then from `{baseDir}/.env` (skill root).
 
 | Script                         | Purpose                          |
 | ------------------------------ | -------------------------------- |
@@ -36,25 +36,23 @@ Check EXTEND.md existence (priority order):
 
 ```bash
 # macOS, Linux, WSL, Git Bash
-test -f .baoyu-skills/baoyu-post-to-wechat/EXTEND.md && echo "project"
-test -f "${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/baoyu-post-to-wechat/EXTEND.md" && echo "xdg"
-test -f "$HOME/.baoyu-skills/baoyu-post-to-wechat/EXTEND.md" && echo "user"
+test -f .config/baoyu-markdown-to-html/EXTEND.md && echo "project"
+test -f "${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-markdown-to-html/EXTEND.md" && echo "user"
 ```
 
 ```powershell
 # PowerShell (Windows)
-if (Test-Path .baoyu-skills/baoyu-post-to-wechat/EXTEND.md) { "project" }
+if (Test-Path .config/baoyu-markdown-to-html/EXTEND.md) { "project" }
 $xdg = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { "$HOME/.config" }
-if (Test-Path "$xdg/baoyu-skills/baoyu-post-to-wechat/EXTEND.md") { "xdg" }
-if (Test-Path "$HOME/.baoyu-skills/baoyu-post-to-wechat/EXTEND.md") { "user" }
+if (Test-Path "$xdg/baoyu-markdown-to-html/EXTEND.md") { "user" }
 ```
 
 ┌────────────────────────────────────────────────────────┬───────────────────┐
 │ Path │ Location │
 ├────────────────────────────────────────────────────────┼───────────────────┤
-│ .baoyu-skills/baoyu-post-to-wechat/EXTEND.md │ Project directory │
+│ .config/baoyu-markdown-to-html/EXTEND.md │ Project directory │
 ├────────────────────────────────────────────────────────┼───────────────────┤
-│ $HOME/.baoyu-skills/baoyu-post-to-wechat/EXTEND.md │ User home │
+│ $HOME/.config/baoyu-markdown-to-html/EXTEND.md │ User home │
 └────────────────────────────────────────────────────────┴───────────────────┘
 
 ┌───────────┬───────────────────────────────────────────────────────────────────────────┐
@@ -106,10 +104,10 @@ Checks: Bun runtime, API credentials.
 
 **If any check fails**, provide fix guidance per item:
 
-| Check           | Fix                                                                    |
-| --------------- | ---------------------------------------------------------------------- |
-| Bun runtime     | `brew install oven-sh/bun/bun` (macOS) or `npm install -g bun`         |
-| API credentials | Follow guided setup in Step 2, or manually set in `.baoyu-skills/.env` |
+| Check           | Fix                                                                |
+| --------------- | ------------------------------------------------------------------ |
+| Bun runtime     | `brew install oven-sh/bun/bun` (macOS) or `npm install -g bun`     |
+| API credentials | Follow guided setup in Step 2, or manually set in `{baseDir}/.env` |
 
 ## Article Posting Workflow (文章)
 
@@ -168,7 +166,7 @@ This skill publishes to WeChat Draft Box via Official API.
 
 **Check API credentials**:
 
-Recommended: save credentials in the project root `.baoyu-skills/.env` (or in `~/.baoyu-skills/.env`). The scripts will find it even when run from a subdirectory.
+Recommended: save credentials in `{baseDir}/.env`. The scripts will find it even when run from a subdirectory.
 
 **If Credentials Missing - Guide Setup**:
 
@@ -181,8 +179,7 @@ To obtain credentials:
 3. Copy AppID and AppSecret
 
 Where to save?
-A) Project-level: .baoyu-skills/.env (this project only)
-B) User-level: ~/.baoyu-skills/.env (all projects)
+A) Skill-level: {baseDir}/.env
 ```
 
 After location choice, prompt for values and write to `.env`:
@@ -305,13 +302,12 @@ Files created:
 **For API method**:
 
 - WeChat Official Account API credentials
-- Guided setup in Step 2, or manually set in `.baoyu-skills/.env`
+- Guided setup in Step 2, or manually set in `{baseDir}/.env`
 
 **Config File Locations** (priority order):
 
 1. Environment variables
-2. Nearest `.baoyu-skills/.env` found by walking up from current working directory (e.g. project root `.baoyu-skills/.env`)
-3. `~/.baoyu-skills/.env`
+2. `{baseDir}/.env`
 
 ## Troubleshooting
 

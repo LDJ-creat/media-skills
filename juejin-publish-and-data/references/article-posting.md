@@ -20,7 +20,7 @@ Resolution priority:
 ## Recommended command
 
 ```bash
-npx tsx post-article.ts --file ./article.md --state ../.baoyu-skills/juejin-publish-and-data/storageState.json --draft --headful
+npx tsx post-article.ts --file ./article.md --state ../.auth/storageState.json --draft --headful
 ```
 
 ## Behavior notes

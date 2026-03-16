@@ -2,7 +2,6 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import os from "node:os";
 import { spawnSync } from "node:child_process";
 import process from "node:process";
 import { Buffer } from "node:buffer";
@@ -47,18 +46,6 @@ interface ArticleOptions {
 const TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";
 const UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/material/add_material";
 const DRAFT_URL = "https://api.weixin.qq.com/cgi-bin/draft/add";
-
-function findEnvInParents(startDir: string): string | null {
-  let current = path.resolve(startDir);
-  for (;;) {
-    const candidate = path.join(current, ".baoyu-skills", ".env");
-    if (fs.existsSync(candidate)) return candidate;
-
-    const parent = path.dirname(current);
-    if (parent === current) return null;
-    current = parent;
-  }
-}
 
 function findFileInParents(startDir: string, relativePath: string): string | null {
   if (!relativePath || path.isAbsolute(relativePath)) return null;
@@ -113,22 +100,23 @@ function loadEnvFile(envPath: string): Record<string, string> {
 }
 
 function loadConfig(): WechatConfig {
-  const cwdBaoyuEnvPath = findEnvInParents(process.cwd());
-  const cwdSimpleEnvPath = findFileInParents(process.cwd(), '.env');
-  const homeEnvPath = path.join(os.homedir(), ".baoyu-skills", ".env");
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
 
-  const cwdBaoyuEnv = cwdBaoyuEnvPath ? loadEnvFile(cwdBaoyuEnvPath) : {};
-  const cwdSimpleEnv = cwdSimpleEnvPath ? loadEnvFile(cwdSimpleEnvPath) : {};
-  const homeEnv = loadEnvFile(homeEnvPath);
+  // We intentionally do NOT search parents from process.cwd().
+  // This keeps behavior stable across different launch directories in a monorepo.
+  // Config file location: <skillRoot>/.env (i.e., parent directory of this script).
+  const skillRootEnvPath = path.resolve(__dirname, "..", ".env");
+  const skillRootEnv = loadEnvFile(skillRootEnvPath);
 
-  // Priority: explicit environment variables -> .baoyu-skills/.env (nearest) -> project .env (nearest) -> home .baoyu-skills/.env
-  const appId = process.env.WECHAT_APP_ID || cwdBaoyuEnv.WECHAT_APP_ID || cwdSimpleEnv.WECHAT_APP_ID || homeEnv.WECHAT_APP_ID;
-  const appSecret = process.env.WECHAT_APP_SECRET || cwdBaoyuEnv.WECHAT_APP_SECRET || cwdSimpleEnv.WECHAT_APP_SECRET || homeEnv.WECHAT_APP_SECRET;
+  // Priority: explicit environment variables -> nearest project .env
+  const appId = process.env.WECHAT_APP_ID || skillRootEnv.WECHAT_APP_ID;
+  const appSecret = process.env.WECHAT_APP_SECRET || skillRootEnv.WECHAT_APP_SECRET;
 
   if (!appId || !appSecret) {
     throw new Error(
       "Missing WECHAT_APP_ID or WECHAT_APP_SECRET.\n" +
-      "Set via environment variables or in .baoyu-skills/.env file."
+      "Set via environment variables or in the nearest .env file."
     );
   }
 
@@ -436,8 +424,7 @@ Environment Variables:
 
 Config File Locations (in priority order):
   1. Environment variables
-  2. <cwd>/.baoyu-skills/.env
-  3. ~/.baoyu-skills/.env
+  2. <skillRoot>/.env (parent directory of this script)
 
 Example:
   npx -y bun wechat-api.ts article.md

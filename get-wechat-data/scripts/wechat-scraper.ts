@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import dns from "node:dns/promises";
 import type { BrowserContextOptions, Cookie, Response } from "playwright";
 import { chromium } from "playwright";
 import {
@@ -22,6 +23,7 @@ interface CrawlOptions {
   token?: string;
   timeoutMs: number;
   headless: boolean;
+  proxyServer?: string;
 }
 
 type NormalizedStorageState = Exclude<BrowserContextOptions["storageState"], string | undefined>;
@@ -154,13 +156,46 @@ async function inspectAuthSession(
   authFile: AuthFileRef,
   headless: boolean,
   timeoutMs: number,
+  proxyServer?: string,
 ): Promise<AuthSessionInfo> {
-  const browser = await chromium.launch({ headless });
+  const browser = await chromium.launch({
+    headless,
+    proxy: proxyServer ? { server: proxyServer } : undefined,
+  });
   const context = await createContextWithAuth(browser, contextOptions, authFile);
   await applyCookieAuth(context, authFile);
   const page = await context.newPage();
 
-  await page.goto("https://mp.weixin.qq.com/", { waitUntil: "domcontentloaded", timeout: timeoutMs });
+  try {
+    await page.goto("https://mp.weixin.qq.com/", { waitUntil: "domcontentloaded", timeout: timeoutMs });
+  } catch (error) {
+    const message = (error as Error)?.message ?? String(error);
+    const lookup = await dns.lookup("mp.weixin.qq.com", { all: true }).catch(() => []);
+    const addresses = Array.isArray(lookup)
+      ? lookup.map((item) => item.address)
+      : [];
+
+    const fakeIpHit = addresses.some((addr) => addr.startsWith("198.18."));
+    const proxyHint = proxyServer
+      ? `proxy=${proxyServer}`
+      : "no proxy configured";
+
+    if (message.includes("net::ERR_CONNECTION_CLOSED")) {
+      throw new Error(
+        [
+          `page.goto failed: net::ERR_CONNECTION_CLOSED`,
+          `- url: https://mp.weixin.qq.com/`,
+          `- dns: ${addresses.length > 0 ? addresses.join(", ") : "(lookup failed)"}`,
+          `- ${proxyHint}`,
+          fakeIpHit
+            ? "- Detected Fake-IP range (198.18.x.x). If you are using Clash/Meta TUN Fake-IP, try running with: --proxy socks5://127.0.0.1:<port> or adjust the proxy rule for mp.weixin.qq.com."
+            : "- If you are behind a proxy/firewall, try running with: --proxy <server> (Playwright supports http://, https://, socks5://).",
+        ].join("\n")
+      );
+    }
+
+    throw error;
+  }
   await page.waitForLoadState("networkidle", { timeout: timeoutMs }).catch(() => undefined);
 
   const finalUrl = page.url();
@@ -226,8 +261,12 @@ async function crawlSinglePage(
   timeoutMs: number,
   headless: boolean,
   resolvedToken: string | undefined,
+  proxyServer?: string,
 ): Promise<CrawlResult> {
-  const browser = await chromium.launch({ headless });
+  const browser = await chromium.launch({
+    headless,
+    proxy: proxyServer ? { server: proxyServer } : undefined,
+  });
   const context = await createContextWithAuth(browser, contextOptions, authFile);
   const page = await context.newPage();
 
@@ -381,6 +420,7 @@ export async function crawlAnalytics(options: CrawlOptions): Promise<CrawlResult
     options.authFile,
     options.headless,
     options.timeoutMs,
+    options.proxyServer,
   );
 
   const authText = `${authSession.pageTitle}\n${authSession.bodyPreview}`.toLowerCase();
@@ -408,6 +448,7 @@ export async function crawlAnalytics(options: CrawlOptions): Promise<CrawlResult
       options.timeoutMs,
       options.headless,
       effectiveToken,
+      options.proxyServer,
     );
     results.push(result);
   }

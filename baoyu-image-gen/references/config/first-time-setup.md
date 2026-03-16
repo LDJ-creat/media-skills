@@ -105,18 +105,18 @@ options:
 header: "Save"
 question: "Where to save preferences?"
 options:
-  - label: "Project (Recommended)"
-    description: ".baoyu-skills/ (this project only)"
-  - label: "User"
-    description: "~/.baoyu-skills/ (all projects)"
+  - label: "Skill (Recommended)"
+    description: ".config/ (this skill only)"
+  - label: "Skill root"
+    description: "EXTEND.md (fallback)"
 ```
 
 ### Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| Project | `.baoyu-skills/baoyu-image-gen/EXTEND.md` | Current project |
-| User | `$HOME/.baoyu-skills/baoyu-image-gen/EXTEND.md` | All projects |
+| Skill | `.config/EXTEND.md` | This skill |
+| Skill root | `EXTEND.md` | This skill (fallback) |
 
 ### EXTEND.md Template
 

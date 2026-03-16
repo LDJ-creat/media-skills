@@ -66,12 +66,8 @@ After this succeeds once, skip these steps in normal runs unless auth expires or
 
 1. CLI --state path
 2. CLI --cookie path
-3. nearest .baoyu-skills/csdn-publish-and-data/storageState.json from current directory to parents
-4. nearest .baoyu-skills/csdn-publish-and-data/cookies.json from current directory to parents
-5. $XDG_CONFIG_HOME/baoyu-skills/csdn-publish-and-data/storageState.json
-6. $XDG_CONFIG_HOME/baoyu-skills/csdn-publish-and-data/cookies.json
-7. $HOME/.baoyu-skills/csdn-publish-and-data/storageState.json
-8. $HOME/.baoyu-skills/csdn-publish-and-data/cookies.json
+3. <skillRoot>/.auth/storageState.json
+4. <skillRoot>/.auth/cookies.json
 
 Prefer `storageState.json`. Use `cookies.json` only as fallback.
 

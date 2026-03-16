@@ -68,9 +68,9 @@ export const THEME_STYLE_DEFAULTS: Record<string, Partial<StyleConfig>> = {
   modern: {
     primaryColor: COLOR_PRESETS.orange,
     accentColor: "#E4B1A0",
-    containerBg: "rgba(250, 249, 245, 1)",
+    containerBg: "transparent",
     fontFamily: FONT_FAMILY_MAP.sans,
-    fontSize: "15px",
+    fontSize: "16px",
     blockquoteBackground: "rgba(255, 255, 255, 0.6)",
   },
 };

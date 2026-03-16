@@ -25,17 +25,15 @@ npx playwright install chromium
 
 Preferred file:
 
-- .baoyu-skills/juejin-publish-and-data/storageState.json
+- .auth/storageState.json
 
 Fallback file:
 
-- .baoyu-skills/juejin-publish-and-data/cookies.json
-- $HOME/.baoyu-skills/juejin-publish-and-data/cookies.json
+- .auth/cookies.json
 
 Recommended storage state locations:
 
-- .baoyu-skills/juejin-publish-and-data/storageState.json
-- $HOME/.baoyu-skills/juejin-publish-and-data/storageState.json
+- .auth/storageState.json
 
 Export storageState after you are already logged into Juejin creator pages and can see real creator data.
 
@@ -43,7 +41,7 @@ Export storageState after you are already logged into Juejin creator pages and c
 
 Create EXTEND.md at:
 
-- .baoyu-skills/juejin-publish-and-data/EXTEND.md
+- .config/EXTEND.md
 
 Example:
 
@@ -78,11 +76,11 @@ npx tsx check-login.ts --page both
 Fetch:
 
 ```bash
-npx tsx fetch-analytics.ts --page both --state ../.baoyu-skills/juejin-publish-and-data/storageState.json --save-raw --output ../output-juejin
+npx tsx fetch-analytics.ts --page both --state ../.auth/storageState.json --save-raw --output ../output-juejin
 ```
 
 Draft post:
 
 ```bash
-npx tsx post-article.ts --file ../demo/article.md --state ../.baoyu-skills/juejin-publish-and-data/storageState.json --draft --headful
+npx tsx post-article.ts --file ../demo/article.md --state ../.auth/storageState.json --draft --headful
 ```

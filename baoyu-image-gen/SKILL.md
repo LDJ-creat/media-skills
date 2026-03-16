@@ -18,6 +18,7 @@ Official API-based image generation. Supports OpenAI, Google, OpenRouter, DashSc
 ## Script Directory
 
 **Agent Execution**:
+
 1. `{baseDir}` = this SKILL.md file's directory
 2. Script path = `{baseDir}/scripts/main.ts`
 3. Resolve `${BUN_X}` runtime: if `bun` installed → `bun`; if `npx` available → `npx -y bun`; else suggest installing bun
@@ -26,34 +27,31 @@ Official API-based image generation. Supports OpenAI, Google, OpenRouter, DashSc
 
 **CRITICAL**: This step MUST complete BEFORE any image generation. Do NOT skip or defer.
 
-Check EXTEND.md existence (priority: project → user):
+Check EXTEND.md existence (priority: skill root):
 
 ```bash
 # macOS, Linux, WSL, Git Bash
-test -f .baoyu-skills/baoyu-image-gen/EXTEND.md && echo "project"
-test -f "${XDG_CONFIG_HOME:-$HOME/.config}/baoyu-skills/baoyu-image-gen/EXTEND.md" && echo "xdg"
-test -f "$HOME/.baoyu-skills/baoyu-image-gen/EXTEND.md" && echo "user"
+test -f "{baseDir}/.config/EXTEND.md" && echo ".config"
+test -f "{baseDir}/EXTEND.md" && echo "root"
 ```
 
 ```powershell
 # PowerShell (Windows)
-if (Test-Path .baoyu-skills/baoyu-image-gen/EXTEND.md) { "project" }
-$xdg = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { "$HOME/.config" }
-if (Test-Path "$xdg/baoyu-skills/baoyu-image-gen/EXTEND.md") { "xdg" }
-if (Test-Path "$HOME/.baoyu-skills/baoyu-image-gen/EXTEND.md") { "user" }
+if (Test-Path "{baseDir}/.config/EXTEND.md") { ".config" }
+if (Test-Path "{baseDir}/EXTEND.md") { "root" }
 ```
 
-| Result | Action |
-|--------|--------|
-| Found | Load, parse, apply settings. If `default_model.[provider]` is null → ask model only (Flow 2) |
+| Result    | Action                                                                                                                                    |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Found     | Load, parse, apply settings. If `default_model.[provider]` is null → ask model only (Flow 2)                                              |
 | Not found | ⛔ Run first-time setup ([references/config/first-time-setup.md](references/config/first-time-setup.md)) → Save EXTEND.md → Then continue |
 
 **CRITICAL**: If not found, complete the full setup (provider + model + quality + save location) using AskUserQuestion BEFORE generating any images. Generation is BLOCKED until EXTEND.md is created.
 
-| Path | Location |
-|------|----------|
-| `.baoyu-skills/baoyu-image-gen/EXTEND.md` | Project directory |
-| `$HOME/.baoyu-skills/baoyu-image-gen/EXTEND.md` | User home |
+| Path                          | Location                 |
+| ----------------------------- | ------------------------ |
+| `{baseDir}/.config/EXTEND.md` | Skill root (recommended) |
+| `{baseDir}/EXTEND.md`         | Skill root (fallback)    |
 
 **EXTEND.md Supports**: Default provider | Default quality | Default aspect ratio | Default image size | Default models | Batch worker cap | Provider-specific batch limits
 
@@ -140,57 +138,57 @@ Paths in `promptFiles`, `image`, and `ref` are resolved relative to the batch fi
 
 ## Options
 
-| Option | Description |
-|--------|-------------|
-| `--prompt <text>`, `-p` | Prompt text |
-| `--promptfiles <files...>` | Read prompt from files (concatenated) |
-| `--image <path>` | Output image path (required in single-image mode) |
-| `--batchfile <path>` | JSON batch file for multi-image generation |
-| `--jobs <count>` | Worker count for batch mode (default: auto, max from config, built-in default 10) |
-| `--provider google\|openai\|openrouter\|dashscope\|jimeng\|seedream\|replicate` | Force provider (default: auto-detect) |
-| `--model <id>`, `-m` | Model ID (Google: `gemini-3-pro-image-preview`; OpenAI: `gpt-image-1.5`; OpenRouter: `google/gemini-3.1-flash-image-preview`; DashScope: `qwen-image-2.0-pro`) |
-| `--ar <ratio>` | Aspect ratio (e.g., `16:9`, `1:1`, `4:3`) |
-| `--size <WxH>` | Size (e.g., `1024x1024`) |
-| `--quality normal\|2k` | Quality preset (default: `2k`) |
-| `--imageSize 1K\|2K\|4K` | Image size for Google/OpenRouter (default: from quality) |
-| `--ref <files...>` | Reference images. Supported by Google multimodal, OpenAI GPT Image edits, OpenRouter multimodal models, and Replicate. Not supported by Jimeng or Seedream |
-| `--n <count>` | Number of images |
-| `--json` | JSON output |
+| Option                                                                          | Description                                                                                                                                                    |
+| ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--prompt <text>`, `-p`                                                         | Prompt text                                                                                                                                                    |
+| `--promptfiles <files...>`                                                      | Read prompt from files (concatenated)                                                                                                                          |
+| `--image <path>`                                                                | Output image path (required in single-image mode)                                                                                                              |
+| `--batchfile <path>`                                                            | JSON batch file for multi-image generation                                                                                                                     |
+| `--jobs <count>`                                                                | Worker count for batch mode (default: auto, max from config, built-in default 10)                                                                              |
+| `--provider google\|openai\|openrouter\|dashscope\|jimeng\|seedream\|replicate` | Force provider (default: auto-detect)                                                                                                                          |
+| `--model <id>`, `-m`                                                            | Model ID (Google: `gemini-3-pro-image-preview`; OpenAI: `gpt-image-1.5`; OpenRouter: `google/gemini-3.1-flash-image-preview`; DashScope: `qwen-image-2.0-pro`) |
+| `--ar <ratio>`                                                                  | Aspect ratio (e.g., `16:9`, `1:1`, `4:3`)                                                                                                                      |
+| `--size <WxH>`                                                                  | Size (e.g., `1024x1024`)                                                                                                                                       |
+| `--quality normal\|2k`                                                          | Quality preset (default: `2k`)                                                                                                                                 |
+| `--imageSize 1K\|2K\|4K`                                                        | Image size for Google/OpenRouter (default: from quality)                                                                                                       |
+| `--ref <files...>`                                                              | Reference images. Supported by Google multimodal, OpenAI GPT Image edits, OpenRouter multimodal models, and Replicate. Not supported by Jimeng or Seedream     |
+| `--n <count>`                                                                   | Number of images                                                                                                                                               |
+| `--json`                                                                        | JSON output                                                                                                                                                    |
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `OPENAI_API_KEY` | OpenAI API key |
-| `OPENROUTER_API_KEY` | OpenRouter API key |
-| `GOOGLE_API_KEY` | Google API key |
-| `DASHSCOPE_API_KEY` | DashScope API key (阿里云) |
-| `REPLICATE_API_TOKEN` | Replicate API token |
-| `JIMENG_ACCESS_KEY_ID` | Jimeng (即梦) Volcengine access key |
-| `JIMENG_SECRET_ACCESS_KEY` | Jimeng (即梦) Volcengine secret key |
-| `ARK_API_KEY` | Seedream (豆包) Volcengine ARK API key |
-| `OPENAI_IMAGE_MODEL` | OpenAI model override |
-| `OPENROUTER_IMAGE_MODEL` | OpenRouter model override (default: `google/gemini-3.1-flash-image-preview`) |
-| `GOOGLE_IMAGE_MODEL` | Google model override |
-| `DASHSCOPE_IMAGE_MODEL` | DashScope model override (default: `qwen-image-2.0-pro`) |
-| `REPLICATE_IMAGE_MODEL` | Replicate model override (default: google/nano-banana-pro) |
-| `JIMENG_IMAGE_MODEL` | Jimeng model override (default: jimeng_t2i_v40) |
-| `SEEDREAM_IMAGE_MODEL` | Seedream model override (default: doubao-seedream-5-0-260128) |
-| `OPENAI_BASE_URL` | Custom OpenAI endpoint |
-| `OPENROUTER_BASE_URL` | Custom OpenRouter endpoint (default: `https://openrouter.ai/api/v1`) |
-| `OPENROUTER_HTTP_REFERER` | Optional app/site URL for OpenRouter attribution |
-| `OPENROUTER_TITLE` | Optional app name for OpenRouter attribution |
-| `GOOGLE_BASE_URL` | Custom Google endpoint |
-| `DASHSCOPE_BASE_URL` | Custom DashScope endpoint |
-| `REPLICATE_BASE_URL` | Custom Replicate endpoint |
-| `JIMENG_BASE_URL` | Custom Jimeng endpoint (default: `https://visual.volcengineapi.com`) |
-| `JIMENG_REGION` | Jimeng region (default: `cn-north-1`) |
-| `SEEDREAM_BASE_URL` | Custom Seedream endpoint (default: `https://ark.cn-beijing.volces.com/api/v3`) |
-| `BAOYU_IMAGE_GEN_MAX_WORKERS` | Override batch worker cap |
-| `BAOYU_IMAGE_GEN_<PROVIDER>_CONCURRENCY` | Override provider concurrency, e.g. `BAOYU_IMAGE_GEN_REPLICATE_CONCURRENCY` |
+| Variable                                       | Description                                                                     |
+| ---------------------------------------------- | ------------------------------------------------------------------------------- |
+| `OPENAI_API_KEY`                               | OpenAI API key                                                                  |
+| `OPENROUTER_API_KEY`                           | OpenRouter API key                                                              |
+| `GOOGLE_API_KEY`                               | Google API key                                                                  |
+| `DASHSCOPE_API_KEY`                            | DashScope API key (阿里云)                                                      |
+| `REPLICATE_API_TOKEN`                          | Replicate API token                                                             |
+| `JIMENG_ACCESS_KEY_ID`                         | Jimeng (即梦) Volcengine access key                                             |
+| `JIMENG_SECRET_ACCESS_KEY`                     | Jimeng (即梦) Volcengine secret key                                             |
+| `ARK_API_KEY`                                  | Seedream (豆包) Volcengine ARK API key                                          |
+| `OPENAI_IMAGE_MODEL`                           | OpenAI model override                                                           |
+| `OPENROUTER_IMAGE_MODEL`                       | OpenRouter model override (default: `google/gemini-3.1-flash-image-preview`)    |
+| `GOOGLE_IMAGE_MODEL`                           | Google model override                                                           |
+| `DASHSCOPE_IMAGE_MODEL`                        | DashScope model override (default: `qwen-image-2.0-pro`)                        |
+| `REPLICATE_IMAGE_MODEL`                        | Replicate model override (default: google/nano-banana-pro)                      |
+| `JIMENG_IMAGE_MODEL`                           | Jimeng model override (default: jimeng_t2i_v40)                                 |
+| `SEEDREAM_IMAGE_MODEL`                         | Seedream model override (default: doubao-seedream-5-0-260128)                   |
+| `OPENAI_BASE_URL`                              | Custom OpenAI endpoint                                                          |
+| `OPENROUTER_BASE_URL`                          | Custom OpenRouter endpoint (default: `https://openrouter.ai/api/v1`)            |
+| `OPENROUTER_HTTP_REFERER`                      | Optional app/site URL for OpenRouter attribution                                |
+| `OPENROUTER_TITLE`                             | Optional app name for OpenRouter attribution                                    |
+| `GOOGLE_BASE_URL`                              | Custom Google endpoint                                                          |
+| `DASHSCOPE_BASE_URL`                           | Custom DashScope endpoint                                                       |
+| `REPLICATE_BASE_URL`                           | Custom Replicate endpoint                                                       |
+| `JIMENG_BASE_URL`                              | Custom Jimeng endpoint (default: `https://visual.volcengineapi.com`)            |
+| `JIMENG_REGION`                                | Jimeng region (default: `cn-north-1`)                                           |
+| `SEEDREAM_BASE_URL`                            | Custom Seedream endpoint (default: `https://ark.cn-beijing.volces.com/api/v3`)  |
+| `BAOYU_IMAGE_GEN_MAX_WORKERS`                  | Override batch worker cap                                                       |
+| `BAOYU_IMAGE_GEN_<PROVIDER>_CONCURRENCY`       | Override provider concurrency, e.g. `BAOYU_IMAGE_GEN_REPLICATE_CONCURRENCY`     |
 | `BAOYU_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS` | Override provider start gap, e.g. `BAOYU_IMAGE_GEN_REPLICATE_START_INTERVAL_MS` |
 
-**Load Priority**: CLI args > EXTEND.md > env vars > `<cwd>/.baoyu-skills/.env` > `~/.baoyu-skills/.env`
+**Load Priority**: CLI args > EXTEND.md > env vars > `baoyu-image-gen/.env` > `<cwd>/.config/baoyu-image-gen/.env` > `~/.config/baoyu-image-gen/.env`
 
 ## Model Resolution
 
@@ -204,6 +202,7 @@ Model priority (highest → lowest), applies to all providers:
 **EXTEND.md overrides env vars**. If both EXTEND.md `default_model.google: "gemini-3-pro-image-preview"` and env var `GOOGLE_IMAGE_MODEL=gemini-3.1-flash-image-preview` exist, EXTEND.md wins.
 
 **Agent MUST display model info** before each generation:
+
 - Show: `Using [provider] / [model]`
 - Show switch hint: `Switch model: --model <id> | EXTEND.md default_model.[provider] | env <PROVIDER>_IMAGE_MODEL`
 
@@ -234,16 +233,16 @@ When translating CLI args into DashScope behavior:
 
 Recommended `qwen-image-2.0*` sizes for common aspect ratios:
 
-| Ratio | `normal` | `2k` |
-|-------|----------|------|
-| `1:1` | `1024*1024` | `1536*1536` |
-| `2:3` | `768*1152` | `1024*1536` |
-| `3:2` | `1152*768` | `1536*1024` |
-| `3:4` | `960*1280` | `1080*1440` |
-| `4:3` | `1280*960` | `1440*1080` |
-| `9:16` | `720*1280` | `1080*1920` |
-| `16:9` | `1280*720` | `1920*1080` |
-| `21:9` | `1344*576` | `2048*872` |
+| Ratio  | `normal`    | `2k`        |
+| ------ | ----------- | ----------- |
+| `1:1`  | `1024*1024` | `1536*1536` |
+| `2:3`  | `768*1152`  | `1024*1536` |
+| `3:2`  | `1152*768`  | `1536*1024` |
+| `3:4`  | `960*1280`  | `1080*1440` |
+| `4:3`  | `1280*960`  | `1440*1080` |
+| `9:16` | `720*1280`  | `1080*1920` |
+| `16:9` | `1280*720`  | `1920*1080` |
+| `21:9` | `1344*576`  | `2048*872`  |
 
 DashScope official APIs also expose `negative_prompt`, `prompt_extend`, and `watermark`, but `baoyu-image-gen` does not expose them as dedicated CLI flags today.
 
@@ -294,10 +293,10 @@ ${BUN_X} {baseDir}/scripts/main.ts --prompt "A cat" --image out.png --provider r
 
 ## Quality Presets
 
-| Preset | Google imageSize | OpenAI Size | OpenRouter size | Replicate resolution | Use Case |
-|--------|------------------|-------------|-----------------|----------------------|----------|
-| `normal` | 1K | 1024px | 1K | 1K | Quick previews |
-| `2k` (default) | 2K | 2048px | 2K | 2K | Covers, illustrations, infographics |
+| Preset         | Google imageSize | OpenAI Size | OpenRouter size | Replicate resolution | Use Case                            |
+| -------------- | ---------------- | ----------- | --------------- | -------------------- | ----------------------------------- |
+| `normal`       | 1K               | 1024px      | 1K              | 1K                   | Quick previews                      |
+| `2k` (default) | 2K               | 2048px      | 2K              | 2K                   | Covers, illustrations, infographics |
 
 **Google/OpenRouter imageSize**: Can be overridden with `--imageSize 1K|2K|4K`
 
@@ -316,19 +315,19 @@ Supported: `1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `2.35:1`
 
 **Batch Parallel Generation**: When `--batchfile` contains 2 or more pending tasks, the script automatically enables parallel generation.
 
-| Mode | When to Use |
-|------|-------------|
+| Mode                 | When to Use                                |
+| -------------------- | ------------------------------------------ |
 | Sequential (default) | Normal usage, single images, small batches |
-| Parallel batch | Batch mode with 2+ tasks |
+| Parallel batch       | Batch mode with 2+ tasks                   |
 
 Execution choice:
 
-| Situation | Preferred approach | Why |
-|-----------|--------------------|-----|
-| One image, or 1-2 simple images | Sequential | Lower coordination overhead and easier debugging |
-| Multiple images already have saved prompt files | Batch (`--batchfile`) | Reuses finalized prompts, applies shared throttling/retries, and gives predictable throughput |
-| Each image still needs separate reasoning, prompt writing, or style exploration | Subagents | The work is still exploratory, so each image may need independent analysis before generation |
-| Output comes from `baoyu-article-illustrator` with `outline.md` + `prompts/` | Batch (`build-batch.ts` -> `--batchfile`) | That workflow already produces prompt files, so direct batch execution is the intended path |
+| Situation                                                                       | Preferred approach                        | Why                                                                                           |
+| ------------------------------------------------------------------------------- | ----------------------------------------- | --------------------------------------------------------------------------------------------- |
+| One image, or 1-2 simple images                                                 | Sequential                                | Lower coordination overhead and easier debugging                                              |
+| Multiple images already have saved prompt files                                 | Batch (`--batchfile`)                     | Reuses finalized prompts, applies shared throttling/retries, and gives predictable throughput |
+| Each image still needs separate reasoning, prompt writing, or style exploration | Subagents                                 | The work is still exploratory, so each image may need independent analysis before generation  |
+| Output comes from `baoyu-article-illustrator` with `outline.md` + `prompts/`    | Batch (`build-batch.ts` -> `--batchfile`) | That workflow already produces prompt files, so direct batch execution is the intended path   |
 
 Rule of thumb:
 

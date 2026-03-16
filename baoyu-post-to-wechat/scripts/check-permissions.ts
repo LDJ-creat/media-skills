@@ -2,9 +2,9 @@
 
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 interface CheckResult {
   name: string;
@@ -14,29 +14,10 @@ interface CheckResult {
 
 const results: CheckResult[] = [];
 
-function findEnvInParents(startDir: string): string | null {
-  let current = path.resolve(startDir);
-  for (;;) {
-    const candidate = path.join(current, '.baoyu-skills', '.env');
-    if (fs.existsSync(candidate)) return candidate;
-
-    const parent = path.dirname(current);
-    if (parent === current) return null;
-    current = parent;
-  }
-}
-
-function findFileInParents(startDir: string, relativePath: string): string | null {
-  if (!relativePath || path.isAbsolute(relativePath)) return null;
-  let current = path.resolve(startDir);
-  for (;;) {
-    const candidate = path.join(current, relativePath);
-    if (fs.existsSync(candidate)) return candidate;
-
-    const parent = path.dirname(current);
-    if (parent === current) return null;
-    current = parent;
-  }
+function getSkillRootEnvPath(): string {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  return path.resolve(__dirname, '..', '.env');
 }
 
 function log(label: string, ok: boolean, detail: string): void {
@@ -55,26 +36,26 @@ async function checkBun(): Promise<void> {
 }
 
 async function checkApiCredentials(): Promise<void> {
-  const cwd = process.cwd();
-  const projectBaoyuEnv = findEnvInParents(cwd);
-  const projectSimpleEnv = findFileInParents(cwd, '.env');
-  const userEnv = path.join(os.homedir(), '.baoyu-skills', '.env');
-
   let found = false;
-  for (const envPath of [projectBaoyuEnv, projectSimpleEnv, userEnv]) {
-    if (!envPath) continue;
-    if (fs.existsSync(envPath)) {
-      const content = fs.readFileSync(envPath, 'utf8');
-      if (content.includes('WECHAT_APP_ID')) {
-        log('API credentials', true, `Found in ${envPath}`);
-        found = true;
-        break;
-      }
+
+  // Check runtime environment first
+  if (process.env.WECHAT_APP_ID && process.env.WECHAT_APP_SECRET) {
+    log('API credentials', true, 'Found in environment variables');
+    found = true;
+  }
+
+  // Then check <skillRoot>/.env (parent directory of this script)
+  const skillRootEnv = getSkillRootEnvPath();
+  if (!found && fs.existsSync(skillRootEnv)) {
+    const content = fs.readFileSync(skillRootEnv, 'utf8');
+    if (content.includes('WECHAT_APP_ID')) {
+      log('API credentials', true, `Found in ${skillRootEnv}`);
+      found = true;
     }
   }
 
   if (!found) {
-    log('API credentials', false, 'Not found. Set WECHAT_APP_ID and WECHAT_APP_SECRET in env or .baoyu-skills/.env');
+    log('API credentials', false, 'Not found. Set WECHAT_APP_ID and WECHAT_APP_SECRET in environment variables or in <skillRoot>/.env');
   }
 }
 

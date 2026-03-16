@@ -1,7 +1,7 @@
 import fs from "node:fs";
-import os from "node:os";
 import path from "node:path";
 import process from "node:process";
+import { fileURLToPath } from "node:url";
 import type { AuthFileRef, CliOptions, PageType, SkillConfig } from "./types";
 
 const DEFAULT_CONFIG: SkillConfig = {
@@ -55,31 +55,29 @@ function parseKeyValueMarkdown(content: string): Record<string, string> {
   return out;
 }
 
-function findFileInParents(startDir: string, relativePath: string): string | null {
-  if (!relativePath || path.isAbsolute(relativePath)) return null;
-  let current = path.resolve(startDir);
-  for (;;) {
-    const candidate = path.join(current, relativePath);
-    if (fs.existsSync(candidate)) return candidate;
-    const parent = path.dirname(current);
-    if (parent === current) return null;
-    current = parent;
-  }
+function getSkillRootDir(): string {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  return path.resolve(__dirname, "..");
+}
+
+function getSkillAuthDir(): string {
+  return path.join(getSkillRootDir(), ".auth");
+}
+
+function getDefaultAuthFilePath(fileName: string): string {
+  return path.join(getSkillAuthDir(), fileName);
 }
 
 function findSkillExtendFile(): string | null {
-  const project = findFileInParents(process.cwd(), path.join(".baoyu-skills", "get-wechat-data", "EXTEND.md"));
-  if (project) return project;
-
-  const xdgBase = process.env.XDG_CONFIG_HOME
-    ? process.env.XDG_CONFIG_HOME
-    : path.join(os.homedir(), ".config");
-  const xdgFile = path.join(xdgBase, "baoyu-skills", "get-wechat-data", "EXTEND.md");
-  if (fs.existsSync(xdgFile)) return xdgFile;
-
-  const userFile = path.join(os.homedir(), ".baoyu-skills", "get-wechat-data", "EXTEND.md");
-  if (fs.existsSync(userFile)) return userFile;
-
+  const skillRoot = getSkillRootDir();
+  const candidates = [
+    path.join(skillRoot, ".config", "EXTEND.md"),
+    path.join(skillRoot, "EXTEND.md"),
+  ];
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) return candidate;
+  }
   return null;
 }
 
@@ -134,6 +132,7 @@ export function parseCliArgs(args: string[], config: SkillConfig): CliOptions {
     probeOnly: false,
     headless: true,
     timeoutMs: config.defaultTimeoutMs,
+    proxyServer: undefined,
   };
 
   for (let i = 0; i < args.length; i += 1) {
@@ -179,6 +178,12 @@ export function parseCliArgs(args: string[], config: SkillConfig): CliOptions {
 
     if (arg === "--state" && next) {
       options.statePath = next;
+      i += 1;
+      continue;
+    }
+
+    if (arg === "--proxy" && next) {
+      options.proxyServer = next;
       i += 1;
       continue;
     }
@@ -255,26 +260,11 @@ export function printUsage(scriptName: string): void {
     "  --output <dir>              Output directory\n" +
     "  --cookie <path>             Cookie JSON file path\n" +
     "  --state <path>              Playwright storageState JSON path\n" +
+    "  --proxy <server>            Proxy server for Playwright (e.g. socks5://127.0.0.1:7897)\n" +
     "  --save-raw / --no-save-raw  Save raw captured payloads\n" +
     "  --probe                     Probe login and capture capability only\n" +
     "  --headful                   Run browser with GUI (default headless)\n" +
     "  --timeout <ms>              Page wait timeout in milliseconds");
-}
-
-function resolveConfigScopedFile(fileName: string): string | null {
-  const projectPath = findFileInParents(process.cwd(), path.join(".baoyu-skills", "get-wechat-data", fileName));
-  if (projectPath) return projectPath;
-
-  const xdgBase = process.env.XDG_CONFIG_HOME
-    ? process.env.XDG_CONFIG_HOME
-    : path.join(os.homedir(), ".config");
-  const xdgPath = path.join(xdgBase, "baoyu-skills", "get-wechat-data", fileName);
-  if (fs.existsSync(xdgPath)) return xdgPath;
-
-  const userPath = path.join(os.homedir(), ".baoyu-skills", "get-wechat-data", fileName);
-  if (fs.existsSync(userPath)) return userPath;
-
-  return null;
 }
 
 function resolveExplicitFile(explicitPath: string | undefined, label: string): string | null {
@@ -301,17 +291,17 @@ export function resolveAuthFile(
     return { kind: "cookie", path: explicitCookie };
   }
 
-  const defaultState = resolveConfigScopedFile(config.storageStateFileName);
-  if (defaultState) {
+  const defaultState = getDefaultAuthFilePath(config.storageStateFileName);
+  if (fs.existsSync(defaultState)) {
     return { kind: "storage-state", path: defaultState };
   }
 
-  const defaultCookie = resolveConfigScopedFile(config.cookieFileName);
-  if (defaultCookie) {
+  const defaultCookie = getDefaultAuthFilePath(config.cookieFileName);
+  if (fs.existsSync(defaultCookie)) {
     return { kind: "cookie", path: defaultCookie };
   }
 
   throw new Error(
-    "No auth state found. Provide --state with a Playwright storageState.json, or --cookie with cookies.json, or create one at .baoyu-skills/get-wechat-data/storageState.json"
+    "No auth state found. Provide --state with a Playwright storageState.json, or --cookie with cookies.json, or create one at .auth/storageState.json"
   );
 }

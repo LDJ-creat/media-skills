@@ -3,6 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
 function ensureDirSync(dirPath: string): void {
@@ -10,7 +11,9 @@ function ensureDirSync(dirPath: string): void {
 }
 
 function defaultOutputPath(): string {
-  return path.resolve(process.cwd(), "..", ".baoyu-skills", "csdn-publish-and-data", "storageState.json");
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  return path.resolve(__dirname, "..", ".auth", "storageState.json");
 }
 
 function parseOutputPath(args: string[]): string {

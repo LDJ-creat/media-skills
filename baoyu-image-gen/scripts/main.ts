@@ -134,7 +134,13 @@ Environment variables:
   BAOYU_IMAGE_GEN_<PROVIDER>_CONCURRENCY  Override provider concurrency
   BAOYU_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS  Override provider start gap in ms
 
-Env file load order: CLI args > EXTEND.md > process.env > <cwd>/.baoyu-skills/.env > ~/.baoyu-skills/.env`);
+Env file load order: CLI args > EXTEND.md > process.env > baoyu-image-gen/.env > <cwd>/.config/baoyu-image-gen/.env > ~/.config/baoyu-image-gen/.env`);
+}
+
+function getSkillRootDir(): string {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  return path.resolve(__dirname, "..");
 }
 
 export function parseArgs(argv: string[]): CliArgs {
@@ -328,8 +334,15 @@ async function loadEnv(): Promise<void> {
   const home = homedir();
   const cwd = process.cwd();
 
-  const homeEnv = await loadEnvFile(path.join(home, ".baoyu-skills", ".env"));
-  const cwdEnv = await loadEnvFile(path.join(cwd, ".baoyu-skills", ".env"));
+  const skillRoot = getSkillRootDir();
+
+  const skillEnv = await loadEnvFile(path.join(skillRoot, ".env"));
+  const cwdEnv = await loadEnvFile(path.join(cwd, ".config", "baoyu-image-gen", ".env"));
+  const homeEnv = await loadEnvFile(path.join(home, ".config", "baoyu-image-gen", ".env"));
+
+  for (const [k, v] of Object.entries(skillEnv)) {
+    if (!process.env[k]) process.env[k] = v;
+  }
 
   for (const [k, v] of Object.entries(homeEnv)) {
     if (!process.env[k]) process.env[k] = v;
@@ -452,12 +465,10 @@ export function parseSimpleYaml(yaml: string): Partial<ExtendConfig> {
 }
 
 async function loadExtendConfig(): Promise<Partial<ExtendConfig>> {
-  const home = homedir();
-  const cwd = process.cwd();
-
+  const skillRoot = getSkillRootDir();
   const paths = [
-    path.join(cwd, ".baoyu-skills", "baoyu-image-gen", "EXTEND.md"),
-    path.join(home, ".baoyu-skills", "baoyu-image-gen", "EXTEND.md"),
+    path.join(skillRoot, ".config", "EXTEND.md"),
+    path.join(skillRoot, "EXTEND.md"),
   ];
 
   for (const p of paths) {
@@ -616,7 +627,7 @@ export function detectProvider(args: CliArgs): Provider {
 
   throw new Error(
     "No API key found. Set GOOGLE_API_KEY, GEMINI_API_KEY, OPENAI_API_KEY, OPENROUTER_API_KEY, DASHSCOPE_API_KEY, REPLICATE_API_TOKEN, JIMENG keys, or ARK_API_KEY.\n" +
-      "Create ~/.baoyu-skills/.env or <cwd>/.baoyu-skills/.env with your keys."
+      "Create baoyu-image-gen/.env (skill root) or <cwd>/.config/baoyu-image-gen/.env (project) with your keys."
   );
 }
 

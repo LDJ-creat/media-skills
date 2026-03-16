@@ -21,7 +21,7 @@ Use the helper script already included in this skill. Run it in get-wechat-data/
 
 Or specify a custom output path:
 
-    npx tsx export-storage-state.ts --output ../.baoyu-skills/get-wechat-data/storageState.json
+  npx tsx export-storage-state.ts --output ../.auth/storageState.json
 
 The script will:
 
@@ -38,14 +38,13 @@ Important:
 
 ## Suggested target path
 
-- .baoyu-skills/get-wechat-data/storageState.json
-- $HOME/.baoyu-skills/get-wechat-data/storageState.json
+- .auth/storageState.json
 
 ## Validation
 
 After exporting, run:
 
-  npx tsx check-login.ts --page both --state ../.baoyu-skills/get-wechat-data/storageState.json
+  npx tsx check-login.ts --page both --state ../.auth/storageState.json
 
 If login still fails, re-export immediately after confirming the analysis pages show real data in the browser.
 

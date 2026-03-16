@@ -7,7 +7,8 @@ Use this flow when the user already has a valid CSDN login in a real browser ses
 Run inside csdn-publish-and-data/scripts:
 
 ```bash
-npx tsx export-storage-state.ts --output ../.baoyu-skills/csdn-publish-and-data/storageState.json
+npx tsx export-storage-state.ts
+# default output: ../.auth/storageState.json
 ```
 
 ## Manual flow

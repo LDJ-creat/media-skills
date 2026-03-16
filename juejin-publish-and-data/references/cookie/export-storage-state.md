@@ -15,7 +15,8 @@ Use this when you want a Playwright-compatible login state file for Juejin creat
 Run inside juejin-publish-and-data/scripts:
 
 ```bash
-npx tsx export-storage-state.ts --output ../.baoyu-skills/juejin-publish-and-data/storageState.json
+npx tsx export-storage-state.ts
+# default output: ../.auth/storageState.json
 ```
 
 ## Why storageState is preferred
