@@ -14,7 +14,7 @@ import { publishArticle } from "./csdn-scraper";
 
 function toMarkdown(result: Awaited<ReturnType<typeof publishArticle>>): string {
   return [
-    "# CSDN Draft Save Result",
+    "# CSDN Post Result",
     "",
     `- Generated: ${result.generatedAt}`,
     `- Mode: ${result.mode}`,
@@ -57,6 +57,7 @@ async function main(): Promise<void> {
     headless: options.headless,
     timeoutMs: options.timeoutMs,
     mode: options.mode,
+    coverPath: options.coverPath,
   });
 
   const outputDir = path.resolve(process.cwd(), options.outputDir);

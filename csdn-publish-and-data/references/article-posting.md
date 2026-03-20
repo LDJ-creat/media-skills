@@ -13,15 +13,18 @@ CLI values override frontmatter values.
 2. Dismiss onboarding overlays if they are visible.
 3. Fill title in the top title input.
 4. Fill Markdown body directly into the left Markdown editor area.
-5. Try to fill summary and category if matching controls are visible.
-6. Save draft only.
-7. Capture related XHR/fetch responses and write result summary files.
+5. Click the bottom-right “发布文章” button to open the publish dialog.
+6. In the publish dialog, try to fill summary/original flag, select tags, and upload cover image if provided.
+7. Submit based on mode:
+	- `--draft`: save as draft
+	- `--publish`: publish immediately
+8. Capture related XHR/fetch responses and write result summary files.
 
 ## Important behavior
 
 - Markdown is sent directly to the CSDN editor. No Markdown to HTML conversion is used.
 - The current implementation targets the dedicated Markdown editor rather than the older rich-text creation page.
-- Automatic publish is disabled. Final publish is completed manually by the user from the draft box.
+- Automatic publish is available only when explicitly requested via `--publish`.
 - The script no longer tries to complete tags or original/repost settings automatically because those fields are part of the uncertain publish flow.
 - If category cannot be matched because CSDN changed the UI, the script keeps going and records warnings in the output result.
 
@@ -37,5 +40,6 @@ CLI values override frontmatter values.
 
 1. Run in `--headful --draft` mode.
 2. Confirm title and Markdown body are placed correctly.
-3. Confirm the draft is actually visible in the draft box.
-4. Confirm warnings are acceptable, then complete publish manually in CSDN.
+3. Confirm tags/cover (if provided) are applied in the publish dialog.
+4. Confirm the draft is actually visible in the draft box.
+5. If you need auto publish, rerun with `--publish`.

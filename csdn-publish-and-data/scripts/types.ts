@@ -2,7 +2,7 @@ export type PageType = "analytics" | "manage" | "both";
 
 export type ConcretePageType = "analytics" | "manage";
 
-export type PostMode = "draft";
+export type PostMode = "draft" | "publish";
 
 export type AuthFileKind = "cookie" | "storage-state";
 
@@ -49,6 +49,7 @@ export interface PostCliOptions {
   tags: string[];
   original?: boolean;
   mode: PostMode;
+  coverPath?: string;
 }
 
 export interface CookieFileEntry {
@@ -196,6 +197,7 @@ export interface PublishRequest {
   headless: boolean;
   timeoutMs: number;
   mode: PostMode;
+  coverPath?: string;
 }
 
 export interface PublishResult {

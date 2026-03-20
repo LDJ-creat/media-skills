@@ -92,6 +92,11 @@ function resolveExplicitFile(explicitPath: string | undefined, label: string): s
   return absolutePath;
 }
 
+function resolveOptionalFile(explicitPath: string | undefined, label: string): string | undefined {
+  if (!explicitPath) return undefined;
+  return resolveExplicitFile(explicitPath, label) ?? undefined;
+}
+
 function toFrontmatter(input: unknown): ArticleFrontmatter {
   if (!input || typeof input !== "object") {
     return {};
@@ -148,7 +153,7 @@ export function loadSkillConfig(): SkillConfig {
   }
   if (parsed.default_post_mode) {
     const normalized = parsed.default_post_mode.toLowerCase() as PostMode;
-    if (normalized === "draft") {
+    if (normalized === "draft" || normalized === "publish") {
       config.defaultPostMode = normalized;
     }
   }
@@ -265,6 +270,7 @@ export function parsePostCliArgs(args: string[], config: SkillConfig): PostCliOp
     tags: [...config.defaultTags],
     original: config.defaultOriginalFlag,
     mode: config.defaultPostMode,
+    coverPath: undefined,
   };
 
   for (let i = 0; i < args.length; i += 1) {
@@ -314,7 +320,13 @@ export function parsePostCliArgs(args: string[], config: SkillConfig): PostCliOp
       continue;
     }
     if (arg === "--publish") {
-      throw new Error("Automatic publish is disabled. This script only saves drafts now.");
+      options.mode = "publish";
+      continue;
+    }
+    if (arg === "--cover" && next) {
+      options.coverPath = next;
+      i += 1;
+      continue;
     }
     if (arg === "--state" && next) {
       options.statePath = next;
@@ -339,6 +351,9 @@ export function parsePostCliArgs(args: string[], config: SkillConfig): PostCliOp
   if (!options.filePath) {
     throw new Error("Missing required --file <markdown-path>");
   }
+
+  options.coverPath = resolveOptionalFile(options.coverPath, "Cover image")
+    ?? options.coverPath;
 
   return options;
 }
@@ -435,10 +450,17 @@ export function loadArticleInput(filePath: string, cli: Pick<PostCliOptions, "ti
         : [];
   const original = cli.original ?? normalizeOriginal(frontmatter.original);
 
+  let finalBody = parsed.content.trim();
+  const headingRegex = /^\s*#\s+(.+)$/m;
+  const match = finalBody.match(headingRegex);
+  if (match && match[1].trim() === title) {
+    finalBody = finalBody.replace(match[0], "").trim();
+  }
+
   return {
     filePath: absolutePath,
     content,
-    body: parsed.content.trim(),
+    body: finalBody,
     title,
     summary,
     category,
@@ -469,9 +491,11 @@ export function printPostUsage(scriptName: string): void {
     "  --summary <value>               Override article summary\n" +
     "  --category <value>              Article category\n" +
     "  --tags <a,b,c>                  Comma-separated tags\n" +
+    "  --cover <path>                  Optional cover image file path\n" +
     "  --original                      Mark as original\n" +
     "  --repost                        Mark as repost\n" +
     "  --draft                         Save as draft\n" +
+    "  --publish                       Publish immediately\n" +
     "  --output <dir>                  Output directory for result summary\n" +
     "  --state <path>                  Playwright storageState JSON path\n" +
     "  --cookie <path>                 Cookie JSON file path\n" +

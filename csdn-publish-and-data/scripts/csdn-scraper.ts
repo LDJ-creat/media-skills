@@ -143,9 +143,9 @@ async function createAuthenticatedContext(authFile: AuthFileRef, headless: boole
 
   const context = authFile.kind === "storage-state"
     ? await browser.newContext({
-        ...contextOptions,
-        storageState: loadStorageStateFile(authFile.path),
-      })
+      ...contextOptions,
+      storageState: loadStorageStateFile(authFile.path),
+    })
     : await browser.newContext(contextOptions);
 
   if (authFile.kind === "cookie") {
@@ -537,6 +537,12 @@ async function clickButtonByPattern(page: Page, patterns: RegExp[]): Promise<boo
 }
 
 async function fillTitle(page: Page, value: string): Promise<boolean> {
+  // 编辑器首屏有时加载较慢：先短暂等待标题框出现，避免瞬时检查导致误判。
+  await page.waitForSelector(
+    "input.article-bar__title, input.article-bar__title--input, #txtTitle, textarea#txtTitle, input[placeholder*='标题'], textarea[placeholder*='标题'], textarea.input__title",
+    { timeout: 15_000 }
+  ).catch(() => undefined);
+
   const selectors = [
     "input.article-bar__title",
     "input.article-bar__title--input",
@@ -636,10 +642,29 @@ function isDraftSavePayload(payload: unknown): payload is Record<string, unknown
   if (!data || typeof data !== "object" || Array.isArray(data)) return false;
   const record = data as Record<string, unknown>;
   const articleId = record.article_id ?? record.articleId ?? record.id;
-  const articleUrl = record.url ?? record.articleUrl;
-  return (typeof articleId === "number" || typeof articleId === "string")
-    && typeof articleUrl === "string"
-    && /^https?:\/\//.test(articleUrl);
+  // 注意：草稿保存接口有时不会返回 articleUrl（或返回在其它响应里），仅凭 articleId 也应视为保存成功。
+  return (typeof articleId === "number" || typeof articleId === "string");
+}
+
+async function closePublishDialogIfNeeded(page: Page, dialog: Locator): Promise<void> {
+  // 尽量在草稿保存后退出弹窗，避免 UI 不弹 toast 时“看起来卡住”。
+  const closeCandidates = [
+    dialog.locator("button[aria-label*='关闭'], button[aria-label*='close']").first(),
+    dialog.locator(".el-dialog__headerbtn, .el_mcm-dialog__headerbtn").first(),
+    dialog.locator(".el-dialog__close, .el_mcm-dialog__close").first(),
+    dialog.locator("button").filter({ hasText: /^×$/ }).first(),
+  ];
+
+  for (const candidate of closeCandidates) {
+    if (await ensureVisible(candidate)) {
+      await candidate.click({ timeout: 2_000 }).catch(() => undefined);
+      await page.waitForTimeout(200);
+      return;
+    }
+  }
+
+  await page.keyboard.press("Escape").catch(() => undefined);
+  await page.waitForTimeout(200);
 }
 
 function walkNode(node: unknown, visit: (value: unknown) => void): void {
@@ -663,6 +688,12 @@ function extractPublishInfo(responses: Array<{ url: string; status: number; payl
   let message: string | undefined;
   let success = false;
 
+  const isValidId = (value: unknown): value is string | number => {
+    if (typeof value === "number") return Number.isFinite(value) && value > 0;
+    if (typeof value === "string") return value.trim() !== "" && value.trim() !== "0";
+    return false;
+  };
+
   for (const response of responses) {
     if (isDraftSaveUrl(response.url) && isDraftSavePayload(response.payload)) {
       const data = response.payload.data as Record<string, unknown>;
@@ -685,7 +716,7 @@ function extractPublishInfo(responses: Array<{ url: string; status: number; payl
       const source = value as Record<string, unknown>;
       if (!articleId) {
         const candidate = source.articleId ?? source.article_id ?? source.blogId ?? source.id;
-        if (typeof candidate === "string" || typeof candidate === "number") {
+        if (isValidId(candidate)) {
           articleId = String(candidate);
         }
       }
@@ -730,14 +761,6 @@ async function maybeFillMetadata(page: Page, article: ArticleInput, warnings: st
         warnings.push(`未定位到分类选择器，分类 ${article.category} 可能需要手动补充。`);
       }
     }
-  }
-
-  if (article.tags.length > 0) {
-    warnings.push(`已跳过自动填充标签：${article.tags.join(", ")}。请在 CSDN 草稿页手动确认后再发布。`);
-  }
-
-  if (article.original !== undefined) {
-    warnings.push("已跳过自动处理原创/转载设置。请在手动发布前确认版权声明。");
   }
 }
 
@@ -793,11 +816,916 @@ async function submitDraft(page: Page, timeoutMs: number): Promise<{ success: bo
   };
 }
 
+async function openPublishDialog(page: Page): Promise<boolean> {
+  const selectors = [
+    "button:has-text('发布文章')",
+    ".article-bar__publish button",
+    ".article-bar__publish",
+  ];
+
+  for (const selector of selectors) {
+    const candidate = page.locator(selector).last();
+    if (await ensureVisible(candidate)) {
+      await candidate.click({ timeout: 1_500 }).catch(() => undefined);
+      return true;
+    }
+  }
+
+  const byRole = page.getByRole("button", { name: /^发布文章$/ }).last();
+  if (await ensureVisible(byRole)) {
+    await byRole.click({ timeout: 1_500 }).catch(() => undefined);
+    return true;
+  }
+
+  return clickButtonByPattern(page, [/^发布文章$/, /发布文章/]);
+}
+
+async function waitForPublishDialog(page: Page, timeoutMs: number): Promise<Locator | null> {
+  const candidates: Locator[] = [
+    page.getByRole("dialog").filter({ hasText: /发布文章|保存为草稿|文章标签|添加封面/ }).first(),
+    page.locator(".el-dialog").filter({ hasText: /发布文章|保存为草稿|文章标签|添加封面/ }).first(),
+    page.locator(".ant-modal").filter({ hasText: /发布文章|保存为草稿|文章标签|添加封面/ }).first(),
+    page.locator("div[role='dialog']").filter({ hasText: /发布文章|保存为草稿|文章标签|添加封面/ }).first(),
+  ];
+
+  const deadline = Date.now() + Math.min(timeoutMs, 12_000);
+  while (Date.now() < deadline) {
+    for (const locator of candidates) {
+      if (await ensureVisible(locator)) {
+        return locator;
+      }
+    }
+
+    // 有些版本不是标准 dialog，而是页面内的发布面板。
+    const panelSignals = [
+      page.getByRole("button", { name: /保存为草稿/ }).first(),
+      page.getByText(/文章标签/).first(),
+      page.getByText(/分类专栏/).first(),
+    ];
+    const signalReady = await Promise.all(panelSignals.map((loc) => ensureVisible(loc)));
+    if (signalReady.filter(Boolean).length >= 2) {
+      return page.locator("body");
+    }
+
+    await page.waitForTimeout(200);
+  }
+
+  return null;
+}
+
+async function tryFillPublishDialogSummary(dialog: Locator, summary: string | undefined): Promise<boolean> {
+  if (!summary) return false;
+  const candidates = [
+    dialog.locator("textarea[placeholder*='摘要']").first(),
+    dialog.locator("textarea[placeholder*='简介']").first(),
+    dialog.locator("textarea[placeholder*='描述']").first(),
+    dialog.getByRole("textbox", { name: /摘要|简介|描述/ }).first(),
+  ];
+  for (const locator of candidates) {
+    if (await fillLocator(locator, summary)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+async function trySetPublishDialogOriginalFlag(dialog: Locator, original: boolean | undefined): Promise<boolean> {
+  if (original === undefined) return false;
+  const label = original ? /原创/ : /转载/;
+  const radio = dialog.getByRole("radio", { name: label }).first();
+  if (await ensureVisible(radio)) {
+    await radio.click({ timeout: 1_500 }).catch(() => undefined);
+    return true;
+  }
+  const fallback = dialog.locator("label, span, div").filter({ hasText: label }).first();
+  if (await ensureVisible(fallback)) {
+    await fallback.click({ timeout: 1_500 }).catch(() => undefined);
+    return true;
+  }
+  return false;
+}
+
+async function tryFillPublishDialogCategory(page: Page, dialog: Locator, category: string | undefined, warnings: string[]): Promise<boolean> {
+  const inputs = [
+    dialog.locator("div:has-text('分类专栏') input").first(),
+    dialog.locator("div:has-text('分类') input").first(),
+    dialog.locator("input[placeholder*='分类']").first(),
+    dialog.locator("input[placeholder*='专栏']").first(),
+    dialog.locator("[role='combobox']").filter({ hasText: /分类|专栏/ }).first(),
+    dialog.getByRole("combobox", { name: /分类|专栏/ }).first(),
+  ];
+
+  let input: Locator | null = null;
+  for (const candidate of inputs) {
+    if (await ensureVisible(candidate)) {
+      input = candidate;
+      break;
+    }
+  }
+
+  // 有些 UI 不是 input，而是“+ 新建分类专栏”旁边的下拉。
+  if (!input) {
+    const area = dialog.locator("div, span, label").filter({ hasText: /分类专栏/ }).first();
+    if (await ensureVisible(area)) {
+      await area.click({ timeout: 1_500 }).catch(() => undefined);
+    }
+    for (const candidate of inputs) {
+      if (await ensureVisible(candidate)) {
+        input = candidate;
+        break;
+      }
+    }
+  }
+
+  if (!input) {
+    if (category) {
+      warnings.push(`未定位到分类专栏选择器，分类 ${category} 可能需要手动补充。`);
+    }
+    return false;
+  }
+
+  try {
+    await input.click({ timeout: 1_500 });
+  } catch {
+    // ignore
+  }
+
+  const pickFirstOption = async (): Promise<boolean> => {
+    // 先尝试通过键盘选中第一个下拉项（很多 combobox/选择器更稳定）
+    await page.keyboard.press("ArrowDown").catch(() => undefined);
+    await page.keyboard.press("Enter").catch(() => undefined);
+    await page.waitForTimeout(150);
+
+    const option = dialog.locator(
+      ".el-select-dropdown__item, li[role='option'], div[role='option'], .ant-select-item-option"
+    ).first();
+    if (await ensureVisible(option)) {
+      await option.click({ timeout: 1_500 }).catch(() => undefined);
+      return true;
+    }
+
+    const globalOption = page.locator(
+      ".el-select-dropdown__item, li[role='option'], div[role='option'], .ant-select-item-option"
+    ).first();
+    if (await ensureVisible(globalOption)) {
+      await globalOption.click({ timeout: 1_500 }).catch(() => undefined);
+      return true;
+    }
+
+    return false;
+  };
+
+  if (!category) {
+    const picked = await pickFirstOption();
+    if (!picked) {
+      const requiredHint = await dialog.locator("*").count().catch(() => 0);
+      if (requiredHint > 0) {
+        warnings.push("未提供 --category 且未能自动选择分类专栏；如果弹窗提示必填，请手动选择后再提交。"
+        );
+      }
+    }
+    return picked;
+  }
+
+  try {
+    await input.fill(category, { timeout: 1_500 }).catch(async () => {
+      await page.keyboard.insertText(category);
+    });
+    const option = page.locator(
+      ".el-select-dropdown__item, li[role='option'], div[role='option'], .ant-select-item-option"
+    ).filter({ hasText: new RegExp(category) }).first();
+
+    if (await ensureVisible(option)) {
+      await option.click({ timeout: 1_500 }).catch(() => undefined);
+      return true;
+    }
+
+    await page.keyboard.press("Enter").catch(() => undefined);
+    return true;
+  } catch {
+    warnings.push(`分类专栏 ${category} 选择失败，可能需要手动补充。`);
+    return false;
+  }
+}
+
+async function findTagInput(dialog: Locator): Promise<Locator | null> {
+  const visibleAndEditable = async (candidate: Locator): Promise<boolean> => {
+    if (!(await ensureVisible(candidate))) return false;
+    // 不用 locator.isEditable()：它会走 Playwright action timeout（默认 30s），误命中时会让流程“假卡住”。
+    return candidate.evaluate((el) => {
+      const input = el as HTMLInputElement;
+      if (input.disabled) return false;
+      if (input.readOnly) return false;
+      const style = window.getComputedStyle(input);
+      if (style.display === "none" || style.visibility === "hidden") return false;
+      const ariaDisabled = input.getAttribute("aria-disabled");
+      if (ariaDisabled && ariaDisabled !== "false") return false;
+      return true;
+    }).catch(() => false);
+  };
+
+  const candidates = [
+    // 1) “标签”选择器弹窗：输入框提示 Enter 可添加自定义标签（最可靠）
+    dialog.locator("input[placeholder*='Enter']").first(),
+
+    // 2) 发布面板的文章标签区域（尽量限制在标签区，避免误命中“创作声明（无声明）”等无关输入框）
+    dialog.locator(".mark_selection_box input").first(),
+    dialog.locator("div:has-text('文章标签') .mark_selection_box input").first(),
+    dialog.locator("div:has-text('文章标签') input").first(),
+    dialog.locator("input[placeholder*='文章标签']").first(),
+  ];
+  for (const candidate of candidates) {
+    if (await visibleAndEditable(candidate)) return candidate;
+  }
+  return null;
+}
+
+async function ensureTagEditorOpen(page: Page, dialog: Locator): Promise<void> {
+  const addButtons = [
+    dialog.getByRole("button", { name: /添加文章标签/ }).first(),
+    dialog.getByRole("button", { name: /^\+$/ }).first(),
+    dialog.locator("button, a, span, div").filter({ hasText: /添加文章标签/ }).first(),
+  ];
+
+  for (const button of addButtons) {
+    if (await ensureVisible(button)) {
+      await button.click({ timeout: 1_500 }).catch(() => undefined);
+      await page.waitForTimeout(200);
+      return;
+    }
+  }
+
+  // 回退：很多版本是点击“文章标签”区域后才展开输入框（不一定有明显的 + / 添加按钮）。
+  const tagAreas = [
+    dialog.locator(".mark_selection_box").first(),
+    dialog.locator(".mark_selection, .mark_selection_title_el_tag").first(),
+    dialog.locator("div:has-text('文章标签')").first(),
+  ];
+  for (const area of tagAreas) {
+    if (await ensureVisible(area)) {
+      await area.click({ timeout: 1_500 }).catch(() => undefined);
+      await page.waitForTimeout(200);
+      const input = await findTagInput(dialog);
+      if (input) return;
+    }
+  }
+}
+
+async function findTagEditorScope(page: Page, publishScope: Locator): Promise<Locator> {
+  // 某些版本点击“添加文章标签”会打开二级弹窗，需要在弹窗里选完再“确定”。
+  // 新版可能是“标签”选择器弹窗（输入框提示 Enter 可添加自定义标签），右上角 X 关闭。
+  const tagPicker = page.getByRole("dialog")
+    .filter({ has: page.locator("input[placeholder*='Enter']") })
+    .first();
+  if (await ensureVisible(tagPicker)) return tagPicker;
+
+  const overlay = page.getByRole("dialog")
+    .filter({ hasText: /文章标签/ })
+    .filter({ has: page.getByRole("button", { name: /确定|完成|确认/ }) })
+    .first();
+  if (await ensureVisible(overlay)) return overlay;
+  return publishScope;
+}
+
+async function maybeConfirmTagSelection(scope: Locator): Promise<void> {
+  const confirm = scope.getByRole("button", { name: /确定|完成|确认/ }).last();
+  if (await ensureVisible(confirm)) {
+    await confirm.click({ timeout: 2_000 }).catch(() => undefined);
+  }
+}
+
+async function closeTagEditorIfNeeded(page: Page, scope: Locator, publishScope: Locator): Promise<void> {
+  if (scope === publishScope) return;
+
+  // 1) 有“确定/完成/确认”按钮的弹窗
+  const confirm = scope.getByRole("button", { name: /确定|完成|确认/ }).last();
+  if (await ensureVisible(confirm)) {
+    await confirm.click({ timeout: 2_000 }).catch(() => undefined);
+    await page.waitForTimeout(200);
+    return;
+  }
+
+  // 2) 只有右上角 X 的“标签”选择器弹窗
+  const closeCandidates = [
+    scope.locator("button[aria-label*='关闭'], button[aria-label*='close']").first(),
+    scope.locator(".el-dialog__headerbtn, .el_mcm-dialog__headerbtn").first(),
+    scope.locator(".el-dialog__close, .el_mcm-dialog__close").first(),
+    scope.locator("button").filter({ hasText: /^×$/ }).first(),
+  ];
+  for (const candidate of closeCandidates) {
+    if (await ensureVisible(candidate)) {
+      await candidate.click({ timeout: 2_000 }).catch(() => undefined);
+      await page.waitForTimeout(200);
+      return;
+    }
+  }
+
+  // 最后兜底：Esc
+  await page.keyboard.press("Escape").catch(() => undefined);
+  await page.waitForTimeout(200);
+}
+
+async function tryClickTagChip(dialog: Locator, tag: string): Promise<boolean> {
+  const pattern = new RegExp(`^${tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}$`);
+  const candidate = dialog.locator("button, a, li, span, div, label").filter({ hasText: pattern }).first();
+  if (await ensureVisible(candidate)) {
+    await candidate.click({ timeout: 1_500 }).catch(() => undefined);
+    return true;
+  }
+  return false;
+}
+
+function parseCsdnTagsValue(raw: string): string[] {
+  const trimmed = raw.trim();
+  if (!trimmed) return [];
+  // 有些情况下可能是 JSON 字符串或逗号分隔字符串。
+  if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) {
+        return parsed.map((v) => String(v).trim()).filter(Boolean);
+      }
+    } catch {
+      // ignore
+    }
+  }
+  return trimmed
+    .split(/[\s,，;；]+/g)
+    .map((t) => t.trim())
+    .filter(Boolean);
+}
+
+async function getPersistedTagsFromDialog(dialog: Locator): Promise<Set<string> | null> {
+  const raw = await readHiddenInputValue(dialog, "tags");
+  if (raw === undefined) return null;
+  const tags = parseCsdnTagsValue(raw);
+  return new Set(tags);
+}
+
+async function isTagSelected(publishDialog: Locator, tag: string, extraScope?: Locator): Promise<boolean> {
+  // 选中后的 tag 文案往往会带“×/关闭”图标，严格的空白边界会误判。
+  const escaped = tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const pattern = new RegExp(escaped);
+
+  const containers: Locator[] = [];
+  const mainContainer = publishDialog.locator("div:has-text('文章标签'), .mark_selection, .mark_selection_title_el_tag").first();
+  if (await ensureVisible(mainContainer)) containers.push(mainContainer);
+  containers.push(publishDialog);
+  if (extraScope && extraScope !== publishDialog) containers.push(extraScope);
+
+  for (const container of containers) {
+    const chip = container.locator("span, div, a, button").filter({ hasText: pattern }).first();
+    if (await ensureVisible(chip)) return true;
+  }
+
+  // 真正提交一般会读取隐藏字段 name=tags；这是“是否回写/落库”的更可靠信号。
+  const persisted = await getPersistedTagsFromDialog(publishDialog);
+  if (persisted && persisted.has(tag)) return true;
+
+  return false;
+}
+
+async function findTagSuggestionOption(page: Page, tag: string): Promise<Locator | null> {
+  const escaped = tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const pattern = new RegExp(`^${escaped}$`);
+  const candidates = [
+    // CSDN 当前版本使用 el_mcm 前缀（Element Plus 定制版）
+    page.locator(".el_mcm-autocomplete-suggestion li").filter({ hasText: pattern }).first(),
+    page.locator(".el_mcm-autocomplete-suggestion__list li").filter({ hasText: pattern }).first(),
+    page.locator(".el_mcm-scrollbar__view li[role='option']").filter({ hasText: pattern }).first(),
+    page.locator(".el_mcm-scrollbar__view li").filter({ hasText: pattern }).first(),
+    page.locator(".el_mcm-select-dropdown__item").filter({ hasText: pattern }).first(),
+    page.locator(".el-select-dropdown__item").filter({ hasText: pattern }).first(),
+    page.locator(".el-autocomplete-suggestion li").filter({ hasText: pattern }).first(),
+    page.locator(".ant-select-item-option").filter({ hasText: pattern }).first(),
+    page.locator("li[role='option'], div[role='option']").filter({ hasText: pattern }).first(),
+  ];
+  for (const candidate of candidates) {
+    if (await ensureVisible(candidate)) return candidate;
+  }
+
+  // 回退：很多时候候选项会带前后空白或附加信息，允许包含匹配。
+  const fuzzy = new RegExp(escaped);
+  const fuzzyCandidates = [
+    page.locator(".el_mcm-autocomplete-suggestion li").filter({ hasText: fuzzy }).first(),
+    page.locator(".el_mcm-autocomplete-suggestion__list li").filter({ hasText: fuzzy }).first(),
+    page.locator(".el-autocomplete-suggestion li").filter({ hasText: fuzzy }).first(),
+    page.locator(".ant-select-item-option").filter({ hasText: fuzzy }).first(),
+    page.locator("li[role='option'], div[role='option']").filter({ hasText: fuzzy }).first(),
+  ];
+  for (const candidate of fuzzyCandidates) {
+    if (await ensureVisible(candidate)) return candidate;
+  }
+
+  return null;
+}
+
+async function waitForTagSuggestionOption(page: Page, tag: string, timeoutMs: number): Promise<Locator | null> {
+  const deadline = Date.now() + Math.min(timeoutMs, 2_000);
+  while (Date.now() < deadline) {
+    const option = await findTagSuggestionOption(page, tag);
+    if (option) return option;
+    await page.waitForTimeout(100).catch(() => undefined);
+  }
+  return null;
+}
+
+async function readHiddenInputValue(scope: Locator, name: string): Promise<string | undefined> {
+  const input = scope.locator(`input[type='hidden'][name='${name}']`).first();
+  if (!(await ensureVisible(input))) return undefined;
+  const value = await input.evaluate((el) => (el as HTMLInputElement).value).catch(() => "");
+  return value ?? undefined;
+}
+
+async function tryFillPublishDialogTags(page: Page, dialog: Locator, tags: string[], warnings: string[]): Promise<void> {
+  if (tags.length === 0) return;
+
+  const normalizedRequested = tags.map((t) => t.trim()).filter(Boolean);
+  if (normalizedRequested.length === 0) return;
+
+  let scope: Locator = dialog;
+  let input = await findTagInput(scope);
+  if (!input) {
+    await ensureTagEditorOpen(page, dialog);
+    scope = await findTagEditorScope(page, dialog);
+    await page.waitForTimeout(200);
+    input = await findTagInput(scope);
+  }
+
+  if (!input) {
+    // 某些版本的 UI 是直接点“推荐标签/标签 chip”完成选择。
+    let pickedAny = false;
+    for (const tag of tags) {
+      const trimmed = tag.trim();
+      if (!trimmed) continue;
+      const picked = await tryClickTagChip(dialog, trimmed);
+      pickedAny = pickedAny || picked;
+    }
+    if (!pickedAny) {
+      warnings.push(`未定位到文章标签输入框，已跳过自动选择标签：${tags.join(", ")}`);
+    }
+    return;
+  }
+
+  for (const tag of normalizedRequested) {
+    const trimmed = tag.trim();
+    if (!trimmed) continue;
+    try {
+      if (await isTagSelected(dialog, trimmed, scope)) {
+        continue;
+      }
+
+      // 选中一个标签后，标签编辑区域可能自动收起；每次都确保输入框仍可用。
+      if (!input || !(await ensureVisible(input))) {
+        await ensureTagEditorOpen(page, dialog);
+        scope = await findTagEditorScope(page, dialog);
+        await page.waitForTimeout(200);
+        input = await findTagInput(scope);
+      }
+
+      // 优先：在标签编辑区域内直接点击可见的推荐/候选项。
+      const escaped = trimmed.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const directOption = scope.locator("button, .tag__btn-tag, .el-tag, li, span")
+        .filter({ hasText: new RegExp(escaped, "i") })
+        .first();
+      if (await ensureVisible(directOption)) {
+        await directOption.click({ timeout: 1_500 }).catch(() => undefined);
+        await page.waitForTimeout(200);
+        if (await isTagSelected(dialog, trimmed, scope)) {
+          continue;
+        }
+      }
+
+      if (!input) {
+        throw new Error("tag input not found");
+      }
+
+      // 再次确认：避免误命中“无声明”等不可编辑 input 导致长时间卡住。
+      if (!(await input.isEditable({ timeout: 1_000 }).catch(() => false))) {
+        throw new Error("tag input not editable");
+      }
+
+      await input.click({ timeout: 1_000 }).catch(() => undefined);
+      await input.fill("", { timeout: 2_000 }).catch(() => undefined);
+      await input.fill(trimmed, { timeout: 2_000 }).catch(async () => {
+        await page.keyboard.insertText(trimmed);
+      });
+
+      // 优先点击精确匹配的建议项，其次回退为 Enter 生成 tag chip。
+      const option = await waitForTagSuggestionOption(page, trimmed, 1_200);
+      if (option) {
+        await option.click({ timeout: 1_500 }).catch(() => undefined);
+
+        // 某些 UI 点击候选项后仍需 Enter 才会生成/确认选中。
+        await page.waitForTimeout(150);
+        if (!(await isTagSelected(dialog, trimmed, scope))) {
+          await page.keyboard.press("Enter").catch(() => undefined);
+        }
+      } else {
+        // 自定义标签：无候选项时，必须 Enter 才会真正添加。
+        await page.keyboard.press("Enter").catch(() => undefined);
+        await page.waitForTimeout(150);
+
+        // 若仍未生成 chip，再回退到“下选第一项 + Enter”。
+        if (!(await isTagSelected(dialog, trimmed, scope))) {
+          await page.keyboard.press("ArrowDown").catch(() => undefined);
+          await page.keyboard.press("Enter").catch(() => undefined);
+        }
+      }
+
+      await page.waitForTimeout(200);
+
+      // 最后验证：如果仍没生成 chip，再尝试点击推荐 chip。
+      if (!(await isTagSelected(dialog, trimmed, scope))) {
+        await tryClickTagChip(dialog, trimmed);
+        await page.waitForTimeout(150);
+      }
+
+      if (!(await isTagSelected(dialog, trimmed, scope))) {
+        warnings.push(`标签 ${trimmed} 未确认被选中（UI/隐藏字段均未检测到），可能需要手动补充。`);
+      }
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : String(error);
+      warnings.push(`标签 ${trimmed} 选择失败，可能需要手动补充。（${detail}）`);
+    }
+  }
+
+  // 如果标签是在二级弹窗里操作的，通常还需要点一次“确定/完成”回写到发布面板。
+  if (scope !== dialog) {
+    await closeTagEditorIfNeeded(page, scope, dialog).catch(() => undefined);
+    await page.waitForTimeout(300);
+  }
+
+  // 额外硬校验：CSDN 发布面板通常有隐藏字段 name=tags，真正提交时会读取它。
+  // 若缺失/为空/缺少部分标签，做一次补救重试（只重试缺失项，且只重试一次）。
+  const persistedBeforeRetry = await getPersistedTagsFromDialog(dialog);
+  if (persistedBeforeRetry && persistedBeforeRetry.size === 0) {
+    warnings.push("已尝试选择文章标签，但发布面板的隐藏字段 tags 仍为空；草稿可能不会保存标签。");
+  }
+
+  const missing = persistedBeforeRetry
+    ? normalizedRequested.filter((t) => !persistedBeforeRetry.has(t))
+    : [];
+
+  if (missing.length > 0) {
+    await ensureTagEditorOpen(page, dialog);
+    const retryScope = await findTagEditorScope(page, dialog);
+    await page.waitForTimeout(200);
+    const retryInput = await findTagInput(retryScope);
+
+    if (retryInput) {
+      for (const tag of missing) {
+        if (!(await retryInput.isEditable({ timeout: 1_000 }).catch(() => false))) {
+          warnings.push("标签输入框不可编辑（可能误命中只读字段），已跳过缺失标签的自动重试。"
+          );
+          break;
+        }
+        await retryInput.click({ timeout: 1_000 }).catch(() => undefined);
+        await retryInput.fill("", { timeout: 2_000 }).catch(() => undefined);
+        await retryInput.fill(tag, { timeout: 2_000 }).catch(async () => {
+          await page.keyboard.insertText(tag);
+        });
+
+        const option = await waitForTagSuggestionOption(page, tag, 1_200);
+        if (option) {
+          await option.click({ timeout: 1_500 }).catch(() => undefined);
+        } else {
+          await page.keyboard.press("Enter").catch(() => undefined);
+        }
+
+        await page.waitForTimeout(200);
+      }
+
+      if (retryScope !== dialog) {
+        await closeTagEditorIfNeeded(page, retryScope, dialog).catch(() => undefined);
+        await page.waitForTimeout(400);
+      }
+    }
+
+    const persistedAfterRetry = await getPersistedTagsFromDialog(dialog);
+    if (persistedAfterRetry) {
+      const stillMissing = normalizedRequested.filter((t) => !persistedAfterRetry.has(t));
+      for (const tag of stillMissing) {
+        warnings.push(`标签 ${tag} 未写入隐藏字段 tags（当前值：${Array.from(persistedAfterRetry).join(", ") || "<empty>"}），草稿可能不会保存该标签。`);
+      }
+    }
+  }
+}
+
+async function maybeConfirmCoverUpload(page: Page): Promise<boolean> {
+  // “图片编辑”弹窗里的“确认上传”有时不是 button，而是 div.vicp-operate-btn。
+  const confirmButton = page.getByRole("button", { name: /确认上传/ }).last();
+  const confirmDiv = page.locator(".vicp-operate-btn").filter({ hasText: /确认上传/ }).last();
+  const confirmTextTarget = page.locator("div, span").filter({ hasText: /^确认上传$/ }).last();
+  const dialogTitle = page.getByText(/图片编辑/).first();
+
+  const deadline = Date.now() + 12_000;
+  while (Date.now() < deadline) {
+    const titleVisible = await ensureVisible(dialogTitle);
+    const buttonVisible = await ensureVisible(confirmButton);
+    const divVisible = await ensureVisible(confirmDiv);
+    const textVisible = await ensureVisible(confirmTextTarget);
+    if (titleVisible || buttonVisible || divVisible || textVisible) {
+      if (buttonVisible) {
+        await confirmButton.click({ timeout: 2_000 }).catch(() => undefined);
+      } else if (divVisible) {
+        await confirmDiv.click({ timeout: 2_000 }).catch(() => undefined);
+      } else if (textVisible) {
+        await confirmTextTarget.click({ timeout: 2_000 }).catch(() => undefined);
+      }
+      await page.waitForTimeout(300);
+      // 等待对话框消失
+      const stillThere = await ensureVisible(dialogTitle);
+      if (!stillThere) return true;
+    }
+    await page.waitForTimeout(200);
+  }
+
+  return false;
+}
+
+async function isCoverPreviewVisible(dialog: Locator): Promise<boolean> {
+  // 发布面板通常会出现“封面图预览”或上传区域内出现 img 预览。
+  const previewText = dialog.getByText(/封面图预览/).first();
+  if (await ensureVisible(previewText)) return true;
+
+  // CSDN 真实 DOM：container-coverimage-box 下的 img.preview 会有 src。
+  const previewImg = dialog.locator(".container-coverimage-box img.preview, img.preview").first();
+  if (await ensureVisible(previewImg)) {
+    const src = await previewImg.getAttribute("src").catch(() => null);
+    if (src && src.trim()) return true;
+  }
+
+  const coverArea = dialog.locator("div:has-text('添加封面')").first();
+  const scope = await ensureVisible(coverArea) ? coverArea : dialog;
+  const img = scope.locator("img").first();
+  return ensureVisible(img);
+}
+
+async function waitForCoverPreview(page: Page, dialog: Locator, timeoutMs: number): Promise<boolean> {
+  const deadline = Date.now() + Math.min(timeoutMs, 12_000);
+  while (Date.now() < deadline) {
+    if (await isCoverPreviewVisible(dialog)) return true;
+    await page.waitForTimeout(250).catch(() => undefined);
+  }
+  return false;
+}
+
+async function tryUploadPublishDialogCover(page: Page, dialog: Locator, coverPath: string | undefined, warnings: string[]): Promise<boolean> {
+  if (!coverPath) return false;
+  // 封面上传控件在 .cover-upload-box 内，避免误命中编辑器其它 file input。
+  const input = dialog.locator(".cover-upload-box input[type='file'], .el_mcm-upload__input[type='file'], .el_mcm-upload input[type='file']").first();
+  const hasInput = await input.count().then((count) => count > 0).catch(() => false);
+  if (!hasInput) {
+    warnings.push(`未定位到封面上传控件，已跳过封面上传：${coverPath}`);
+    return false;
+  }
+
+  try {
+    await input.setInputFiles(coverPath);
+
+    // CSDN 可能弹出“图片编辑”对话框，需要点“确认上传”才能完成封面设置。
+    await maybeConfirmCoverUpload(page).catch(() => undefined);
+
+    // 给预览/回写一点时间（上传 + 裁剪确认后异步更新）。
+    const confirmed = await waitForCoverPreview(page, dialog, 10_000);
+    if (!confirmed) {
+      warnings.push("封面上传已执行，但未在发布面板中检测到封面预览；可能需要手动点击上传区域并确认。"
+      );
+    }
+
+    return true;
+  } catch (error) {
+    warnings.push(`封面上传失败：${error instanceof Error ? error.message : String(error)}`);
+    return false;
+  }
+}
+
+async function clickDialogSubmit(
+  page: Page,
+  dialog: Locator,
+  mode: "draft" | "publish",
+): Promise<{ clicked: boolean; detail?: string }> {
+  const patterns = mode === "draft"
+    ? [/^保存为草稿$/, /保存为草稿/, /^保存草稿$/, /保存草稿/, /保存到草稿箱/, /草稿箱/]
+    : [/^发布文章$/, /发布文章/, /^确认发布$/, /确认发布/];
+
+  const scopes: Array<{ name: string; scope: Locator | Page }> = [
+    { name: "dialog", scope: dialog },
+    // 某些版本的 footer 按钮不在 dialog DOM 子树内（例如 portal 到 body）
+    { name: "page", scope: page },
+  ];
+
+  const isPage = (value: Locator | Page): value is Page => {
+    return typeof (value as Page).getByRole === "function" && typeof (value as Page).locator === "function";
+  };
+
+  const describeLocator = async (locator: Locator): Promise<string> => {
+    const text = await locator.evaluate((el) => {
+      const value = (el as HTMLElement).innerText
+        || (el as HTMLElement).textContent
+        || (el as HTMLInputElement).value
+        || "";
+      return String(value).trim();
+    }).catch(() => "");
+    const tag = await locator.evaluate((el) => (el as HTMLElement).tagName.toLowerCase()).catch(() => "");
+    const aria = await locator.getAttribute("aria-label").catch(() => null);
+    const cls = await locator.getAttribute("class").catch(() => null);
+    return [tag || "node", text ? `text=${JSON.stringify(text)}` : undefined, aria ? `aria=${JSON.stringify(aria)}` : undefined, cls ? `class=${JSON.stringify(cls)}` : undefined]
+      .filter(Boolean)
+      .join(" ");
+  };
+
+  const clickFirstVisible = async (candidate: Locator): Promise<{ ok: boolean; clickedText?: string }> => {
+    const count = await candidate.count().catch(() => 0);
+    const limit = Math.min(count, 20);
+    for (let i = 0; i < limit; i += 1) {
+      const item = candidate.nth(i);
+      if (!(await ensureVisible(item))) continue;
+      try {
+        await item.click({ timeout: 2_000 });
+        return { ok: true, clickedText: await describeLocator(item) };
+      } catch {
+        // try next
+      }
+    }
+    return { ok: false };
+  };
+
+  const getByRole = (scope: Locator | Page, name: RegExp): Locator => {
+    return isPage(scope)
+      ? scope.getByRole("button", { name })
+      : scope.getByRole("button", { name });
+  };
+
+  const locatorByText = (scope: Locator | Page, pattern: RegExp): Locator => {
+    return isPage(scope)
+      ? scope.locator("button, a, span, div").filter({ hasText: pattern })
+      : scope.locator("button, a, span, div").filter({ hasText: pattern });
+  };
+
+  // 额外兜底：某些版本 footer 按钮挂在 dialog footer 容器里。
+  if (mode === "draft") {
+    const footerDraftButtons = page.locator(
+      ".el-dialog__footer button, .el_mcm-dialog__footer button, .dialog-footer button"
+    ).filter({ hasText: /草稿/ });
+    const r = await clickFirstVisible(footerDraftButtons);
+    if (r.ok) return { clicked: true, detail: `scope=footer pattern=/草稿/ ${r.clickedText ?? ""}`.trim() };
+  }
+
+  for (const { scope } of scopes) {
+    for (const pattern of patterns) {
+      const button = getByRole(scope, pattern);
+      const r = await clickFirstVisible(button);
+      if (r.ok) {
+        return { clicked: true, detail: `scope=${isPage(scope) ? "page" : "dialog"} byRole pattern=${pattern} ${r.clickedText ?? ""}`.trim() };
+      }
+    }
+
+    // role=button 不可靠时，退化为按文本点击。
+    for (const pattern of patterns) {
+      const textTarget = locatorByText(scope, pattern);
+      const r = await clickFirstVisible(textTarget);
+      if (r.ok) {
+        return { clicked: true, detail: `scope=${isPage(scope) ? "page" : "dialog"} byText pattern=${pattern} ${r.clickedText ?? ""}`.trim() };
+      }
+    }
+  }
+
+  return { clicked: false };
+}
+
+async function findSuccessToastText(page: Page, mode: "draft" | "publish"): Promise<string | undefined> {
+  const successTexts = mode === "draft"
+    ? ["草稿保存成功", "保存成功"]
+    : ["发布成功", "发布成功！", "文章发布成功"];
+  for (const text of successTexts) {
+    const locator = page.getByText(text).first();
+    if (await ensureVisible(locator)) {
+      return text;
+    }
+  }
+  return undefined;
+}
+
+async function submitViaPublishDialog(
+  page: Page,
+  request: PublishRequest,
+  warnings: string[],
+  capturedResponses: Array<{ url: string; status: number; payload: unknown }>,
+): Promise<{ success: boolean; message?: string }> {
+  const opened = await openPublishDialog(page);
+  if (!opened) {
+    if (request.mode === "draft") {
+      warnings.push("未定位到右下角发布按钮，回退到编辑器页的“保存草稿”按钮。标签/封面未自动处理。");
+      return submitDraft(page, request.timeoutMs);
+    }
+    throw new Error("Publish dialog trigger button not found. Try running with --headful and inspect the current editor layout.");
+  }
+
+  const dialog = await waitForPublishDialog(page, request.timeoutMs);
+  if (!dialog) {
+    if (request.mode === "draft") {
+      warnings.push("发布弹窗未弹出，回退到编辑器页的“保存草稿”按钮。标签/封面未自动处理。");
+      return submitDraft(page, request.timeoutMs);
+    }
+    throw new Error("Publish dialog not found after clicking 发布文章. Try running with --headful and inspect the current editor layout.");
+  }
+
+  await tryFillPublishDialogSummary(dialog, request.article.summary).catch(() => undefined);
+  await trySetPublishDialogOriginalFlag(dialog, request.article.original).catch(() => undefined);
+  await tryFillPublishDialogCategory(page, dialog, request.article.category, warnings).catch(() => undefined);
+  await tryFillPublishDialogTags(page, dialog, request.article.tags, warnings);
+  await tryUploadPublishDialogCover(page, dialog, request.coverPath, warnings);
+
+  // 先挂 waitForResponse 再点击，避免响应过快导致漏捕。
+  const responseStartIndex = capturedResponses.length;
+  const responsePromise = page.waitForResponse(async (response) => {
+    const url = response.url();
+    if (!response.ok()) return false;
+    if (request.mode === "draft") {
+      // 草稿：保存可能走 saveArticle，但不一定返回 url/toast。
+      if (!isDraftSaveUrl(url)) return false;
+      const payload = await safeParseResponse(response);
+      return isDraftSavePayload(payload) || looksSuccessful(payload);
+    }
+
+    const lower = url.toLowerCase();
+    if (!lower.includes("csdn.net")) return false;
+    if (!["publish", "release", "post"].some((token) => lower.includes(token))) return false;
+    const payload = await safeParseResponse(response);
+    return looksSuccessful(payload) || isDraftSavePayload(payload);
+  }, { timeout: Math.min(request.timeoutMs, 20_000) }).then(() => true).catch(() => false);
+
+  const clickResult = await clickDialogSubmit(page, dialog, request.mode);
+  if (!clickResult.clicked) {
+    throw new Error(`Submit button not found in publish dialog for mode=${request.mode}.`);
+  }
+
+  warnings.push(`已点击提交按钮（mode=${request.mode}）：${clickResult.detail ?? "<unknown>"}`);
+
+  const responseMatched = await responsePromise;
+
+  // 给 UI/请求一点回写时间；某些版本不会出现 toast，也不会自动关闭弹窗。
+  await page.waitForTimeout(800);
+  await page.waitForLoadState("networkidle", { timeout: Math.min(request.timeoutMs, 8_000) }).catch(() => undefined);
+  await page.waitForTimeout(600);
+  const message = await findSuccessToastText(page, request.mode);
+
+  // 回退成功判定：如果接口没被准确捕获，但已经能从响应里抽到 articleId，也视为成功。
+  const info = extractPublishInfo(capturedResponses);
+  const urlHasArticleId = /[?&]articleId=\d+/.test(page.url());
+
+  const postClickResponses = capturedResponses.slice(responseStartIndex);
+  const sawDraftNetwork = request.mode === "draft"
+    ? postClickResponses.some((r) => isDraftSaveUrl(r.url) || isDraftRelatedUrl(r.url))
+    : false;
+
+  // 草稿模式特殊兜底：有些账号/版本点击“保存为草稿”不会弹提示，也可能不触发可捕获的保存响应，
+  // 但标签/封面等会在面板字段回写且最终落库。此时用“字段回写”作为成功信号，避免误判失败/卡住。
+  let persistedFallbackOk = false;
+  if (request.mode === "draft") {
+    const requestedTags = request.article.tags.map((t) => t.trim()).filter(Boolean);
+    // 有些版本没有 hidden input[name=tags]，因此优先用“可见标签 chip”判断是否已回写。
+    const tagsOk = requestedTags.length === 0
+      ? true
+      : (await Promise.all(requestedTags.map((t) => isTagSelected(dialog, t)))).every(Boolean);
+
+    // 封面预览在不同版本 DOM 差异较大，可能存在假阴性；因此不把它作为失败条件，但会输出 warning。
+    const coverVisible = request.coverPath ? await isCoverPreviewVisible(dialog) : true;
+    if (request.coverPath && !coverVisible) {
+      warnings.push("已执行封面上传，但未在发布弹窗中检测到封面预览；如果草稿箱没有封面，请手动补充或重试。"
+      );
+    }
+
+    // 仅凭“标签 chip 可见”可能会出现误判（例如其实没点到保存按钮），因此要求至少观察到一次保存/草稿相关网络活动。
+    persistedFallbackOk = Boolean(tagsOk && sawDraftNetwork);
+    if (persistedFallbackOk && !responseMatched && !message && !info.articleId && !urlHasArticleId) {
+      warnings.push("未捕获到明确的草稿保存接口响应/成功提示，已基于发布面板字段回写（标签/封面）判定为成功。若草稿箱未出现，请手动确认或重试。"
+      );
+    }
+  }
+
+  const success = request.mode === "draft"
+    ? (responseMatched || Boolean(message) || Boolean(info.articleId) || urlHasArticleId || persistedFallbackOk)
+    : (responseMatched || Boolean(message));
+
+  if (request.mode === "draft" && success) {
+    await closePublishDialogIfNeeded(page, dialog).catch(() => undefined);
+  }
+
+  return { success, message };
+}
+
 export async function publishArticle(request: PublishRequest): Promise<PublishResult> {
   const { browser, context } = await createAuthenticatedContext(request.authFile, request.headless);
   const page = await context.newPage();
   const capturedResponses: Array<{ url: string; status: number; payload: unknown }> = [];
   const warnings: string[] = [];
+
+  // 让 --timeout 真正对所有 Playwright 动作生效（fill/click/isEditable 等），避免卡在发布弹窗里“看似不动”。
+  page.setDefaultTimeout(request.timeoutMs);
+  page.setDefaultNavigationTimeout(request.timeoutMs);
 
   page.on("response", async (response) => {
     const url = response.url().toLowerCase();
@@ -811,59 +1739,63 @@ export async function publishArticle(request: PublishRequest): Promise<PublishRe
     });
   });
 
-  await page.goto(EDITOR_URL, { waitUntil: "domcontentloaded", timeout: request.timeoutMs });
-  await page.waitForLoadState("networkidle", { timeout: request.timeoutMs }).catch(() => undefined);
-  await dismissEditorOverlays(page);
+  try {
+    await page.goto(EDITOR_URL, { waitUntil: "domcontentloaded", timeout: request.timeoutMs });
+    await page.waitForLoadState("networkidle", { timeout: request.timeoutMs }).catch(() => undefined);
+    await dismissEditorOverlays(page);
 
-  const loginIssue = detectLoginIssue([{
-    finalUrl: page.url(),
-    pageTitle: await page.title().catch(() => ""),
-    bodyPreview: await safePageText(page, "body"),
-  }]);
-  if (loginIssue) {
-    await context.close();
-    await browser.close();
-    throw new Error(loginIssue);
+    const loginIssue = detectLoginIssue([{
+      finalUrl: page.url(),
+      pageTitle: await page.title().catch(() => ""),
+      bodyPreview: await safePageText(page, "body"),
+    }]);
+    if (loginIssue) {
+      throw new Error(loginIssue);
+    }
+
+    const titleFilled = await fillTitle(page, request.article.title || "");
+    if (!titleFilled) {
+      throw new Error("Title input not found in CSDN editor.");
+    }
+
+    const bodyFilled = await typeInEditor(page, request.article.body);
+    if (!bodyFilled) {
+      throw new Error("Markdown editor input not found in CSDN editor.");
+    }
+
+    await maybeFillMetadata(page, request.article, warnings);
+    const submitResult = await submitViaPublishDialog(page, request, warnings, capturedResponses);
+
+    const info = extractPublishInfo(capturedResponses);
+    const finalUrl = page.url();
+
+    return {
+      generatedAt: new Date().toISOString(),
+      mode: request.mode,
+      title: request.article.title || "",
+      summary: request.article.summary,
+      category: request.article.category,
+      tags: request.article.tags,
+      original: request.article.original,
+      finalUrl,
+      articleId: info.articleId,
+      articleUrl: info.articleUrl,
+      success: submitResult.success,
+      message: submitResult.message || (submitResult.success
+        ? (request.mode === "publish" ? "发布成功" : "草稿保存成功")
+        : "未检测到明确的保存/发布请求或成功提示"),
+      warnings,
+      capturedResponses,
+    };
+  } finally {
+    await Promise.race([
+      context.close(),
+      page.waitForTimeout(3_000).then(() => undefined),
+    ]).catch(() => undefined);
+    await Promise.race([
+      browser.close(),
+      page.waitForTimeout(3_000).then(() => undefined),
+    ]).catch(() => undefined);
   }
-
-  const titleFilled = await fillTitle(page, request.article.title || "");
-  if (!titleFilled) {
-    await context.close();
-    await browser.close();
-    throw new Error("Title input not found in CSDN editor.");
-  }
-
-  const bodyFilled = await typeInEditor(page, request.article.body);
-  if (!bodyFilled) {
-    await context.close();
-    await browser.close();
-    throw new Error("Markdown editor input not found in CSDN editor.");
-  }
-
-  await maybeFillMetadata(page, request.article, warnings);
-  const draftResult = await submitDraft(page, request.timeoutMs);
-
-  const info = extractPublishInfo(capturedResponses);
-  const finalUrl = page.url();
-
-  await context.close();
-  await browser.close();
-
-  return {
-    generatedAt: new Date().toISOString(),
-    mode: request.mode,
-    title: request.article.title || "",
-    summary: request.article.summary,
-    category: request.article.category,
-    tags: request.article.tags,
-    original: request.article.original,
-    finalUrl,
-    articleId: info.articleId,
-    articleUrl: info.articleUrl,
-    success: draftResult.success,
-    message: draftResult.message || info.message || (draftResult.success ? "草稿保存成功" : "未检测到明确的草稿保存成功信号"),
-    warnings,
-    capturedResponses,
-  };
 }
 

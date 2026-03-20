@@ -408,9 +408,16 @@ export function readArticleInput(filePath: string, options: PostCliOptions): Art
       : [];
   const tags = options.tags.length > 0 ? options.tags : frontmatterTags;
 
+  let finalContent = parsed.content.trim();
+  const headingRegex = /^\s*#\s+(.+)$/m;
+  const match = finalContent.match(headingRegex);
+  if (match && match[1].trim() === title) {
+    finalContent = finalContent.replace(match[0], "").trim();
+  }
+
   return {
     filePath: resolvedPath,
-    content: parsed.content.trim(),
+    content: finalContent,
     frontmatter,
     title,
     tags,

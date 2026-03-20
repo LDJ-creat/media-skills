@@ -70,6 +70,12 @@ default_save_raw: true
 default_timeout_ms: 30000
 cookie_file_name: cookies.json
 storage_state_file_name: storageState.json
+
+You can also set:
+
+```md
+default_post_mode: publish
+```
 ```
 
 ## 5. Quick verification
@@ -87,4 +93,8 @@ npx tsx fetch-analytics.ts --page both --state ../.auth/storageState.json --save
 
 ```bash
 npx tsx post-article.ts --file ../example.md --draft --state ../.auth/storageState.json --output ../output
+```
+
+```bash
+npx tsx post-article.ts --file ../example.md --publish --tags typescript,playwright --cover ../cover.png --state ../.auth/storageState.json --output ../output
 ```
