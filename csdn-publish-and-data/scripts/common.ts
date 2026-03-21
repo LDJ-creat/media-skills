@@ -10,13 +10,11 @@ import type {
   AuthFileRef,
   PageType,
   PostCliOptions,
-  PostMode,
   SkillConfig,
 } from "./types";
 
 const DEFAULT_CONFIG: SkillConfig = {
   defaultOutputDir: "./csdn-output",
-  defaultPostMode: "draft",
   defaultCategories: [],
   defaultTags: [],
   defaultOriginalFlag: true,
@@ -151,12 +149,6 @@ export function loadSkillConfig(): SkillConfig {
   if (parsed.default_output_dir) {
     config.defaultOutputDir = parsed.default_output_dir;
   }
-  if (parsed.default_post_mode) {
-    const normalized = parsed.default_post_mode.toLowerCase() as PostMode;
-    if (normalized === "draft" || normalized === "publish") {
-      config.defaultPostMode = normalized;
-    }
-  }
   if (parsed.default_categories) {
     config.defaultCategories = parseList(parsed.default_categories);
   }
@@ -269,7 +261,6 @@ export function parsePostCliArgs(args: string[], config: SkillConfig): PostCliOp
     category: config.defaultCategories[0],
     tags: [...config.defaultTags],
     original: config.defaultOriginalFlag,
-    mode: config.defaultPostMode,
     coverPath: undefined,
   };
 
@@ -316,12 +307,11 @@ export function parsePostCliArgs(args: string[], config: SkillConfig): PostCliOp
       continue;
     }
     if (arg === "--draft") {
-      options.mode = "draft";
+      // Backward compatible no-op: draft is the only supported mode.
       continue;
     }
     if (arg === "--publish") {
-      options.mode = "publish";
-      continue;
+      throw new Error("Publishing is disabled: this skill only supports saving to draft.");
     }
     if (arg === "--cover" && next) {
       options.coverPath = next;
@@ -494,8 +484,7 @@ export function printPostUsage(scriptName: string): void {
     "  --cover <path>                  Optional cover image file path\n" +
     "  --original                      Mark as original\n" +
     "  --repost                        Mark as repost\n" +
-    "  --draft                         Save as draft\n" +
-    "  --publish                       Publish immediately\n" +
+    "  (always saves to draft)\n" +
     "  --output <dir>                  Output directory for result summary\n" +
     "  --state <path>                  Playwright storageState JSON path\n" +
     "  --cookie <path>                 Cookie JSON file path\n" +

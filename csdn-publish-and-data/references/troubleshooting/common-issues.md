@@ -61,7 +61,7 @@ Possible reasons:
 
 - account-specific dialog differs
 - controls are custom combobox widgets
-- tags and original/repost are intentionally left for manual publish
+- tag/original controls may be missing or rendered differently in the publish dialog
 
 Fix:
 

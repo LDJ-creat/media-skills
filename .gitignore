@@ -23,5 +23,5 @@ data
 storageState.json
 cookies.json
 __pycache__/
-output/
+output/*
 cover/

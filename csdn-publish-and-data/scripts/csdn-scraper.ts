@@ -1504,11 +1504,8 @@ async function tryUploadPublishDialogCover(page: Page, dialog: Locator, coverPat
 async function clickDialogSubmit(
   page: Page,
   dialog: Locator,
-  mode: "draft" | "publish",
 ): Promise<{ clicked: boolean; detail?: string }> {
-  const patterns = mode === "draft"
-    ? [/^保存为草稿$/, /保存为草稿/, /^保存草稿$/, /保存草稿/, /保存到草稿箱/, /草稿箱/]
-    : [/^发布文章$/, /发布文章/, /^确认发布$/, /确认发布/];
+  const patterns = [/^保存为草稿$/, /保存为草稿/, /^保存草稿$/, /保存草稿/, /保存到草稿箱/, /草稿箱/];
 
   const scopes: Array<{ name: string; scope: Locator | Page }> = [
     { name: "dialog", scope: dialog },
@@ -1565,13 +1562,11 @@ async function clickDialogSubmit(
   };
 
   // 额外兜底：某些版本 footer 按钮挂在 dialog footer 容器里。
-  if (mode === "draft") {
-    const footerDraftButtons = page.locator(
-      ".el-dialog__footer button, .el_mcm-dialog__footer button, .dialog-footer button"
-    ).filter({ hasText: /草稿/ });
-    const r = await clickFirstVisible(footerDraftButtons);
-    if (r.ok) return { clicked: true, detail: `scope=footer pattern=/草稿/ ${r.clickedText ?? ""}`.trim() };
-  }
+  const footerDraftButtons = page.locator(
+    ".el-dialog__footer button, .el_mcm-dialog__footer button, .dialog-footer button"
+  ).filter({ hasText: /草稿/ });
+  const r = await clickFirstVisible(footerDraftButtons);
+  if (r.ok) return { clicked: true, detail: `scope=footer pattern=/草稿/ ${r.clickedText ?? ""}`.trim() };
 
   for (const { scope } of scopes) {
     for (const pattern of patterns) {
@@ -1595,10 +1590,8 @@ async function clickDialogSubmit(
   return { clicked: false };
 }
 
-async function findSuccessToastText(page: Page, mode: "draft" | "publish"): Promise<string | undefined> {
-  const successTexts = mode === "draft"
-    ? ["草稿保存成功", "保存成功"]
-    : ["发布成功", "发布成功！", "文章发布成功"];
+async function findDraftSuccessToastText(page: Page): Promise<string | undefined> {
+  const successTexts = ["草稿保存成功", "保存成功"];
   for (const text of successTexts) {
     const locator = page.getByText(text).first();
     if (await ensureVisible(locator)) {
@@ -1616,20 +1609,14 @@ async function submitViaPublishDialog(
 ): Promise<{ success: boolean; message?: string }> {
   const opened = await openPublishDialog(page);
   if (!opened) {
-    if (request.mode === "draft") {
-      warnings.push("未定位到右下角发布按钮，回退到编辑器页的“保存草稿”按钮。标签/封面未自动处理。");
-      return submitDraft(page, request.timeoutMs);
-    }
-    throw new Error("Publish dialog trigger button not found. Try running with --headful and inspect the current editor layout.");
+    warnings.push("未定位到右下角发布按钮，回退到编辑器页的“保存草稿”按钮。标签/封面未自动处理。");
+    return submitDraft(page, request.timeoutMs);
   }
 
   const dialog = await waitForPublishDialog(page, request.timeoutMs);
   if (!dialog) {
-    if (request.mode === "draft") {
-      warnings.push("发布弹窗未弹出，回退到编辑器页的“保存草稿”按钮。标签/封面未自动处理。");
-      return submitDraft(page, request.timeoutMs);
-    }
-    throw new Error("Publish dialog not found after clicking 发布文章. Try running with --headful and inspect the current editor layout.");
+    warnings.push("发布弹窗未弹出，回退到编辑器页的“保存草稿”按钮。标签/封面未自动处理。");
+    return submitDraft(page, request.timeoutMs);
   }
 
   await tryFillPublishDialogSummary(dialog, request.article.summary).catch(() => undefined);
@@ -1643,26 +1630,18 @@ async function submitViaPublishDialog(
   const responsePromise = page.waitForResponse(async (response) => {
     const url = response.url();
     if (!response.ok()) return false;
-    if (request.mode === "draft") {
-      // 草稿：保存可能走 saveArticle，但不一定返回 url/toast。
-      if (!isDraftSaveUrl(url)) return false;
-      const payload = await safeParseResponse(response);
-      return isDraftSavePayload(payload) || looksSuccessful(payload);
-    }
-
-    const lower = url.toLowerCase();
-    if (!lower.includes("csdn.net")) return false;
-    if (!["publish", "release", "post"].some((token) => lower.includes(token))) return false;
+    // 草稿：保存可能走 saveArticle，但不一定返回 url/toast。
+    if (!isDraftSaveUrl(url)) return false;
     const payload = await safeParseResponse(response);
-    return looksSuccessful(payload) || isDraftSavePayload(payload);
+    return isDraftSavePayload(payload) || looksSuccessful(payload);
   }, { timeout: Math.min(request.timeoutMs, 20_000) }).then(() => true).catch(() => false);
 
-  const clickResult = await clickDialogSubmit(page, dialog, request.mode);
+  const clickResult = await clickDialogSubmit(page, dialog);
   if (!clickResult.clicked) {
-    throw new Error(`Submit button not found in publish dialog for mode=${request.mode}.`);
+    throw new Error("Draft submit button not found in publish dialog.");
   }
 
-  warnings.push(`已点击提交按钮（mode=${request.mode}）：${clickResult.detail ?? "<unknown>"}`);
+  warnings.push(`已点击“保存草稿”按钮：${clickResult.detail ?? "<unknown>"}`);
 
   const responseMatched = await responsePromise;
 
@@ -1670,47 +1649,40 @@ async function submitViaPublishDialog(
   await page.waitForTimeout(800);
   await page.waitForLoadState("networkidle", { timeout: Math.min(request.timeoutMs, 8_000) }).catch(() => undefined);
   await page.waitForTimeout(600);
-  const message = await findSuccessToastText(page, request.mode);
+  const message = await findDraftSuccessToastText(page);
 
   // 回退成功判定：如果接口没被准确捕获，但已经能从响应里抽到 articleId，也视为成功。
   const info = extractPublishInfo(capturedResponses);
   const urlHasArticleId = /[?&]articleId=\d+/.test(page.url());
 
   const postClickResponses = capturedResponses.slice(responseStartIndex);
-  const sawDraftNetwork = request.mode === "draft"
-    ? postClickResponses.some((r) => isDraftSaveUrl(r.url) || isDraftRelatedUrl(r.url))
-    : false;
+  const sawDraftNetwork = postClickResponses.some((r) => isDraftSaveUrl(r.url) || isDraftRelatedUrl(r.url));
 
   // 草稿模式特殊兜底：有些账号/版本点击“保存为草稿”不会弹提示，也可能不触发可捕获的保存响应，
   // 但标签/封面等会在面板字段回写且最终落库。此时用“字段回写”作为成功信号，避免误判失败/卡住。
-  let persistedFallbackOk = false;
-  if (request.mode === "draft") {
-    const requestedTags = request.article.tags.map((t) => t.trim()).filter(Boolean);
-    // 有些版本没有 hidden input[name=tags]，因此优先用“可见标签 chip”判断是否已回写。
-    const tagsOk = requestedTags.length === 0
-      ? true
-      : (await Promise.all(requestedTags.map((t) => isTagSelected(dialog, t)))).every(Boolean);
+  const requestedTags = request.article.tags.map((t) => t.trim()).filter(Boolean);
+  // 有些版本没有 hidden input[name=tags]，因此优先用“可见标签 chip”判断是否已回写。
+  const tagsOk = requestedTags.length === 0
+    ? true
+    : (await Promise.all(requestedTags.map((t) => isTagSelected(dialog, t)))).every(Boolean);
 
-    // 封面预览在不同版本 DOM 差异较大，可能存在假阴性；因此不把它作为失败条件，但会输出 warning。
-    const coverVisible = request.coverPath ? await isCoverPreviewVisible(dialog) : true;
-    if (request.coverPath && !coverVisible) {
-      warnings.push("已执行封面上传，但未在发布弹窗中检测到封面预览；如果草稿箱没有封面，请手动补充或重试。"
-      );
-    }
-
-    // 仅凭“标签 chip 可见”可能会出现误判（例如其实没点到保存按钮），因此要求至少观察到一次保存/草稿相关网络活动。
-    persistedFallbackOk = Boolean(tagsOk && sawDraftNetwork);
-    if (persistedFallbackOk && !responseMatched && !message && !info.articleId && !urlHasArticleId) {
-      warnings.push("未捕获到明确的草稿保存接口响应/成功提示，已基于发布面板字段回写（标签/封面）判定为成功。若草稿箱未出现，请手动确认或重试。"
-      );
-    }
+  // 封面预览在不同版本 DOM 差异较大，可能存在假阴性；因此不把它作为失败条件，但会输出 warning。
+  const coverVisible = request.coverPath ? await isCoverPreviewVisible(dialog) : true;
+  if (request.coverPath && !coverVisible) {
+    warnings.push("已执行封面上传，但未在发布弹窗中检测到封面预览；如果草稿箱没有封面，请手动补充或重试。"
+    );
   }
 
-  const success = request.mode === "draft"
-    ? (responseMatched || Boolean(message) || Boolean(info.articleId) || urlHasArticleId || persistedFallbackOk)
-    : (responseMatched || Boolean(message));
+  // 仅凭“标签 chip 可见”可能会出现误判（例如其实没点到保存按钮），因此要求至少观察到一次保存/草稿相关网络活动。
+  const persistedFallbackOk = Boolean(tagsOk && sawDraftNetwork);
+  if (persistedFallbackOk && !responseMatched && !message && !info.articleId && !urlHasArticleId) {
+    warnings.push("未捕获到明确的草稿保存接口响应/成功提示，已基于发布面板字段回写（标签/封面）判定为成功。若草稿箱未出现，请手动确认或重试。"
+    );
+  }
 
-  if (request.mode === "draft" && success) {
+  const success = responseMatched || Boolean(message) || Boolean(info.articleId) || urlHasArticleId || persistedFallbackOk;
+
+  if (success) {
     await closePublishDialogIfNeeded(page, dialog).catch(() => undefined);
   }
 
@@ -1771,7 +1743,7 @@ export async function publishArticle(request: PublishRequest): Promise<PublishRe
 
     return {
       generatedAt: new Date().toISOString(),
-      mode: request.mode,
+      mode: "draft",
       title: request.article.title || "",
       summary: request.article.summary,
       category: request.article.category,
@@ -1782,8 +1754,8 @@ export async function publishArticle(request: PublishRequest): Promise<PublishRe
       articleUrl: info.articleUrl,
       success: submitResult.success,
       message: submitResult.message || (submitResult.success
-        ? (request.mode === "publish" ? "发布成功" : "草稿保存成功")
-        : "未检测到明确的保存/发布请求或成功提示"),
+        ? "草稿保存成功"
+        : "未检测到明确的草稿保存请求或成功提示"),
       warnings,
       capturedResponses,
     };

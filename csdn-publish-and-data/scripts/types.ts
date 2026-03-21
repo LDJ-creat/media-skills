@@ -2,7 +2,7 @@ export type PageType = "analytics" | "manage" | "both";
 
 export type ConcretePageType = "analytics" | "manage";
 
-export type PostMode = "draft" | "publish";
+export type PostMode = "draft";
 
 export type AuthFileKind = "cookie" | "storage-state";
 
@@ -13,7 +13,6 @@ export interface AuthFileRef {
 
 export interface SkillConfig {
   defaultOutputDir: string;
-  defaultPostMode: PostMode;
   defaultCategories: string[];
   defaultTags: string[];
   defaultOriginalFlag: boolean;
@@ -48,7 +47,6 @@ export interface PostCliOptions {
   category?: string;
   tags: string[];
   original?: boolean;
-  mode: PostMode;
   coverPath?: string;
 }
 
@@ -196,7 +194,6 @@ export interface PublishRequest {
   authFile: AuthFileRef;
   headless: boolean;
   timeoutMs: number;
-  mode: PostMode;
   coverPath?: string;
 }
 

@@ -12,7 +12,6 @@ Match the user's language.
 ## Use This Skill For
 
 - Save a local Markdown file into the CSDN draft box.
-- Publish a local Markdown file directly to CSDN when explicitly requested.
 - Validate whether the current CSDN creator auth state is still usable.
 - Export Playwright storage state for later reuse.
 - Fetch creator analytics with a JSON report focused on overall metrics plus per-article summary and recent 7-day dynamics.
@@ -33,7 +32,7 @@ Resolve ${RUN_TS} like this:
 
 Pick exactly one path for the current request:
 
-- Post article (draft or publish): use `post-article.ts`.
+- Post article (draft only): use `post-article.ts`.
 - Fetch analytics: use `fetch-analytics.ts`.
 - Check auth only: use `check-login.ts`.
 - Export auth state only: use `export-storage-state.ts`.
@@ -99,18 +98,11 @@ Recommended command:
 npx tsx {baseDir}/scripts/post-article.ts --file <article.md> --draft --state <storageState.json>
 ```
 
-Direct publish:
-
-```bash
-npx tsx {baseDir}/scripts/post-article.ts --file <article.md> --publish --tags <a,b,c> --cover <cover.png> --state <storageState.json>
-```
-
 Rules:
 
 - Pass the original Markdown file directly.
 - Do not convert Markdown to HTML before calling the script.
 - By default, saves draft only.
-- For direct publish, pass `--publish` explicitly.
 - If the editor layout changes or selectors fail, rerun with `--headful` and inspect the current page.
 - If auth is already known-good, do not rerun dependency install or login check first.
 
@@ -231,5 +223,5 @@ npx tsx {baseDir}/scripts/export-storage-state.ts
 
 - Do not ask for account password, SMS code, or login QR secrets.
 - Do not commit cookies.json or storageState.json into git.
-- Draft save is always supported. Auto publish is supported only when the user explicitly requests `--publish`.
+- Draft save is always supported.
 - If CSDN introduces new required fields in the editor or publish dialog, stop after surfacing the missing selector or warning instead of guessing hidden values.

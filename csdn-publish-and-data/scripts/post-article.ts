@@ -56,7 +56,6 @@ async function main(): Promise<void> {
     authFile,
     headless: options.headless,
     timeoutMs: options.timeoutMs,
-    mode: options.mode,
     coverPath: options.coverPath,
   });
 

@@ -34,4 +34,4 @@ npx playwright install chromium
 ## Notes
 
 - Export storageState.json on a local desktop browser, then copy it to the server.
-- Validate with `check-environment.ts` and `check-login.ts` before running fetch or publish.
+- Validate with `check-environment.ts` and `check-login.ts` before running fetch or posting drafts.

@@ -47,14 +47,14 @@ Each fetch run creates:
   - commentCount
   - collectCount
 
-## Publish files
+## Post files
 
 Each draft-save run creates:
 
 - csdn-post-result-YYYYMMDD-HHMMSS.json
 - csdn-post-result-YYYYMMDD-HHMMSS.md
 
-### Publish JSON structure
+### Post JSON structure
 
 - generatedAt
 - mode

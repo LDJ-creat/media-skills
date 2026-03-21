@@ -49,7 +49,6 @@ Create EXTEND.md at one of these locations:
 Supported keys:
 
 - default_output_dir
-- default_post_mode
 - default_categories
 - default_tags
 - default_original_flag
@@ -62,7 +61,6 @@ Example:
 
 ```md
 default_output_dir: ./csdn-output
-default_post_mode: draft
 default_categories: 后端, 工具
 default_tags: typescript, playwright
 default_original_flag: true
@@ -70,12 +68,6 @@ default_save_raw: true
 default_timeout_ms: 30000
 cookie_file_name: cookies.json
 storage_state_file_name: storageState.json
-
-You can also set:
-
-```md
-default_post_mode: publish
-```
 ```
 
 ## 5. Quick verification
@@ -93,8 +85,4 @@ npx tsx fetch-analytics.ts --page both --state ../.auth/storageState.json --save
 
 ```bash
 npx tsx post-article.ts --file ../example.md --draft --state ../.auth/storageState.json --output ../output
-```
-
-```bash
-npx tsx post-article.ts --file ../example.md --publish --tags typescript,playwright --cover ../cover.png --state ../.auth/storageState.json --output ../output
 ```
