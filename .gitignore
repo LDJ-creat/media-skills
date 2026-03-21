@@ -25,3 +25,6 @@ cookies.json
 __pycache__/
 output/*
 cover/
+
+
+csdn-output/
