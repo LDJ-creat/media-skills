@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 import type { BrowserContext, BrowserContextOptions, Cookie, Locator, Page, Response } from "playwright";
 import { chromium } from "playwright";
 import {
@@ -478,6 +479,85 @@ async function clickSaveDraft(page: Page, timeoutMs: number): Promise<boolean> {
   return true;
 }
 
+async function uploadImagesInMarkdown(
+  page: Page,
+  markdown: string,
+  baseDir: string,
+  timeoutMs: number
+): Promise<{ markdown: string; warnings: string[] }> {
+  const warnings: string[] = [];
+  let updatedMarkdown = markdown;
+  
+  const imgRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+  const matches = [...markdown.matchAll(imgRegex)];
+  
+  if (matches.length === 0) {
+    return { markdown, warnings };
+  }
+
+  const uploadedUrls = new Map<string, string>();
+  const fileInput = page.locator("input[type='file'][accept*='image'], input[type='file']").first();
+  const hasInput = await fileInput.count().then(c => c > 0).catch(() => false);
+  
+  if (!hasInput) {
+    warnings.push("未定位到图片上传控件，无法上传本地图片。");
+    return { markdown, warnings };
+  }
+
+  for (const match of matches) {
+    const [fullMatch, altText, localPath] = match;
+    
+    if (localPath.startsWith("http://") || localPath.startsWith("https://") || localPath.startsWith("data:")) {
+      continue;
+    }
+    
+    const resolvedPath = path.resolve(baseDir, localPath);
+    if (!fs.existsSync(resolvedPath)) {
+      warnings.push(`本地图片不存在，跳过上传: ${resolvedPath}`);
+      continue;
+    }
+
+    if (uploadedUrls.has(resolvedPath)) {
+      const remoteUrl = uploadedUrls.get(resolvedPath)!;
+      updatedMarkdown = updatedMarkdown.replace(fullMatch, `![${altText}](${remoteUrl})`);
+      continue;
+    }
+
+    try {
+      const responsePromise = page.waitForResponse(async (res) => {
+        if (res.request().method() !== "POST") return false;
+        const url = res.url();
+        if (url.includes("bytedanceapi.com") || (url.includes("upload") && url.includes("image"))) {
+          try {
+            const json = await res.json();
+            if (json.Result && Array.isArray(json.Result.Results) && json.Result.Results[0]?.Uri) {
+              return true;
+            }
+          } catch(e) { }
+        }
+        return false;
+      }, { timeout: Math.min(timeoutMs, 15_000) });
+
+      await fileInput.setInputFiles(resolvedPath);
+      
+      const response = await responsePromise;
+      const json = await response.json();
+      const uri = json.Result.Results[0].Uri;
+      const remoteUrl = `https://p3-juejin.byteimg.com/${uri}~tplv-k3u1n-jj-mark:0:0:0:0:q75.image`;
+      
+      uploadedUrls.set(resolvedPath, remoteUrl);
+      updatedMarkdown = updatedMarkdown.replace(fullMatch, `![${altText}](${remoteUrl})`);
+      
+      await page.waitForTimeout(500);
+
+    } catch (e) {
+      warnings.push(`图片上传失败 ${localPath}: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  }
+
+  return { markdown: updatedMarkdown, warnings };
+}
+
 export async function postArticle(options: PublishOptions): Promise<PublishResult> {
   const { browser, context } = await createContext(options.authFile, options.headless);
   const page = await context.newPage();
@@ -493,7 +573,16 @@ export async function postArticle(options: PublishOptions): Promise<PublishResul
   }
 
   await fillTitle(page, options.article.title);
-  await fillBody(page, options.article.content);
+  
+  const baseDir = path.dirname(options.article.filePath);
+  const { markdown: updatedContent, warnings } = await uploadImagesInMarkdown(
+    page,
+    options.article.content,
+    baseDir,
+    options.timeoutMs
+  );
+  
+  await fillBody(page, updatedContent);
   const appliedTags = await applyTags(page, options.article.tags, options.timeoutMs);
   const appliedColumn = await applyColumn(page, options.article.column, options.timeoutMs);
   const appliedCover = await applyCover(page, options.article.cover);
@@ -519,6 +608,7 @@ export async function postArticle(options: PublishOptions): Promise<PublishResul
     appliedCover,
     visibility: appliedVisibility,
     message: "Draft flow completed",
+    warnings: warnings.length > 0 ? warnings : undefined,
   };
 
   await context.close();

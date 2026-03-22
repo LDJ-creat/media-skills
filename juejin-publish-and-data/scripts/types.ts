@@ -201,4 +201,5 @@ export interface PublishResult {
   appliedCover?: string;
   visibility?: string;
   message: string;
+  warnings?: string[];
 }
