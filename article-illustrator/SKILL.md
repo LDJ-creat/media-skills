@@ -92,14 +92,17 @@ ${BUN_X} {baoyu-image-gen-baseDir}/scripts/main.ts --promptfiles "output/{slug}/
 2. 用户审查：
    - **满意**：进入回写
    - **不满意某张**：用户说明修改意见 → 更新 `images/prompts/{id}.md` → 重新调用 `baoyu-image-gen` 生成该张
-3. 所有图片确认后，回写 `article.md`：在每个占位符注释下方追加图片引用：
-
-```markdown
-<!-- img: img-01 | 原始描述 -->
-![配图](./images/img-01.png)
-```
-
-封面图在文章最顶部占位符下方追加（保留占位符注释，方便识别）。
+3. 所有图片确认后，回写 `article.md`：
+   - 对于 **正文配图**（如 `img-01` 等），在占位符注释下方追加图片引用：
+     ```markdown
+     <!-- img: img-01 | 原始描述 -->
+     ![配图](./images/img-01.png)
+     ```
+   - 对于 **封面图**（`cover`），为了避免在各平台的正文中直接渲染出大图（与平台自身的独立封面设置冲突），需追加为隐式的专用提取注释格式：
+     ```markdown
+     <!-- img: cover | 原始描述 -->
+     <!-- cover_path: ./images/cover.png -->
+     ```
 
 ### Step 6：复盘与更新风格指南
 
