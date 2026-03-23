@@ -1,9 +1,10 @@
-$sourceDir = "C:\Users\FLDJ\Desktop\skills"
+$sourceDir = $PSScriptRoot
 $targetDirs = @(
-    "C:\Users\FLDJ\.claude\skills",
-    "C:\Users\FLDJ\.gemini\skills",
-    "C:\Users\FLDJ\.copilot\skill",
-    "C:\Users\FLDJ\.gemini\antigravity\skillss"
+    "$HOME\.claude\skills",
+    "$HOME\.gemini\skills",
+    "$HOME\.copilot\skills",
+    "$HOME\.gemini\antigravity\skills",
+    "$HOME\.agent\skills"
 )
 
 # 排除与 skill 无关的文件和目录
@@ -11,7 +12,11 @@ $excludeDirs = @("node_modules", "output", "test-output", "test-output-archive",
 $excludeFiles = @(".gitignore", "*.html", "sync-skills.ps1")
 
 # 获取所有包含 SKILL.md 的有效技能目录
-$skillDirs = Get-ChildItem -Path $sourceDir -Directory | Where-Object { Test-Path (Join-Path $_.FullName "SKILL.md") }
+# 获取所有包含 SKILL.md 的技能目录，以及必要的资源目录（如 guidance）
+$skillDirs = Get-ChildItem -Path $sourceDir -Directory | Where-Object { 
+    (Test-Path (Join-Path $_.FullName "SKILL.md")) -or 
+    ($_.Name -eq "guidance")
+}
 
 Write-Host "开始同步技能..." -ForegroundColor Cyan
 
