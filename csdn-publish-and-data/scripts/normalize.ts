@@ -1,4 +1,4 @@
-import { normalizeDate } from "./common";
+import { normalizeDate } from "./common.js";
 import type {
   CapturedResponse,
   CrawlResult,
@@ -7,7 +7,7 @@ import type {
   ArticleDailyStats,
   ArticleQualityScore,
   CreatorOverview,
-} from "./types";
+} from "./types.js";
 
 function uniqueResponses(responses: CapturedResponse[]): CapturedResponse[] {
   const seen = new Set<string>();

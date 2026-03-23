@@ -11,7 +11,7 @@ import type {
   PageType,
   PostCliOptions,
   SkillConfig,
-} from "./types";
+} from "./types.js";
 
 const DEFAULT_CONFIG: SkillConfig = {
   defaultOutputDir: "./csdn-output",
@@ -413,7 +413,7 @@ export function resolveAuthFile(
   );
 }
 
-export function loadArticleInput(filePath: string, cli: Pick<PostCliOptions, "title" | "summary" | "category" | "tags" | "original">): ArticleInput {
+export function loadArticleInput(filePath: string, cli: Pick<PostCliOptions, "title" | "summary" | "category" | "tags" | "original" | "coverPath">): ArticleInput {
   const absolutePath = path.resolve(process.cwd(), filePath);
   if (!fs.existsSync(absolutePath)) {
     throw new Error(`Markdown file not found: ${absolutePath}`);
@@ -439,6 +439,14 @@ export function loadArticleInput(filePath: string, cli: Pick<PostCliOptions, "ti
         ? parseList(frontmatter.tags)
         : [];
   const original = cli.original ?? normalizeOriginal(frontmatter.original);
+  let coverPath = cli.coverPath;
+  if (!coverPath) {
+    const coverRegex = /<!--\s*cover_path:\s*(.*?)\s*-->/;
+    const cmMatch = parsed.content.match(coverRegex);
+    if (cmMatch) {
+      coverPath = cmMatch[1].trim();
+    }
+  }
 
   let finalBody = parsed.content.trim();
   const headingRegex = /^\s*#\s+(.+)$/m;
@@ -456,6 +464,7 @@ export function loadArticleInput(filePath: string, cli: Pick<PostCliOptions, "ti
     category,
     tags,
     original,
+    coverPath: coverPath ? path.resolve(path.dirname(absolutePath), coverPath) : undefined,
   };
 }
 

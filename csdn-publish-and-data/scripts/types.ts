@@ -93,6 +93,7 @@ export interface ArticleInput {
   category?: string;
   tags: string[];
   original?: boolean;
+  coverPath?: string;
 }
 
 export interface CapturedResponse {
@@ -216,4 +217,5 @@ export interface PublishResult {
     status: number;
     payload: unknown;
   }>;
+  coverPath?: string;
 }

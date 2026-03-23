@@ -1,7 +1,7 @@
 import process from "node:process";
-import { loadSkillConfig, parseAnalyticsCliArgs, printAnalyticsUsage, resolveAuthFile } from "./common";
-import { crawlAnalytics, detectLoginIssue, inspectCreatorSession } from "./csdn-scraper";
-import type { ConcretePageType } from "./types";
+import { loadSkillConfig, parseAnalyticsCliArgs, printAnalyticsUsage, resolveAuthFile } from "./common.js";
+import { crawlAnalytics, detectLoginIssue, inspectCreatorSession } from "./csdn-scraper.js";
+import type { ConcretePageType } from "./types.js";
 
 function resolvePages(page: "analytics" | "manage" | "both"): ConcretePageType[] {
   if (page === "both") return ["analytics", "manage"];

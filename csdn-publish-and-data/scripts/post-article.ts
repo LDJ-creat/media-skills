@@ -9,8 +9,8 @@ import {
   parsePostCliArgs,
   printPostUsage,
   resolveAuthFile,
-} from "./common";
-import { publishArticle } from "./csdn-scraper";
+} from "./common.js";
+import { publishArticle } from "./csdn-scraper.js";
 
 function toMarkdown(result: Awaited<ReturnType<typeof publishArticle>>): string {
   return [
@@ -29,13 +29,13 @@ function toMarkdown(result: Awaited<ReturnType<typeof publishArticle>>): string 
     `- Original: ${result.original === undefined ? "-" : String(result.original)}`,
     "",
     "## Warnings",
-    ...(result.warnings.length > 0 ? result.warnings.map((item) => `- ${item}`) : ["- none"]),
+    ...(result.warnings.length > 0 ? result.warnings.map((item: string) => `- ${item}`) : ["- none"]),
     "",
     "## Captured Responses",
     "| status | url |",
     "|---|---|",
     ...(result.capturedResponses.length > 0
-      ? result.capturedResponses.map((item) => `| ${item.status} | ${item.url.replaceAll("|", "\\|")} |`)
+      ? result.capturedResponses.map((item: { status: number; url: string }) => `| ${item.status} | ${item.url.replaceAll("|", "\\|")} |`)
       : ["| - | - |"]),
   ].join("\n");
 }

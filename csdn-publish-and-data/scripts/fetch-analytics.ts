@@ -9,10 +9,10 @@ import {
   parseAnalyticsCliArgs,
   printAnalyticsUsage,
   resolveAuthFile,
-} from "./common";
-import { crawlAnalytics, detectLoginIssue, resolveAnalyticsRange } from "./csdn-scraper";
-import { buildAnalyticsReport, dedupeCrawlResults } from "./normalize";
-import type { ConcretePageType, FetchOutput } from "./types";
+} from "./common.js";
+import { crawlAnalytics, detectLoginIssue, resolveAnalyticsRange } from "./csdn-scraper.js";
+import { buildAnalyticsReport, dedupeCrawlResults } from "./normalize.js";
+import type { ConcretePageType, FetchOutput } from "./types.js";
 
 function resolvePages(page: "analytics" | "manage" | "both"): ConcretePageType[] {
   if (page === "both") return ["analytics", "manage"];
