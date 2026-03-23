@@ -37,9 +37,10 @@ output/{slug}/
 **分支 A — 用户已提供选题**：直接进入 Step 2。
 
 **分支 B — 用户无明确选题**：
-1. 调用 `news-skill` 获取近期热点
-2. 从热点中筛选 3-5 个适合写作的候选选题（列出选题标题 + 一句话说明写作角度）
-3. 让用户选择，或用户提出调整
+1. **加载选题指南**（如有）：检查项目根目录下是否存在 `guidance/topic-selection.md`。若存在，在筛选选题前加载，作为选题偏好、风格、受众定位的核心依据。
+2. **获取热点并落盘**：调用 `news-skill` 获取近期热点。**要求执行完整流程**，包含日报 Markdown 文件的生成与去重记录（以确保数据持久化，防止多轮对话后丢失原始信息）。
+3. **筛选并推荐**：结合“选题指南”，从 `news-skill` 生成的日报或原始数据中筛选 3-5 个适合写作的候选选题（列出选题标题 + 一句话说明写作角度）。
+4. **交互确认**：让用户选择。若用户不满意或要求“更多选题”，可重新读取落盘的日报数据进行二次推荐。
 
 ### Step 2：列提纲并审批
 
@@ -51,8 +52,8 @@ output/{slug}/
 
 **加载顺序**（每次写作前执行）：
 
-1. 读取 `references/writing-guide.md`（通用写作指南）
-2. 若用户指定平台（`--platform xiaohongshu` / `--platform wechat`）：额外读取 `references/platform/{platform}.md`
+1. 读取 `guidance/writing/general.md`（通用写作指南）
+2. 若用户指定平台（`--platform xiaohongshu` / `--platform wechat`）：额外读取 `guidance/writing/platform/{platform}.md`
 3. 若用户在本次调用中提出了具体写作要求：优先级最高，覆盖指南中的冲突规则
 
 **写作要点**：
@@ -72,11 +73,12 @@ output/{slug}/
 
 1. 复盘本次修改过程，提炼 1-3 条有实际价值的写作经验或注意点
 2. 向用户展示提炼结果，询问是否更新到对应写作指南：
-   - 通用经验 → `references/writing-guide.md`
-   - 平台专属经验 → `references/platform/{platform}.md`（不存在则创建）
+   - 通用经验 → `guidance/writing/general.md`
+   - 平台专属经验 → `guidance/writing/platform/{platform}.md`（不存在则创建）
 3. 用户同意后更新对应文件；用户拒绝则跳过
 
 ## References
 
-- **通用写作指南**：`references/writing-guide.md` — 在 Step 3 写作前加载，适用于所有文章
-- **平台专项指南**：`references/platform/xiaohongshu.md`、`references/platform/wechat.md` — 仅在用户指定平台时额外加载
+- **选题指南**：`guidance/topic-selection.md` — 存在时在 Step 1 加载
+- **通用写作指南**：`guidance/writing/general.md` — 在 Step 3 写作前加载，适用于所有文章
+- **平台专项指南**：`guidance/writing/platform/xiaohongshu.md`、`guidance/writing/platform/wechat.md` — 仅在用户指定平台时额外加载
