@@ -1,6 +1,7 @@
 # 🚀 Media Skills - 自媒体自动化写作与运营工具集
 
 这是一个面向技术自媒体的自动化工具集，旨在通过 AI 串联选题、写作、配图、发布及运营数据分析的全流程。
+该项目的CLI重构升级版本请移步至: [MediaManager](https://github.com/LDJ-creat/MediaManager)
 
 ## 🛠️ 1. Skill 概览
 
